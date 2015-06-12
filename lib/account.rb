@@ -1,10 +1,10 @@
 class Account
 
-  attr_reader :balance, :holders
+  attr_reader :balance, :holders, :interest_rate, :account_number
 
-  def initialize
+  def initialize(holder)
     @balance = 0.00
-    @holders = []
+    @holders = [holder]
   end
 
   def add(holder)
@@ -16,6 +16,7 @@ class Account
   end
 
   def withdraw(amount)
+    fail 'The withdrawal amount exceeds your current balance!' if amount > @balance
     @balance -= amount
   end
 end
