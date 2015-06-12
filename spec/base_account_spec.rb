@@ -1,8 +1,8 @@
-require 'account'
+require 'base_account'
 
-describe 'Account' do
-  let(:holder)       { double :holder       }
-  let(:test_account) { Account.new(:holder) }
+describe 'BaseAccount' do
+  let(:holder)       { double :holder           }
+  let(:test_account) { BaseAccount.new(:holder) }
 
   it 'has a balance' do
     expect(test_account).to respond_to(:balance)
@@ -19,7 +19,7 @@ describe 'Account' do
   it 'can add a holder' do
     new_holder = double :new_holder
     test_account.add_holder(new_holder)
-    expect(test_account.holders.last).to eq(:new_holder)
+    expect(test_account.holders.last).to eq(new_holder)
   end
 
   it 'can make a deposit' do

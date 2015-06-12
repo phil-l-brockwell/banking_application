@@ -1,5 +1,5 @@
-# Definition of Account Class
-class Account
+# Definition of Base Account Class
+class BaseAccount
   attr_reader :balance, :holders, :account_number, :transactions
   attr_accessor :interest_rate
 

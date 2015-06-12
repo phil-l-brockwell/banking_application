@@ -1,0 +1,3 @@
+class BusinessAccount < BaseAccount
+
+end
