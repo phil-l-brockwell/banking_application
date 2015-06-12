@@ -19,7 +19,7 @@ describe 'Account' do
 
   it 'can add a holder' do
     new_holder = double :new_holder
-    test_account.add(:new_holder)
+    test_account.add_holder(:new_holder)
     expect(test_account.holders).to eq([:holder, :new_holder])
   end
 
@@ -46,5 +46,18 @@ describe 'Account' do
 
   it 'has an account number' do
     expect(test_account).to respond_to(:account_number)
+  end
+
+  it 'can add the interest to the balance' do
+    test_account.interest_rate = 0.1
+    test_account.deposit(100)
+    test_account.add_interest
+    expect(test_account.balance).to eq(110)
+  end
+
+  it 'can add a new transaction' do
+    new_transaction = double :new_transaction
+    test_account.add_transaction(new_transaction)
+    expect(test_account.transactions).to eq([new_transaction])
   end
 end
