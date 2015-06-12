@@ -1,5 +1,5 @@
+# Definition of Transaction Class
 class Transaction
-
   attr_reader :type, :date, :amount
 
   def initialize(type, amount)

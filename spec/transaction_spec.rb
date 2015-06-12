@@ -2,7 +2,6 @@ require 'timecop'
 require 'transaction'
 
 describe 'Transaction' do
-
   let(:new_transaction) { Transaction.new(:deposit, 100) }
 
   it 'is initialised with a type' do

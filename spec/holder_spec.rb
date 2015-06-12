@@ -1,7 +1,6 @@
 require 'holder'
 
 describe 'Holder' do
-
   let(:test_holder) { Holder.new('Robert Pulson') }
 
   it 'has a first name' do
@@ -12,7 +11,7 @@ describe 'Holder' do
     expect(test_holder.name).to eq('Robert Pulson')
   end
 
-  it 'has a list of accounts' do
+  it 'has an array of accounts' do
     expect(test_holder).to respond_to(:accounts)
   end
 

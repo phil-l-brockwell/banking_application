@@ -1,5 +1,5 @@
+# Definition of Account Class
 class Account
-
   attr_reader :balance, :holders, :account_number, :transactions
   attr_accessor :interest_rate
 
@@ -18,7 +18,7 @@ class Account
   end
 
   def withdraw(amount)
-    fail 'The withdrawal amount exceeds your current balance!' if amount > @balance
+    fail 'The withdrawal amount exceeds current balance!' if amount > @balance
     @balance -= amount
   end
 

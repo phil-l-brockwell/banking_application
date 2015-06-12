@@ -1,5 +1,5 @@
+# Definition of Holder Class
 class Holder
-
   attr_reader :name, :accounts
 
   def initialize(name)

@@ -1,7 +1,6 @@
 require 'account'
 
 describe 'Account' do
-
   let(:holder)       { double :holder       }
   let(:test_account) { Account.new(:holder) }
 
@@ -19,8 +18,8 @@ describe 'Account' do
 
   it 'can add a holder' do
     new_holder = double :new_holder
-    test_account.add_holder(:new_holder)
-    expect(test_account.holders).to eq([:holder, :new_holder])
+    test_account.add_holder(new_holder)
+    expect(test_account.holders.last).to eq(:new_holder)
   end
 
   it 'can make a deposit' do
@@ -37,7 +36,7 @@ describe 'Account' do
   it 'doesnt allow withdrawals over the current balance' do
     test_account.deposit(100.00)
     expect { test_account.withdraw(101.00) }.to raise_error
-      ('The withdrawal amount exceeds your current balance!')
+    ('The withdrawal amount exceeds current balance!')
   end
 
   it 'has an interest rate' do
