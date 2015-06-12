@@ -7,5 +7,4 @@ class Transaction
     @amount = amount
     @date = Time.now
   end
-
 end

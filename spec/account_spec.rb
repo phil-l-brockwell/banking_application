@@ -24,19 +24,19 @@ describe 'Account' do
   end
 
   it 'can make a deposit' do
-    test_account.deposit(100)
+    test_account.deposit(100.00)
     expect(test_account.balance).to eq(100.00)
   end
 
   it 'can make a withdrawal' do
-    test_account.deposit(100)
-    test_account.withdraw(100)
-    expect(test_account.balance).to eq(0)
+    test_account.deposit(100.00)
+    test_account.withdraw(100.00)
+    expect(test_account.balance).to eq(0.00)
   end
 
   it 'doesnt allow withdrawals over the current balance' do
-    test_account.deposit(100)
-    expect { test_account.withdraw(101) }.to raise_error
+    test_account.deposit(100.00)
+    expect { test_account.withdraw(101.00) }.to raise_error
       ('The withdrawal amount exceeds your current balance!')
   end
 
@@ -50,9 +50,9 @@ describe 'Account' do
 
   it 'can add the interest to the balance' do
     test_account.interest_rate = 0.1
-    test_account.deposit(100)
+    test_account.deposit(100.00)
     test_account.add_interest
-    expect(test_account.balance).to eq(110)
+    expect(test_account.balance).to eq(110.00)
   end
 
   it 'can add a new transaction' do
