@@ -5,4 +5,3 @@ class IRAccount < BaseAccount
     @type = :ir
   end
 end
-

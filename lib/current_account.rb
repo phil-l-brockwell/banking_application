@@ -5,4 +5,3 @@ class CurrentAccount < BaseAccount
     @type = :current
   end
 end
-
