@@ -2,7 +2,7 @@ require 'base_account'
 
 describe 'BaseAccount' do
   let(:holder)       { double :holder                         }
-  let(:test_account) { BaseAccount.new(:holder, 1, :business) }
+  let(:test_account) { BaseAccount.new(:holder, 1) }
 
   it 'has a balance' do
     expect(test_account).to respond_to(:balance)
@@ -20,8 +20,8 @@ describe 'BaseAccount' do
     expect(test_account.account_number).to eq(1)
   end
 
-  it 'is initialsed with a type' do
-    expect(test_account.type).to eq(:business)
+  it 'has a type' do
+    expect(test_account).to respond_to(:type)
   end
 
   it 'can add a holder' do
