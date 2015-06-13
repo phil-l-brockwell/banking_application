@@ -47,16 +47,13 @@ describe 'BaseAccount' do
     ('The withdrawal amount exceeds current balance!')
   end
 
-  it 'has an interest rate' do
-    expect(test_account).to respond_to(:interest_rate)
-  end
-
-  it 'has an account number' do
-    expect(test_account).to respond_to(:account_number)
+  it 'can change the interest rate' do
+    test_account.change_interest_rate_to(0.1)
+    expect(test_account.interest_rate).to be(0.1)
   end
 
   it 'can add the interest to the balance' do
-    test_account.interest_rate = 0.1
+    test_account.change_interest_rate_to(0.1)
     test_account.deposit(100.00)
     test_account.add_interest
     expect(test_account.balance).to eq(110.00)

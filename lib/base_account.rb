@@ -1,7 +1,7 @@
 # Definition of Base Account Class
 class BaseAccount
-  attr_reader :balance, :holders, :account_number, :transactions, :type
-  attr_accessor :interest_rate
+  attr_reader :balance, :holders, :account_number, 
+              :transactions, :type, :interest_rate
 
   def initialize(holder, account_number, type)
     @balance = 0.00
@@ -30,5 +30,9 @@ class BaseAccount
 
   def add_transaction(transaction)
     @transactions << transaction
+  end
+
+  def change_interest_rate_to(interest_rate)
+    @interest_rate = interest_rate
   end
 end
