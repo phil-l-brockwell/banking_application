@@ -8,4 +8,5 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Used rspec to test most functionality; 19 tests passing
 
 # Next...
+* Complete controller class
 * Add Command line interface
