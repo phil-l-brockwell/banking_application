@@ -33,8 +33,11 @@ class Controller
   end
 
   def selector(input)
-    if input == 
-      
+    if input == 1
+      puts 'Which type of account would you like to open?'
+      @accounts.each_with_index { |account, index| puts "#{index + 1}. #{account} Account" }
+      account = gets.chomp.to_i
+      puts ''
     end
   end
 
