@@ -10,6 +10,12 @@ class Controller
                    'Add Account Holder',
                    'Show all accounts held by a customer',
                    'View Transactions']
+    @accounts =   ['Current',
+                   'Savings',
+                   'Student',
+                   'Business',
+                   'SMB',
+                   'IR']
   end
 
   def enter
@@ -18,12 +24,23 @@ class Controller
       puts "Press 'ENTER' to begin"
       input = gets.chomp
     end
-    main_menu
   end
 
   def main_menu
     @main_items.each_with_index { |item, index| puts "#{index + 1}. #{item}" }
     puts "What would you like to do?\nEnter a number and hit 'ENTER'"
     gets.chomp
+  end
+
+  def selector(input)
+    if input == 
+      
+    end
+  end
+
+  def start
+    enter
+    input = main_menu.to_i
+    selector(input)
   end
 end
