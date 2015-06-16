@@ -1,10 +1,13 @@
 # Definition of Controller Class
 class Controller
   attr_reader :name, :accounts, :holders
+  attr_accessor :account_number, :holder_id
 
   def initialize
+    @account_number = 0
+    @holder_id = 0
     @accounts = []
-    @holders = {}
+    @holders = []
     @main_items =    { 0 => 'Create New Holder',
                        1 => 'Create Current Account',
                        2 => 'Deposit',
@@ -24,9 +27,9 @@ class Controller
   end
 
   def add_holder(new_holder)
-    @holders.any? ? id = @holders.length + 1 : id = 0
-    new_holder.add_id(id)
-    @holders[id] = new_holder
+    new_holder.add_id(@holder_id)
+    @holder_id += 1
+    @holders << new_holder
   end
 
   def add_account(new_account)
@@ -42,7 +45,7 @@ class Controller
   end
 
   def main_menu
-    @main_items.each { |key, value | puts "#{key}. #{value}" }
+    @main_items.each { |key, value| puts "#{key}. #{value}" }
     puts "What would you like to do?\nEnter a number and hit 'ENTER'"
     gets.chomp
   end
@@ -57,14 +60,15 @@ class Controller
 
   def option_1
     puts 'Enter customer ID'
-    index = gets.chomp
+    index = gets.chomp.to_i
     holder = @holders[index]
     puts 'Which type of account would you like to open?'
     @account_types.each { |key, value| puts "#{key}. #{value} Account" }
     input = gets.chomp.to_i
     account = create_account(input, holder)
-    @accounts[account.account_number] = account
-    puts 'Account Created'
+    @accounts << account
+    puts "Account Created.\nYour Account Number is: #{@account_number}"
+    @account_number += 1
   end
 
   def selector(input)
@@ -84,7 +88,12 @@ class Controller
 
   def create_account(input, holder)
     case input
-    when 0 then CurrentAccount.new(holder, 0)
+    when 0 then CurrentAccount.new(holder, @account_number)
+    when 1 then SavingsAccount.new(holder, @account_number)
+    when 2 then StudentAccount.new(holder, @account_number)
+    when 3 then BusinessAccount.new(holder, @account_number)
+    when 4 then SMBAccount.new(holder, @account_number)
+    when 5 then IRAccount.new(holder, @account_number)
     end
   end
 
