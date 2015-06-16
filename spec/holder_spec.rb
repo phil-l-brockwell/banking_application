@@ -11,6 +11,11 @@ describe 'Holder' do
     expect(test_holder.name).to eq('Robert Pulson')
   end
 
+  it 'can add a unique id' do
+    test_holder.add_id(0)
+    expect(test_holder.id).to eq(0)
+  end
+
   it 'has an array of accounts' do
     expect(test_holder).to respond_to(:accounts)
   end

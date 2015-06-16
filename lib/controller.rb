@@ -4,7 +4,7 @@ class Controller
 
   def initialize
     @accounts = []
-    @holders = []
+    @holders = {}
     @main_items =   { 0 => 'Create New Holder',
                       1 => 'Create Current Account',
                       2 => 'Deposit',
@@ -24,7 +24,9 @@ class Controller
   end
 
   def add_holder(new_holder)
-    @holders << new_holder
+    @holders.any? ? id = @holders.length + 1 : id = 0
+    new_holder.add_id(id)
+    @holders[id] = new_holder
   end
 
   def add_account(new_account)
@@ -48,22 +50,31 @@ class Controller
   def option_0
     puts 'Enter Customer Name'
     name = gets.chomp
-    new_holder = Holder.new(name)
     add_holder(new_holder)
     puts 'Holder added!'
+  end
+
+  def option_1
+      puts 'Enter customer ID'
+      puts 'Which type of account would you like to open?'
+      @account_types.each_with_index { |account, index| puts "#{index}. #{account} Account" }
+      account = gets.chomp.to_i
+      puts ''
   end
 
   def selector(input)
     case input
     when 0 then option_0
     when 1 then option_1
+    when 2 then option_2
+    when 3 then option_3
+    when 4 then option_4
+    when 5 then option_5
+    when 6 then option_6
+    when 7 then option_7
+    when 8 then option_8
+    when 9 then option_9
     end
-    # if input == 1
-    #   puts 'Which type of account would you like to open?'
-    #   @account_types.each_with_index { |account, index| puts "#{index}. #{account} Account" }
-    #   account = gets.chomp.to_i
-    #   puts ''
-    # end
   end
 
   def start

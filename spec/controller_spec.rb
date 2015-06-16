@@ -7,14 +7,15 @@ describe 'Controller' do
     expect(test_controller).to respond_to(:accounts)
   end
 
-  it 'has an array of holders' do
+  it 'has a hash of holders' do
     expect(test_controller).to respond_to(:holders)
   end
 
   it 'can add a new holder' do
-    new_holder = double :new_holder
-    test_controller.add_holder(:new_holder)
-    expect(test_controller.holders.last).to eq(:new_holder)
+    test_holder = double :test_holder
+    expect(test_holder).to receive(:add_id)
+    test_controller.add_holder(test_holder)
+    expect(test_controller.holders).to include(0 => test_holder)
   end
 
   it 'can add a new account' do
