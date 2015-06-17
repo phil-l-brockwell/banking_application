@@ -74,9 +74,8 @@ class Controller
     @account_types.each { |key, value| puts "#{key}. #{value} Account" }
     input = gets.chomp.to_i
     account = create_account(input, holder)
-    @accounts[] << account
-    puts "Account Created.\nYour Account Number is: #{@account_number}"
-    @account_number += 1
+    add_account(account)
+    puts "Account Created.\nYour Account Number is: #{account.account_number}"
   end
 
   def selector(input)
