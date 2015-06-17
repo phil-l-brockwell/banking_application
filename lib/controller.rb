@@ -1,39 +1,47 @@
 # Definition of Controller Class
 class Controller
   attr_reader :name, :accounts, :holders
-  attr_accessor :account_number, :holder_id
+  attr_accessor :account_number, :holder_number
 
   def initialize
     @account_number = 0
-    @holder_id = 0
-    @accounts = []
-    @holders = []
-    @main_items =    { 0 => 'Create New Holder',
-                       1 => 'Create Current Account',
-                       2 => 'Deposit',
-                       3 => 'Display Balance',
-                       4 => 'Withdraw',
-                       5 => 'Transfer Money',
-                       6 => 'Pay Interest',
-                       7 => 'Add Account Holder',
-                       8 => 'Show all accounts held by a customer',
-                       9 => 'View Transactions' }
-    @account_types = { 0 => 'Current',
-                       1 => 'Savings',
-                       2 => 'Student',
-                       3 => 'Business',
-                       4 => 'SMB',
-                       5 => 'IR' }
+    @holder_number  = 0
+    @accounts       = {}
+    @holders        = {}
+    @main_items     = { 0 => 'Create New Holder',
+                        1 => 'Create Current Account',
+                        2 => 'Deposit',
+                        3 => 'Display Balance',
+                        4 => 'Withdraw',
+                        5 => 'Transfer Money',
+                        6 => 'Pay Interest',
+                        7 => 'Add Account Holder',
+                        8 => 'Show all accounts held by a customer',
+                        9 => 'View Transactions' }
+    @account_types  = { 0 => 'Current',
+                        1 => 'Savings',
+                        2 => 'Student',
+                        3 => 'Business',
+                        4 => 'SMB',
+                        5 => 'IR' }
+  end
+
+  def increment_account_number
+    @account_number += 1
+  end
+
+  def increment_holder_number
+    @holder_number += 1
   end
 
   def add_holder(new_holder)
-    new_holder.add_id(@holder_id)
-    @holder_id += 1
-    @holders << new_holder
+    @holders[new_holder.id] = new_holder
+    increment_holder_number
   end
 
   def add_account(new_account)
-    @accounts << new_account
+    @accounts[new_account.account_number] = new_account
+    increment_account_number
   end
 
   def enter
@@ -53,7 +61,7 @@ class Controller
   def option_0
     puts 'Enter Customer Name'
     name = gets.chomp
-    new_holder = Holder.new(name)
+    new_holder = Holder.new(name, @holder_number)
     add_holder(new_holder)
     puts 'Holder added!'
   end
@@ -66,7 +74,7 @@ class Controller
     @account_types.each { |key, value| puts "#{key}. #{value} Account" }
     input = gets.chomp.to_i
     account = create_account(input, holder)
-    @accounts << account
+    @accounts[] << account
     puts "Account Created.\nYour Account Number is: #{@account_number}"
     @account_number += 1
   end

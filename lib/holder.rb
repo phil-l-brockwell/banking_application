@@ -2,11 +2,7 @@
 class Holder
   attr_reader :name, :id
 
-  def initialize(name)
+  def initialize(name, id)
     @name = name
-  end
-
-  def add_id(id)
-    @id = id
   end
 end
