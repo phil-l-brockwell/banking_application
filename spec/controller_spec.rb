@@ -25,7 +25,8 @@ describe 'Controller' do
     test_holder = double :test_holder, id: current_holder_number
     expect(test_holder).to receive(:id)
     test_controller.add_holder(test_holder)
-    expect(test_controller.holders).to include(current_holder_number => test_holder)
+    expect(test_controller.holders)
+      .to include(current_holder_number => test_holder)
     expect(test_controller.holder_number).to eq(current_holder_number += 1)
   end
 
@@ -43,7 +44,14 @@ describe 'Controller' do
     new_account = double :new_account, account_number: current_account_number
     expect(new_account).to receive(:account_number)
     test_controller.add_account(new_account)
-    expect(test_controller.accounts).to include(current_account_number => new_account)
+    expect(test_controller.accounts)
+      .to include(current_account_number => new_account)
     expect(test_controller.account_number).to eq(current_account_number += 1)
+  end
+
+  it 'can make a deposit into an account' do
+    new_account = double :new_account
+    expect(new_account).to receive(:deposit).with(10)
+    test_controller.deposit_into(new_account, 10)
   end
 end
