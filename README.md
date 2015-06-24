@@ -5,7 +5,7 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 # So Far...
 * Added Account super class, holder class and transaction class
 * Added all account sub classes
-* Used rspec to test most functionality; 19 tests passing
+* Used rspec to test most functionality; 32 tests passing
 
 # Next...
 * Complete controller class

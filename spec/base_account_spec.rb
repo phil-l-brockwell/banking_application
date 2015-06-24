@@ -1,7 +1,7 @@
 require 'base_account'
 
 describe 'BaseAccount' do
-  let(:holder)       { double :holder                         }
+  let(:holder)       { double :holder              }
   let(:test_account) { BaseAccount.new(:holder, 1) }
 
   it 'has a balance' do
@@ -12,8 +12,8 @@ describe 'BaseAccount' do
     expect(test_account.balance).to eq(0.00)
   end
 
-  it 'is initialsed with a holder' do
-    expect(test_account.holders).to eq([:holder])
+  it 'is initialsed with a main holder' do
+    expect(test_account.main_holder).to eq(:holder)
   end
 
   it 'is initialsed with an account number' do
