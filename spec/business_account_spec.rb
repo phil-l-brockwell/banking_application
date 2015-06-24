@@ -1,4 +1,4 @@
-require 'business_account'
+require 'accounts/business_account'
 
 describe 'BusinessAccount' do
   it 'can initialise with the correct type' do

@@ -1,4 +1,4 @@
-require 'savings_account'
+require 'accounts/savings_account'
 
 describe 'SavingsAccount' do
   it 'can initialise with the correct type' do

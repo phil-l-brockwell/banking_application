@@ -1,15 +1,12 @@
+require 'require_all'
+require_all 'lib/accounts'
 # Definition of Controller Class
 class Controller
-  attr_reader :name, :accounts
-  attr_accessor :account_number
+  attr_reader :name, :accounts, :account_number
 
   def initialize
     @account_number = 0
     @accounts       = {}
-  end
-
-  def increment_account_number
-    @account_number += 1
   end
 
   def open_account(type, holder)
@@ -18,18 +15,33 @@ class Controller
     increment_account_number
   end
 
+  def deposit_into(account_number, amount)
+    @accounts[account_number].deposit(amount)
+  end
+
+  def withdraw_from(account_number, amount)
+    @accounts[account_number].withdraw(amount)
+  end
+
   private
+
+  ACCOUNT_CLASSES = { current:  CurrentAccount,
+                      savings:  SavingsAccount,
+                      business: BusinessAccount,
+                      ir:       IRAccount,
+                      smb:      SMBAccount,
+                      student:  StudentAccount }
 
   def add_account(new_account)
     @accounts[new_account.account_number] = new_account
   end
 
   def create_account(type, holder)
-    return CurrentAccount.new(holder, @account_number)  if type == :current
-    return SavingsAccount.new(holder, @account_number)  if type == :savings
-    return BusinessAccount.new(holder, @account_number) if type == :business
-    return IRAccount.new(holder, @account_number)       if type == :ir
-    return SMBAccount.new(holder, @account_number)      if type == :smb
-    return StudentAccount.new(holder, @account_number)  if type == :student
+    account_class = ACCOUNT_CLASSES[type]
+    account_class.new(holder, @account_number)
+  end
+
+  def increment_account_number
+    @account_number += 1
   end
 end

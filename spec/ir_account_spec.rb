@@ -1,4 +1,4 @@
-require 'ir_account'
+require 'accounts/ir_account'
 
 describe 'IRAccount' do
   it 'can initialise with the correct type' do

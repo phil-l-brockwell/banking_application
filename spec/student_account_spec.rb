@@ -1,4 +1,4 @@
-require 'student_account'
+require 'accounts/student_account'
 
 describe 'StudentAccount' do
   it 'can initialise with the correct type' do

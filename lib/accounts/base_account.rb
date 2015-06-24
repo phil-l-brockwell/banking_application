@@ -9,6 +9,7 @@ class BaseAccount
     @holders = []
     @transactions = []
     @account_number = account_number
+    @interest_rate = 0.1
   end
 
   def add_holder(holder)
@@ -30,9 +31,5 @@ class BaseAccount
 
   def add_transaction(transaction)
     @transactions << transaction
-  end
-
-  def change_interest_rate_to(interest_rate)
-    @interest_rate = interest_rate
   end
 end

@@ -1,4 +1,4 @@
-require 'current_account'
+require 'accounts/current_account'
 
 describe 'CurrentAccount' do
   it 'can initialise with the correct type' do

@@ -1,4 +1,4 @@
-require 'smb_account'
+require 'accounts/smb_account'
 
 describe 'SMBAccount' do
   it 'can initialise with the correct type' do
