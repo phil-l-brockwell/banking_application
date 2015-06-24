@@ -12,16 +12,15 @@ class Controller
     @account_number += 1
   end
 
+  def open_account(holder)
+    new_account = CurrentAccount.new(holder, @account_number)
+    add_account(new_account)
+    increment_account_number
+  end
+
+  private
+
   def add_account(new_account)
     @accounts[new_account.account_number] = new_account
-  end
-
-  def deposit_into(account, amount)
-    account.deposit(amount)
-  end
-
-  def create_account(type, holder)
-    increment_account_number
-    CurrentAccount.new(holder, @account_number)
   end
 end
