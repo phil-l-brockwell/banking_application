@@ -1,3 +1,5 @@
+require 'transaction'
+
 # Definition of Base Account Class
 class BaseAccount
   attr_reader :balance, :main_holder, :holders, :id,
@@ -7,7 +9,7 @@ class BaseAccount
     @balance = 0.00
     @main_holder = holder
     @holders = {}
-    @transactions = {}
+    @transactions = []
     @id = id
     @interest_rate = 0.1
   end
@@ -18,11 +20,15 @@ class BaseAccount
 
   def deposit(amount)
     @balance += amount
+    new_transaction = Transaction.new(:deposit, amount)
+    add_transaction(new_transaction)
   end
 
   def withdraw(amount)
     fail 'The withdrawal amount exceeds current balance!' if amount > @balance
     @balance -= amount
+    new_transaction = Transaction.new(:withdrawal, amount)
+    add_transaction(new_transaction)
   end
 
   def add_interest

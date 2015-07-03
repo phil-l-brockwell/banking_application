@@ -7,6 +7,10 @@ describe 'Controller' do
   let(:second_holder)   { double :second_holder, id: 0            }
   let(:test_account)    { double :test_account, account_number: 1 }
 
+  def create_holder
+    test_controller.create_holder('Robert Pulson')
+  end
+
   context 'when initialised' do
     it 'has a hash of accounts' do
       expect(test_controller).to respond_to(:accounts)
@@ -25,8 +29,27 @@ describe 'Controller' do
     end
   end
 
+  context 'when creating a holder' do
+    it 'increments the holder number' do
+      expect { test_controller.create_holder('Robert Pulson') }
+        .to change { test_controller.holder_id }.by(1)
+    end
+
+    it 'returns the new holders id' do
+      num = test_controller.holder_id
+      expect(test_controller.create_holder('Robert Pulson'))
+        .to eq(num)
+    end
+
+    it 'gives the new holder the correct holder id' do
+      num = test_controller.create_holder('Robert Pulson')
+      expect(test_controller.holders[num].id).to eq(num)
+    end
+  end
+
   context 'when opening an account' do
     it 'returns the new accounts id' do
+      holder_num = create_holder
       num = test_controller.account_id
       expect(test_controller.open_account(:savings, test_holder))
         .to eq(num)
@@ -45,24 +68,6 @@ describe 'Controller' do
     it 'can open a savings account' do
       num = test_controller.open_account(:savings, test_holder)
       expect(test_controller.accounts[num].type).to eq(:savings)
-    end
-  end
-
-  context 'when creating a holder' do
-    it 'increments the holder number' do
-      expect { test_controller.create_holder('Robert Pulson') }
-        .to change { test_controller.holder_id }.by(1)
-    end
-
-    it 'returns the new holders id' do
-      num = test_controller.holder_id
-      expect(test_controller.create_holder('Robert Pulson'))
-        .to eq(num)
-    end
-
-    it 'gives the new holder the correct holder id' do
-      num = test_controller.create_holder('Robert Pulson')
-      expect(test_controller.holders[num].id).to eq(num)
     end
   end
 
