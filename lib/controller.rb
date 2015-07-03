@@ -47,6 +47,14 @@ class Controller
     @accounts[account_id].add_holder(new_holder)
   end
 
+  def get_transactions_of(account_id)
+    @accounts[account_id].transactions
+  end
+
+  def get_accounts_of(holder)
+    @accounts.select { |_, account| account.main_holder.id == holder.id }.values
+  end
+
   private
 
   ACCOUNT_CLASSES = { current:  CurrentAccount,

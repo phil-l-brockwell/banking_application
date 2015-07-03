@@ -7,7 +7,7 @@ class BaseAccount
     @balance = 0.00
     @main_holder = holder
     @holders = {}
-    @transactions = []
+    @transactions = {}
     @id = id
     @interest_rate = 0.1
   end

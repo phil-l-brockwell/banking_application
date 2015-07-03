@@ -3,7 +3,7 @@ require 'timecop'
 
 describe 'Controller' do
   let(:test_controller) { Controller.new                          }
-  let(:test_holder)     { double :test_holder                     }
+  let(:test_holder)     { double :test_holder, id: 1              }
   let(:second_holder)   { double :second_holder, id: 0            }
   let(:test_account)    { double :test_account, account_number: 1 }
 
@@ -108,5 +108,21 @@ describe 'Controller' do
         .with(second_holder)
       test_controller.add_holder_to(num_1, second_holder)
     end
+  end
+
+  it 'can return all transactions of a given account' do
+    num = test_controller.open_account(:savings, test_holder)
+    new_transaction = double :new_transaction, type: :deposit, amount: 50.00
+    test_controller.accounts[num].add_transaction(new_transaction)
+    expect(test_controller.get_transactions_of(num))
+      .to eq([new_transaction])
+  end
+
+  it 'can return all accounts for a given holder' do
+    num = test_controller.open_account(:savings, test_holder)
+    test_controller.open_account(:savings, second_holder)
+    num_3 = test_controller.open_account(:savings, test_holder)
+    expect(test_controller.get_accounts_of(test_holder))
+      .to eq([test_controller.accounts[num], test_controller.accounts[num_3]])
   end
 end
