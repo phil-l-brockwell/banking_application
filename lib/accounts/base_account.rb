@@ -1,19 +1,19 @@
 # Definition of Base Account Class
 class BaseAccount
-  attr_reader :balance, :main_holder, :holders, :account_number,
+  attr_reader :balance, :main_holder, :holders, :id,
               :transactions, :type, :interest_rate
 
-  def initialize(holder, account_number)
+  def initialize(holder, id)
     @balance = 0.00
     @main_holder = holder
-    @holders = []
+    @holders = {}
     @transactions = []
-    @account_number = account_number
+    @id = id
     @interest_rate = 0.1
   end
 
   def add_holder(holder)
-    @holders << holder
+    @holders[holder.id] = holder
   end
 
   def deposit(amount)
