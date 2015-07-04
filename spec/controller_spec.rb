@@ -91,6 +91,11 @@ describe 'Controller' do
       test_controller.deposit_into(id, 50.00)
     end
 
+    it 'can give the balance of an account' do
+      id = open_account
+      expect(test_controller.get_balance_of(id)).to eq(0.00)
+    end
+
     it 'can make a withdrawal' do
       id = open_account
       expect(test_controller.accounts[id]).to receive(:withdraw).with(50.00)
