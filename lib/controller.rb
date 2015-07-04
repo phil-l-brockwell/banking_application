@@ -2,8 +2,7 @@ require 'require_all'
 require_all 'lib/accounts'
 # Definition of Controller Class
 class Controller
-  attr_reader :name, :accounts, :account_id,
-              :holders, :holder_id
+  attr_reader :name, :accounts, :account_id, :holders, :holder_id
 
   def initialize
     @account_id = 0
@@ -50,12 +49,14 @@ class Controller
   end
 
   def pay_interest_on(account_id)
-    @accounts[account_id].add_interest
+    account = account_exist? account_id
+    account.add_interest
   end
 
   def add_holder_to(account_id, new_holder_id)
     new_holder = holder_exist? new_holder_id
-    @accounts[account_id].add_holder new_holder
+    account = account_exist? account_id
+    account.add_holder new_holder
   end
 
   def get_transactions_of(account_id)

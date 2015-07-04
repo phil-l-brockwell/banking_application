@@ -1,0 +1,3 @@
+class Boundary
+
+end
