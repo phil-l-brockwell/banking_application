@@ -45,6 +45,11 @@ describe 'Controller' do
       num = test_controller.create_holder('Robert Pulson')
       expect(test_controller.holders[num].id).to eq(num)
     end
+
+    it 'adds the new holder to the holders hash' do
+      num = test_controller.create_holder('Robert Pulson')
+      expect(test_controller.holders[num].name).to eq('Robert Pulson')
+    end
   end
 
   context 'when opening an account' do
@@ -63,6 +68,13 @@ describe 'Controller' do
     it 'gives the new account the correct account id' do
       num = test_controller.open_account(:current, test_holder)
       expect(test_controller.accounts[num].id).to eq(num)
+    end
+
+    it 'adds the new account to the accounts hash' do
+      num = test_controller.open_account(:current, test_holder)
+      expect(test_controller.accounts[num].main_holder).to eq(test_holder)
+      expect(test_controller.accounts[num]).to respond_to(:balance)
+      expect(test_controller.accounts[num].type).to eq(:current)
     end
 
     it 'can open a savings account' do
@@ -127,7 +139,7 @@ describe 'Controller' do
     num = test_controller.open_account(:savings, test_holder)
     test_controller.open_account(:savings, second_holder)
     num_3 = test_controller.open_account(:savings, test_holder)
-    expect(test_controller.get_accounts_of(test_holder))
+    expect(test_controller.get_accounts_of(test_holder.id))
       .to eq([test_controller.accounts[num], test_controller.accounts[num_3]])
   end
 end

@@ -51,8 +51,8 @@ class Controller
     @accounts[account_id].transactions
   end
 
-  def get_accounts_of(holder)
-    @accounts.select { |_, account| account.main_holder.id == holder.id }.values
+  def get_accounts_of(holder_id)
+    @accounts.select { |_, account| account.main_holder.id == holder_id }.values
   end
 
   private
