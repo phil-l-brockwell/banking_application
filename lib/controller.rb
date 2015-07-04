@@ -12,7 +12,8 @@ class Controller
     @holders    = {}
   end
 
-  def open_account(type, holder)
+  def open_account(type, holder_id)
+    fail "Holder number #{holder_id} does not exist!" unless holder = @holders[holder_id]
     new_account = create_account(type, holder)
     add_account(new_account)
     increment_account_id
