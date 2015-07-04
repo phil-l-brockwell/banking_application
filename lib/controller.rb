@@ -13,7 +13,7 @@ class Controller
   end
 
   def open_account(type, holder_id)
-    fail "Holder number #{holder_id} does not exist!" unless holder = @holders[holder_id]
+    holder = holder_exist?(holder_id)
     new_account = create_account(type, holder)
     add_account(new_account)
     increment_account_id
@@ -44,7 +44,8 @@ class Controller
     @accounts[account_id].add_interest
   end
 
-  def add_holder_to(account_id, new_holder)
+  def add_holder_to(account_id, new_holder_id)
+    new_holder = holder_exist?(new_holder_id)
     @accounts[account_id].add_holder(new_holder)
   end
 
@@ -53,7 +54,8 @@ class Controller
   end
 
   def get_accounts_of(holder_id)
-    @accounts.select { |_, account| account.main_holder.id == holder_id }.values
+    holder = holder_exist?(holder_id)
+    @accounts.select { |_, account| account.main_holder.id == holder.id }.values
   end
 
   private
@@ -67,6 +69,16 @@ class Controller
 
   def add_account(new_account)
     @accounts[new_account.id] = new_account
+  end
+
+  def holder_exist?(holder_id)
+    fail "Holder number #{holder_id} does not exist!" unless @holders[holder_id]
+    @holders[holder_id]
+  end
+
+  def account_exist?(account_id)
+    fail "Account number #{account_id} does not exist!" unless @accounts[account_id]
+    @accounts[account_id]
   end
 
   def create_account(type, holder)

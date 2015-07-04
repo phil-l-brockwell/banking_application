@@ -3,15 +3,13 @@ require 'timecop'
 
 describe 'Controller' do
   let(:test_controller) { Controller.new                          }
-  let(:test_holder)     { double :test_holder, id: 1              }
-  let(:second_holder)   { double :second_holder, id: 0            }
   let(:test_account)    { double :test_account, account_number: 1 }
 
   def create_holder
     test_controller.create_holder('Robert Pulson')
   end
 
-  def open_account(type = :savings, holder_id = test_holder.id)
+  def open_account(type = :savings, holder_id)
     test_controller.open_account(type, holder_id)
   end
 
@@ -136,10 +134,11 @@ describe 'Controller' do
 
     it 'can add a holder to an account' do
       holder_num = create_holder
+      holder_num_2 = create_holder
       num_1 = open_account(:savings, holder_num)
       expect(test_controller.accounts[num_1]).to receive(:add_holder)
-        .with(second_holder)
-      test_controller.add_holder_to(num_1, second_holder)
+        .with(test_controller.holders[holder_num_2])
+      test_controller.add_holder_to(num_1, holder_num_2)
     end
   end
 
