@@ -28,16 +28,20 @@ class Controller
   end
 
   def deposit_into(account_id, amount)
-    @accounts[account_id].deposit(amount)
+    account = account_exist?(account_id)
+    account.deposit(amount)
   end
 
   def withdraw_from(account_id, amount)
-    @accounts[account_id].withdraw(amount)
+    account = account_exist?(account_id)
+    account.withdraw(amount)
   end
 
   def transfer_between(donar_id, recipitent_id, amount)
-    @accounts[donar_id].withdraw(amount)
-    @accounts[recipitent_id].deposit(amount)
+    donar = account_exist?(donar_id)
+    recipitent = account_exist?(recipitent_id)
+    donar.withdraw(amount)
+    recipitent.deposit(amount)
   end
 
   def pay_interest_on(account_id)
@@ -50,7 +54,8 @@ class Controller
   end
 
   def get_transactions_of(account_id)
-    @accounts[account_id].transactions
+    account = account_exist?(account_id)
+    account.transactions
   end
 
   def get_accounts_of(holder_id)
@@ -72,12 +77,12 @@ class Controller
   end
 
   def holder_exist?(holder_id)
-    fail "Holder number #{holder_id} does not exist!" unless @holders[holder_id]
+    fail "Holder id #{holder_id} does not exist!" unless @holders[holder_id]
     @holders[holder_id]
   end
 
   def account_exist?(account_id)
-    fail "Account number #{account_id} does not exist!" unless @accounts[account_id]
+    fail "Account id #{account_id} does not exist!" unless @accounts[account_id]
     @accounts[account_id]
   end
 

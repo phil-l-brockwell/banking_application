@@ -87,7 +87,7 @@ describe 'Controller' do
 
     it 'raises an error if an invalid holder number is entered' do
       expect { open_account(:current, 57) }
-        .to raise_error('Holder number 57 does not exist!')
+        .to raise_error('Holder id 57 does not exist!')
     end
   end
 
@@ -139,6 +139,13 @@ describe 'Controller' do
       expect(test_controller.accounts[num_1]).to receive(:add_holder)
         .with(test_controller.holders[holder_num_2])
       test_controller.add_holder_to(num_1, holder_num_2)
+    end
+
+    it 'raises an error if an invalid account id is entered' do
+      holder_num = create_holder
+      num_1 = open_account(:savings, holder_num)
+      expect { test_controller.deposit_into(57, 10.00) }
+        .to raise_error('Account id 57 does not exist!')
     end
   end
 
