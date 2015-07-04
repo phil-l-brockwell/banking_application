@@ -2,6 +2,6 @@
 class StudentAccount < BaseAccount
   def initialize(holder, account_number)
     super
-    @type = :student
+    @type = :Student
   end
 end

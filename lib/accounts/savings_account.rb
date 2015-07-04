@@ -2,6 +2,6 @@
 class SavingsAccount < BaseAccount
   def initialize(holder, account_number)
     super
-    @type = :savings
+    @type = :Savings
   end
 end

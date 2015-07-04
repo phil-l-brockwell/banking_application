@@ -1,3 +1,4 @@
+require './lib/holder'
 require 'require_all'
 require_all 'lib/accounts'
 # Definition of Controller Class
@@ -69,14 +70,14 @@ class Controller
     @accounts.select { |_, account| account.main_holder.id == holder.id }.values
   end
 
-  private
+  ACCOUNT_CLASSES = { :Current  => CurrentAccount,
+                      :Savings  => SavingsAccount,
+                      :Business => BusinessAccount,
+                      :IR       => IRAccount,
+                      :SMB      => SMBAccount,
+                      :Student  => StudentAccount }
 
-  ACCOUNT_CLASSES = { current:  CurrentAccount,
-                      savings:  SavingsAccount,
-                      business: BusinessAccount,
-                      ir:       IRAccount,
-                      smb:      SMBAccount,
-                      student:  StudentAccount }
+  private
 
   def add_account(new_account)
     @accounts[new_account.id] = new_account

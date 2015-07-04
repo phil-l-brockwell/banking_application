@@ -7,7 +7,7 @@ describe 'Controller' do
     test_controller.create_holder('Robert Pulson')
   end
 
-  def open_account(type = :savings)
+  def open_account(type = :Savings)
     holder_id = create_holder
     test_controller.open_account(type, with: holder_id)
   end
@@ -70,16 +70,16 @@ describe 'Controller' do
       id = open_account
       expect(test_controller.accounts[id].main_holder.class).to eq(Holder)
       expect(test_controller.accounts[id]).to respond_to(:balance)
-      expect(test_controller.accounts[id].type).to eq(:savings)
+      expect(test_controller.accounts[id].type).to eq(:Savings)
     end
 
     it 'can open different account types' do
-      id = open_account(:current)
-      expect(test_controller.accounts[id].type).to eq(:current)
+      id = open_account(:Current)
+      expect(test_controller.accounts[id].type).to eq(:Current)
     end
 
     it 'raises an error if an invalid holder number is entered' do
-      expect { test_controller.open_account(:current, with: 57) }
+      expect { test_controller.open_account(:Current, with: 57) }
         .to raise_error('Holder id 57 does not exist!')
     end
   end
@@ -149,9 +149,9 @@ describe 'Controller' do
   it 'can return all accounts for a given holder' do
     holder_id = create_holder
     second_holder_id = create_holder
-    id = test_controller.open_account(:savings, with: holder_id)
-    test_controller.open_account(:savings, with: second_holder_id)
-    id_3 = test_controller.open_account(:current, with: holder_id)
+    id = test_controller.open_account(:Savings, with: holder_id)
+    test_controller.open_account(:Savings, with: second_holder_id)
+    id_3 = test_controller.open_account(:Current, with: holder_id)
     expect(test_controller.get_accounts_of(holder_id))
       .to eq([test_controller.accounts[id], test_controller.accounts[id_3]])
   end

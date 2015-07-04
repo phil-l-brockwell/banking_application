@@ -2,6 +2,6 @@
 class IRAccount < BaseAccount
   def initialize(holder, account_number)
     super
-    @type = :ir
+    @type = :IR
   end
 end

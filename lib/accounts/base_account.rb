@@ -1,4 +1,4 @@
-require 'transaction'
+require './lib/transaction'
 
 # Definition of Base Account Class
 class BaseAccount

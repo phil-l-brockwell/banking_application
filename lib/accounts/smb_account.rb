@@ -2,6 +2,6 @@
 class SMBAccount < BaseAccount
   def initialize(holder, account_number)
     super
-    @type = :smb
+    @type = :SMB
   end
 end

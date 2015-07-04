@@ -2,6 +2,6 @@
 class CurrentAccount < BaseAccount
   def initialize(holder, account_number)
     super
-    @type = :current
+    @type = :Current
   end
 end

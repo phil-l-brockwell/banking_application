@@ -2,6 +2,6 @@
 class BusinessAccount < BaseAccount
   def initialize(holder, account_number)
     super
-    @type = :business
+    @type = :Business
   end
 end
