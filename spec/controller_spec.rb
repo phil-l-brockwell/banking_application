@@ -9,7 +9,7 @@ describe 'Controller' do
 
   def open_account(type = :savings)
     holder_id = create_holder
-    test_controller.open_account(type, holder_id)
+    test_controller.open_account(type, with: holder_id)
   end
 
   context 'when initialised' do
@@ -79,7 +79,7 @@ describe 'Controller' do
     end
 
     it 'raises an error if an invalid holder number is entered' do
-      expect { test_controller.open_account(:current, 57) }
+      expect { test_controller.open_account(:current, with: 57) }
         .to raise_error('Holder id 57 does not exist!')
     end
   end
@@ -88,7 +88,7 @@ describe 'Controller' do
     it 'can make a deposit' do
       id = open_account
       expect(test_controller.accounts[id]).to receive(:deposit).with(50.00)
-      test_controller.deposit_into(id, 50.00)
+      test_controller.deposit(50.00, into: id)
     end
 
     it 'can give the balance of an account' do
@@ -99,28 +99,28 @@ describe 'Controller' do
     it 'can make a withdrawal' do
       id = open_account
       expect(test_controller.accounts[id]).to receive(:withdraw).with(50.00)
-      test_controller.withdraw_from(id, 50.00)
+      test_controller.withdraw(50.00, into: id)
     end
 
     it 'can make a transfer between two accounts' do
       id = open_account
-      test_controller.deposit_into(id, 10.00)
+      test_controller.deposit(10.00, into: id)
       id_2 = open_account
       expect(test_controller.accounts[id]).to receive(:withdraw).with(10.00)
       expect(test_controller.accounts[id_2]).to receive(:deposit).with(10.00)
-      test_controller.transfer_between(id, id_2, 10.00)
+      test_controller.transfer(10.00, from: id, to: id_2)
     end
 
     it 'raises an error if the donar account has insufficient funds' do
       id = open_account
       id_2 = open_account
-      expect { test_controller.transfer_between(id, id_2, 10.00) }
+      expect { test_controller.transfer(10.00, from: id, to: id_2) }
         .to raise_error('The withdrawal amount exceeds current balance!')
     end
 
     it 'can pay the interest on an account' do
       id = open_account
-      test_controller.deposit_into(id, 10.00)
+      test_controller.deposit(10.00, into: id)
       expect { test_controller.pay_interest_on(id) }
         .to change { test_controller.accounts[id].balance }
     end
@@ -130,11 +130,11 @@ describe 'Controller' do
       new_holder_id = create_holder
       expect(test_controller.accounts[id]).to receive(:add_holder)
         .with(test_controller.holders[new_holder_id])
-      test_controller.add_holder_to(id, new_holder_id)
+      test_controller.add_holder(new_holder_id, to_account: id)
     end
 
     it 'raises an error if an invalid account id is entered' do
-      expect { test_controller.deposit_into(57, 10.00) }
+      expect { test_controller.deposit(10.00, into: 57) }
         .to raise_error('Account id 57 does not exist!')
     end
   end
@@ -149,9 +149,9 @@ describe 'Controller' do
   it 'can return all accounts for a given holder' do
     holder_id = create_holder
     second_holder_id = create_holder
-    id = test_controller.open_account(:savings, holder_id)
-    test_controller.open_account(:savings, second_holder_id)
-    id_3 = test_controller.open_account(:current, holder_id)
+    id = test_controller.open_account(:savings, with: holder_id)
+    test_controller.open_account(:savings, with: second_holder_id)
+    id_3 = test_controller.open_account(:current, with: holder_id)
     expect(test_controller.get_accounts_of(holder_id))
       .to eq([test_controller.accounts[id], test_controller.accounts[id_3]])
   end

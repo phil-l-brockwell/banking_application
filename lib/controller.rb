@@ -11,8 +11,8 @@ class Controller
     @holders    = {}
   end
 
-  def open_account(type, holder_id)
-    holder = holder_exist? holder_id
+  def open_account(type, with:)
+    holder = holder_exist? with
     new_account = create_account(type, holder)
     add_account new_account
     increment_account_id
@@ -26,13 +26,13 @@ class Controller
     new_holder.id
   end
 
-  def deposit_into(account_id, amount)
-    account = account_exist? account_id
+  def deposit(amount, into:)
+    account = account_exist? into
     account.deposit amount
   end
 
-  def withdraw_from(account_id, amount)
-    account = account_exist? account_id
+  def withdraw(amount, into:)
+    account = account_exist? into
     account.withdraw amount
   end
 
@@ -41,9 +41,9 @@ class Controller
     account.balance
   end
 
-  def transfer_between(donar_id, recipitent_id, amount)
-    donar = account_exist? donar_id
-    recipitent = account_exist? recipitent_id
+  def transfer(amount, from:, to:)
+    donar = account_exist? from
+    recipitent = account_exist? to
     donar.withdraw amount
     recipitent.deposit amount
   end
@@ -53,9 +53,9 @@ class Controller
     account.add_interest
   end
 
-  def add_holder_to(account_id, new_holder_id)
-    new_holder = holder_exist? new_holder_id
-    account = account_exist? account_id
+  def add_holder(id, to_account:)
+    new_holder = holder_exist? id
+    account = account_exist? to_account
     account.add_holder new_holder
   end
 
