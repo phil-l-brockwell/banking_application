@@ -99,7 +99,7 @@ describe 'Controller' do
     it 'can make a withdrawal' do
       id = open_account
       expect(test_controller.accounts[id]).to receive(:withdraw).with(50.00)
-      test_controller.withdraw(50.00, into: id)
+      test_controller.withdraw(50.00, from: id)
     end
 
     it 'can make a transfer between two accounts' do
@@ -137,22 +137,22 @@ describe 'Controller' do
       expect { test_controller.deposit(10.00, into: 57) }
         .to raise_error('Account id 57 does not exist!')
     end
-  end
 
-  it 'can return all transactions of a given account' do
-    id = open_account
-    new_transaction = double :new_transaction, type: :deposit, amount: 50.00
-    test_controller.accounts[id].add_transaction(new_transaction)
-    expect(test_controller.get_transactions_of(id)).to eq([new_transaction])
-  end
+    it 'can return all transactions of a given account' do
+      id = open_account
+      new_transaction = double :new_transaction, type: :deposit, amount: 50.00
+      test_controller.accounts[id].add_transaction(new_transaction)
+      expect(test_controller.get_transactions_of(id)).to eq([new_transaction])
+    end
 
-  it 'can return all accounts for a given holder' do
-    holder_id = create_holder
-    second_holder_id = create_holder
-    id = test_controller.open_account(:Savings, with: holder_id)
-    test_controller.open_account(:Savings, with: second_holder_id)
-    id_3 = test_controller.open_account(:Current, with: holder_id)
-    expect(test_controller.get_accounts_of(holder_id))
-      .to eq([test_controller.accounts[id], test_controller.accounts[id_3]])
+    it 'can return all accounts for a given holder' do
+      holder_id = create_holder
+      second_holder_id = create_holder
+      id = test_controller.open_account(:Savings, with: holder_id)
+      test_controller.open_account(:Savings, with: second_holder_id)
+      id_3 = test_controller.open_account(:Current, with: holder_id)
+      expect(test_controller.get_accounts_of(holder_id))
+        .to eq([test_controller.accounts[id], test_controller.accounts[id_3]])
+    end
   end
 end

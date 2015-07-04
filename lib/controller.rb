@@ -32,8 +32,8 @@ class Controller
     account.deposit amount
   end
 
-  def withdraw(amount, into:)
-    account = account_exist? into
+  def withdraw(amount, from:)
+    account = account_exist? from
     account.withdraw amount
   end
 
