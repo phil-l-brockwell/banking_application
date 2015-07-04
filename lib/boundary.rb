@@ -1,23 +1,23 @@
 require './lib/controller'
 # Definition of Boundary Class
 class Boundary
-  MENU_ITEMS = { '0' => 'Create New Holder',
-                 '1' => 'Create an Account',
-                 '2' => 'Make a Deposit',
-                 '3' => 'Display Account Balance',
-                 '4' => 'Make a Withdrawal',
-                 '5' => 'Make a Transfer',
-                 '6' => 'Pay Interest',
-                 '7' => 'Add Account ',
-                 '8' => 'Show Customers Accounts',
-                 '9' => 'View Account Transactions' }
+  MENU_ITEMS = {  1  => { output: 'Create New Holder'         },
+                  2  => { output: 'Create an Account'         },
+                  3  => { output: 'Make a Deposit'            },
+                  4  => { output: 'Display Account Balance'   },
+                  5  => { output: 'Make a Withdrawal'         },
+                  6  => { output: 'Make a Transfer'           },
+                  7  => { output: 'Pay Interest'              },
+                  8  => { output: 'Add Account'               },
+                  9  => { output: 'Show Customers Accounts'   },
+                  10 => { output: 'View Account Transactions' }  }
 
-  ACCOUNT_TYPES = { '0' => :Current,
-                    '1' => :Savings,
-                    '2' => :Business,
-                    '3' => :IR,
-                    '4' => :SMB,
-                    '5' => :Student }
+  ACCOUNT_TYPES = {  1 => { output: :Current  },
+                     2 => { output: :Savings  },
+                     3 => { output: :Business },
+                     4 => { output: :IR       },
+                     5 => { output: :SMB      },
+                     6 => { output: :Student  }  }
 
   def initialize
     @controller = Controller.new
@@ -25,7 +25,7 @@ class Boundary
 
   def start
     show(MENU_ITEMS)
-    input = verify(gets.chomp, with: MENU_ITEMS)
+    input = verify(gets.chomp.to_i, with: MENU_ITEMS)
     select_option(input)
   end
 
@@ -35,7 +35,7 @@ class Boundary
     until with.key? input
       puts_with_sleep 'Unrecognised option, try again...'
       show(with)
-      input = gets.chomp
+      input = gets.chomp.to_i
     end
     input
   end
@@ -49,8 +49,8 @@ class Boundary
 
   def create_account
     show(ACCOUNT_TYPES)
-    input = verify(gets.chomp, with: ACCOUNT_TYPES)
-    type = ACCOUNT_TYPES[input]
+    input = verify(gets.chomp.to_i, with: ACCOUNT_TYPES)
+    type = ACCOUNT_TYPES[input][:output]
     puts_with_sleep 'Enter Holder ID'
     holder_id = gets.chomp.to_i
     response = @controller.open_account(type, with: holder_id)
@@ -63,13 +63,14 @@ class Boundary
   end
 
   def show(list)
-    list.each { |key, value| puts_with_sleep "#{key}. #{value}" }
+    list.each { |key, value| puts_with_sleep "#{key}. #{value[:output]}" }
     puts_with_sleep 'Make a selection and Press Enter'
   end
 
   def select_option(input)
-    create_holder if input.to_i == 0
-    create_account if input.to_i == 1
+    create_holder  if input == 1
+    create_account if input == 2
+    deposit if input == 3
     start
   end
 end
