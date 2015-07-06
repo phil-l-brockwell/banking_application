@@ -3,12 +3,13 @@ require 'controller'
 describe 'Controller' do
   let(:test_controller) { Controller.new }
 
-  def create_holder
-    test_controller.create_holder('Robert Pulson')
+  def create_holder_and_return_id
+    message = test_controller.create_holder('Robert Pulson')
+    message.new_holder_id
   end
 
   def open_account(type = :Savings)
-    holder_id = create_holder
+    holder_id = create_holder_and_return_id
     test_controller.open_account(type, with: holder_id)
   end
 
@@ -32,21 +33,23 @@ describe 'Controller' do
 
   context 'when creating a holder' do
     it 'increments the holder number' do
-      expect { create_holder }.to change { test_controller.holder_id }.by(1)
+      expect { create_holder_and_return_id }
+        .to change { test_controller.holder_id }.by(1)
     end
 
-    it 'returns the new holders id' do
+    it 'returns a message with the new holders id' do
       id = test_controller.holder_id
-      expect(create_holder).to eq(id)
+      new_holder_id = create_holder_and_return_id
+      expect(new_holder_id).to eq(id)
     end
 
     it 'gives the new holder the correct holder id' do
-      id = create_holder
+      id = create_holder_and_return_id
       expect(test_controller.holders[id].id).to eq(id)
     end
 
     it 'adds the new holder to the holders hash' do
-      id = create_holder
+      id = create_holder_and_return_id
       expect(test_controller.holders[id].name).to eq('Robert Pulson')
     end
   end
@@ -128,7 +131,7 @@ describe 'Controller' do
 
     it 'can add a holder to an account' do
       id = open_account
-      new_holder_id = create_holder
+      new_holder_id = create_holder_and_return_id
       expect(test_controller.accounts[id]).to receive(:add_holder)
         .with(test_controller.holders[new_holder_id])
       test_controller.add_holder(new_holder_id, to_account: id)
@@ -147,8 +150,8 @@ describe 'Controller' do
     end
 
     it 'can return all accounts for a given holder' do
-      holder_id = create_holder
-      second_holder_id = create_holder
+      holder_id = create_holder_and_return_id
+      second_holder_id = create_holder_and_return_id
       id = test_controller.open_account(:Savings, with: holder_id)
       test_controller.open_account(:Savings, with: second_holder_id)
       id_3 = test_controller.open_account(:Current, with: holder_id)

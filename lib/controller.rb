@@ -24,7 +24,7 @@ class Controller
     new_holder = Holder.new(name, @holder_id)
     increment_holder_id
     @holders[new_holder.id] = new_holder
-    new_holder.id
+    HolderSuccessMessage.new(new_holder)
   end
 
   def deposit(amount, into:)

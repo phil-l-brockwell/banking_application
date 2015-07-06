@@ -1,4 +1,5 @@
-require './lib/controller'
+require 'require_all'
+require_all 'lib'
 # Definition of Boundary Class
 class Boundary
   MENU_ITEMS = {  1  => { method: :option_1,  output: 'Create New Holder'         },
@@ -44,8 +45,8 @@ class Boundary
   def option_1
     puts 'Enter Name and Press Enter'
     name = gets.chomp
-    response = @controller.create_holder name
-    puts response
+    message = @controller.create_holder name
+    puts message.output
   end
 
   def option_2
