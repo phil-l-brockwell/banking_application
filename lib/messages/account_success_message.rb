@@ -1,4 +1,3 @@
-require './lib/base_message'
 # Defintion of Account Success Message Class
 class AccountSuccessMessage < BaseMessage
   attr_reader :new_account_id

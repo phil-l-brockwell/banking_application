@@ -1,4 +1,4 @@
-require 'invalid_account_message'
+require 'messages/invalid_account_message'
 
 describe 'InvalidAccountMessage' do
   context 'when initialised' do

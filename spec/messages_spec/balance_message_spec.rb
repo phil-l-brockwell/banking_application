@@ -1,4 +1,4 @@
-require 'balance_message'
+require 'messages/balance_message'
 
 describe 'BalanceMessage' do
   context 'when initialised' do

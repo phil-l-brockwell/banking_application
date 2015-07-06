@@ -1,5 +1,3 @@
-require './lib/transaction'
-
 # Definition of Base Account Class
 class BaseAccount
   attr_reader :balance, :main_holder, :holders, :id,

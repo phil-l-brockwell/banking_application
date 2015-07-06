@@ -1,4 +1,5 @@
-require 'account_success_message'
+require 'messages/base_message'
+require 'messages/account_success_message'
 
 describe 'AccountSuccessMessage' do
   context 'when initialised' do

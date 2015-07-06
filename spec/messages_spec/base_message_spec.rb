@@ -1,4 +1,4 @@
-require 'base_message'
+require 'messages/base_message'
 
 describe 'BaseMessage' do
   context 'when initialised' do

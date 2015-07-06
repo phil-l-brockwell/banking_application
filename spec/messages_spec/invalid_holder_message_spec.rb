@@ -1,5 +1,4 @@
-require 'base_message'
-require 'invalid_holder_message'
+require 'messages/invalid_holder_message'
 
 describe 'InvalidHolderMessage' do
   context 'when initialised' do

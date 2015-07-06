@@ -1,6 +1,3 @@
-require './lib/holder'
-require 'require_all'
-require_all 'lib/accounts'
 # Definition of Controller Class
 class Controller
   attr_reader :name, :accounts, :account_id, :holders, :holder_id
