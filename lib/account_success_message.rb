@@ -1,7 +1,6 @@
-require 'base_message'
-
+require './lib/base_message'
+# Defintion of Account Success Message Class
 class AccountSuccessMessage < BaseMessage
-
   attr_reader :new_account_id
 
   def initialize(new_account)

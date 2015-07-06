@@ -55,8 +55,8 @@ class Boundary
     type = ACCOUNT_TYPES[input][:output]
     puts_with_sleep 'Enter Holder ID'
     holder_id = gets.chomp.to_i
-    response = @controller.open_account(type, with: holder_id)
-    puts response
+    message = @controller.open_account(type, with: holder_id)
+    puts message.output
   end
 
   def puts_with_sleep(string)

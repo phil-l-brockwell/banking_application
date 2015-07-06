@@ -1,9 +1,7 @@
 require 'base_message'
 
 describe 'BaseMessage' do
-
   context 'when initialised' do
-
     let(:test_object)  { double :object               }
     let(:test_message) { BaseMessage.new(test_object) }
 

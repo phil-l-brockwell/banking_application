@@ -1,9 +1,7 @@
+# Definition of Base Message Class
 class BaseMessage
-
   attr_reader :output
 
-  def initialize(object)
-
+  def initialize(*)
   end
-
 end

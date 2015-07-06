@@ -1,5 +1,5 @@
+# Definition of Holder Success Message
 class HolderSuccessMessage < BaseMessage
-
   attr_accessor :new_holder_id, :new_holder_name
 
   def initialize(new_holder)
