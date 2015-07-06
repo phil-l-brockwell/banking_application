@@ -1,13 +1,13 @@
 require 'base_message'
-require 'account_error_message'
+require 'invalid_holder_message'
 
-describe 'AccountErrorMessage' do
+describe 'InvalidHolderMessage' do
   context 'when initialised' do
 
-    let(:test_message) { AccountErrorMessage.new(69) } 
+    let(:test_message) { InvalidHolderMessage.new(69) } 
 
-    it 'knows the incorrect holder ID' do
-      expect(test_message.incorrect_holder_id).to eq(69)
+    it 'knows the invalid holder ID' do
+      expect(test_message.invalid_holder_id).to eq(69)
     end
 
     it 'has the correct output' do

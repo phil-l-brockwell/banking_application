@@ -13,7 +13,7 @@ class Controller
   end
 
   def open_account(type, with:)
-    return AccountErrorMessage.new(with) unless holder = holder_exist?(with)
+    return InvalidHolderMessage.new(with) unless holder = holder_exist?(with)
     new_account = create_account(type, holder)
     add_account new_account
     increment_account_id
@@ -28,48 +28,48 @@ class Controller
   end
 
   def deposit(amount, into:)
-    account = account_exist? into
+    return InvalidAccountMessage.new(into) unless account = account_exist?(into)
     account.deposit amount
     DepositSuccessMessage.new(amount)
   end
 
   def withdraw(amount, from:)
-    account = account_exist? from
+    return InvalidAccountMessage.new(from) unless account = account_exist?(from)
     check account, has: amount
     account.withdraw amount
   end
 
   def get_balance_of(account_id)
-    account = account_exist? account_id
+    return InvalidAccountMessage.new(account_id) unless account = account_exist?(account_id)
     account.balance
   end
 
   def transfer(amount, from:, to:)
-    donar = account_exist? from
-    recipitent = account_exist? to
+    return InvalidAccountMessage.new(from) unless donar = account_exist?(from)
+    return InvalidAccountMessage.new(to)   unless recipitent = account_exist?(to)
     check donar, has: amount
     donar.withdraw amount
     recipitent.deposit amount
   end
 
   def pay_interest_on(account_id)
-    account = account_exist? account_id
+    return InvalidAccountMessage.new(account_id) unless account = account_exist?(account_id)
     account.add_interest
   end
 
   def add_holder(id, to_account:)
-    new_holder = holder_exist? id
-    account = account_exist? to_account
+    return InvalidHolderMessage.new(id) unless new_holder = holder_exist?(id)
+    return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
     account.add_holder new_holder
   end
 
   def get_transactions_of(account_id)
-    account = account_exist? account_id
+    return InvalidAccountMessage.new(account_id) unless account = account_exist?(account_id)
     account.transactions
   end
 
   def get_accounts_of(holder_id)
-    holder = holder_exist? holder_id
+    return InvalidHolderMessage.new(holder_id) unless holder = holder_exist?(holder_id)
     @accounts.select { |_, account| account.main_holder.id == holder.id }.values
   end
 
@@ -91,12 +91,10 @@ class Controller
   end
 
   def holder_exist?(holder_id)
-    # fail "Holder id #{holder_id} does not exist!" unless @holders[holder_id]
     @holders[holder_id]
   end
 
   def account_exist?(account_id)
-    fail "Account id #{account_id} does not exist!" unless @accounts[account_id]
     @accounts[account_id]
   end
 

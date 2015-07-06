@@ -140,8 +140,9 @@ describe 'Controller' do
     end
 
     it 'raises an error if an invalid account id is entered' do
-      expect { test_controller.deposit(10.00, into: 57) }
-        .to raise_error('Account id 57 does not exist!')
+      message = test_controller.deposit(10.00, into: 57)
+      expect(message.output)
+        .to eq('Transaction Error. Account ID: 57 does not exist.')
     end
 
     it 'can return all transactions of a given account' do
