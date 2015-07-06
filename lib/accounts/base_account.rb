@@ -25,7 +25,6 @@ class BaseAccount
   end
 
   def withdraw(amount)
-    fail 'The withdrawal amount exceeds current balance!' if amount > @balance
     @balance -= amount
     new_transaction = Transaction.new(:withdrawal, amount)
     add_transaction(new_transaction)

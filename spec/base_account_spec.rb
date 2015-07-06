@@ -39,12 +39,6 @@ describe 'BaseAccount' do
     expect(test_account.balance).to eq(0.00)
   end
 
-  it 'doesnt allow withdrawals over the current balance' do
-    test_account.deposit(100.00)
-    expect { test_account.withdraw(101.00) }.to raise_error
-    ('The withdrawal amount exceeds current balance!')
-  end
-
   it 'can add the interest to the balance' do
     test_account.deposit(100.00)
     test_account.add_interest

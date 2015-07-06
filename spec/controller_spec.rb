@@ -98,6 +98,7 @@ describe 'Controller' do
 
     it 'can make a withdrawal' do
       id = open_account
+      test_controller.deposit(50.00, into: id)
       expect(test_controller.accounts[id]).to receive(:withdraw).with(50.00)
       test_controller.withdraw(50.00, from: id)
     end

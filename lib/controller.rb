@@ -34,6 +34,7 @@ class Controller
 
   def withdraw(amount, from:)
     account = account_exist? from
+    check account, has: amount
     account.withdraw amount
   end
 
@@ -45,6 +46,7 @@ class Controller
   def transfer(amount, from:, to:)
     donar = account_exist? from
     recipitent = account_exist? to
+    check donar, has: amount
     donar.withdraw amount
     recipitent.deposit amount
   end
@@ -78,6 +80,10 @@ class Controller
                       :Student  => StudentAccount }
 
   private
+
+  def check(account, has:)
+    fail 'The withdrawal amount exceeds current balance!' if has > account.balance
+  end
 
   def add_account(new_account)
     @accounts[new_account.id] = new_account
