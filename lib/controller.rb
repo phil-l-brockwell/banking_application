@@ -13,11 +13,14 @@ class Controller
   end
 
   def open_account(type, with:)
-    holder = holder_exist? with
-    new_account = create_account(type, holder)
-    add_account new_account
-    increment_account_id
-    AccountSuccessMessage.new(new_account)
+    if holder = holder_exist?(with)
+      new_account = create_account(type, holder)
+      add_account new_account
+      increment_account_id
+      AccountSuccessMessage.new(new_account)
+    else
+      AccountErrorMessage.new(with)
+    end
   end
 
   def create_holder(name)
@@ -90,7 +93,7 @@ class Controller
   end
 
   def holder_exist?(holder_id)
-    fail "Holder id #{holder_id} does not exist!" unless @holders[holder_id]
+    # fail "Holder id #{holder_id} does not exist!" unless @holders[holder_id]
     @holders[holder_id]
   end
 

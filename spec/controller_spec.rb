@@ -83,9 +83,9 @@ describe 'Controller' do
       expect(test_controller.accounts[id].type).to eq(:Current)
     end
 
-    it 'raises an error if an invalid holder number is entered' do
-      expect { test_controller.open_account(:Current, with: 57) }
-        .to raise_error('Holder id 57 does not exist!')
+    it 'returns an error message if an incorrect holder number is entered' do
+      message = test_controller.open_account(:Current, with: 57)
+      expect(message.output).to eq('Transaction Error. Holder ID: 57 does not exist.')
     end
   end
 
