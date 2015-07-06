@@ -1,16 +1,16 @@
 require './lib/controller'
 # Definition of Boundary Class
 class Boundary
-  MENU_ITEMS = {  1  => { output: 'Create New Holder'         },
-                  2  => { output: 'Create an Account'         },
-                  3  => { output: 'Make a Deposit'            },
-                  4  => { output: 'Display Account Balance'   },
-                  5  => { output: 'Make a Withdrawal'         },
-                  6  => { output: 'Make a Transfer'           },
-                  7  => { output: 'Pay Interest'              },
-                  8  => { output: 'Add Account'               },
-                  9  => { output: 'Show Customers Accounts'   },
-                  10 => { output: 'View Account Transactions' }  }
+  MENU_ITEMS = {  1  => { method: :option_1,  output: 'Create New Holder'         },
+                  2  => { method: :option_2,  output: 'Create an Account'         },
+                  3  => { method: :option_3,  output: 'Make a Deposit'            },
+                  4  => { method: :option_4,  output: 'Display Account Balance'   },
+                  5  => { method: :option_5,  output: 'Make a Withdrawal'         },
+                  6  => { method: :option_6,  output: 'Make a Transfer'           },
+                  7  => { method: :option_7,  output: 'Pay Interest'              },
+                  8  => { method: :option_8,  output: 'Add Account'               },
+                  9  => { method: :option_9,  output: 'Show Customers Accounts'   },
+                  10 => { method: :option_10, output: 'View Account Transactions' }  }
 
   ACCOUNT_TYPES = {  1 => { output: :Current  },
                      2 => { output: :Savings  },
@@ -26,7 +26,8 @@ class Boundary
   def start
     show(MENU_ITEMS)
     input = verify(gets.chomp.to_i, with: MENU_ITEMS)
-    select_option(input)
+    send MENU_ITEMS[input][:method]
+    start
   end
 
   private
@@ -40,14 +41,14 @@ class Boundary
     input
   end
 
-  def create_holder
+  def option_1
     puts 'Enter Name and Press Enter'
     name = gets.chomp
     response = @controller.create_holder name
     puts response
   end
 
-  def create_account
+  def option_2
     show(ACCOUNT_TYPES)
     input = verify(gets.chomp.to_i, with: ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
@@ -65,13 +66,6 @@ class Boundary
   def show(list)
     list.each { |key, value| puts_with_sleep "#{key}. #{value[:output]}" }
     puts_with_sleep 'Make a selection and Press Enter'
-  end
-
-  def select_option(input)
-    create_holder  if input == 1
-    create_account if input == 2
-    deposit if input == 3
-    start
   end
 end
 
