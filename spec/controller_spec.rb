@@ -98,7 +98,8 @@ describe 'Controller' do
 
     it 'can give the balance of an account' do
       id = open_account_and_return_id
-      expect(test_controller.get_balance_of(id)).to eq(0.00)
+      message = test_controller.get_balance_of(id)
+      expect(message.balance).to eq(0.00)
     end
 
     it 'can make a withdrawal' do

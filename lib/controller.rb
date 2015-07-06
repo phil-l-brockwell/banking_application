@@ -41,7 +41,7 @@ class Controller
 
   def get_balance_of(account_id)
     return InvalidAccountMessage.new(account_id) unless account = account_exist?(account_id)
-    account.balance
+    BalanceMessage.new(account)
   end
 
   def transfer(amount, from:, to:)

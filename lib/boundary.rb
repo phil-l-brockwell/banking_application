@@ -2,16 +2,16 @@ require 'require_all'
 require_all 'lib'
 # Definition of Boundary Class
 class Boundary
-  MENU_ITEMS = {  1  => { method: :option_1,  output: 'Create New Holder'         },
-                  2  => { method: :option_2,  output: 'Create an Account'         },
-                  3  => { method: :option_3,  output: 'Make a Deposit'            },
-                  4  => { method: :option_4,  output: 'Display Account Balance'   },
-                  5  => { method: :option_5,  output: 'Make a Withdrawal'         },
-                  6  => { method: :option_6,  output: 'Make a Transfer'           },
-                  7  => { method: :option_7,  output: 'Pay Interest'              },
-                  8  => { method: :option_8,  output: 'Add Account'               },
-                  9  => { method: :option_9,  output: 'Show Customers Accounts'   },
-                  10 => { method: :option_10, output: 'View Account Transactions' }  }
+  MENU_ITEMS = { 1  => { method: :option_1,  output: 'Create New Holder'         },
+                 2  => { method: :option_2,  output: 'Create an Account'         },
+                 3  => { method: :option_3,  output: 'Make a Deposit'            },
+                 4  => { method: :option_4,  output: 'Display Account Balance'   },
+                 5  => { method: :option_5,  output: 'Make a Withdrawal'         },
+                 6  => { method: :option_6,  output: 'Make a Transfer'           },
+                 7  => { method: :option_7,  output: 'Pay Interest'              },
+                 8  => { method: :option_8,  output: 'Add Holder'                },
+                 9  => { method: :option_9,  output: 'Show Customers Accounts'   },
+                 10 => { method: :option_10, output: 'View Account Transactions' }  }
 
   ACCOUNT_TYPES = {  1 => { output: :Current  },
                      2 => { output: :Savings  },
@@ -65,6 +65,13 @@ class Boundary
     puts_with_sleep "Enter Amount you would like to Deposit and Press Enter"
     amount = gets.chomp.to_i
     message = @controller.deposit amount, into: account_id
+    puts_with_sleep message.output
+  end
+
+  def option_4
+    puts_with_sleep 'Enter Account ID and Press Enter'
+    account_id = gets.chomp.to_i
+    message = @controller.get_balance_of account_id
     puts_with_sleep message.output
   end
 
