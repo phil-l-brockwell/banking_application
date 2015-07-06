@@ -17,7 +17,7 @@ class Controller
     new_account = create_account(type, holder)
     add_account new_account
     increment_account_id
-    new_account.id
+    AccountSuccessMessage.new(new_account)
   end
 
   def create_holder(name)
