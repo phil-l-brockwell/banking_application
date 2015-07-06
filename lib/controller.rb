@@ -13,14 +13,11 @@ class Controller
   end
 
   def open_account(type, with:)
-    if holder = holder_exist?(with)
-      new_account = create_account(type, holder)
-      add_account new_account
-      increment_account_id
-      AccountSuccessMessage.new(new_account)
-    else
-      AccountErrorMessage.new(with)
-    end
+    return AccountErrorMessage.new(with) unless holder = holder_exist?(with)
+    new_account = create_account(type, holder)
+    add_account new_account
+    increment_account_id
+    AccountSuccessMessage.new(new_account)
   end
 
   def create_holder(name)
@@ -33,6 +30,7 @@ class Controller
   def deposit(amount, into:)
     account = account_exist? into
     account.deposit amount
+    DepositSuccessMessage.new(amount)
   end
 
   def withdraw(amount, from:)

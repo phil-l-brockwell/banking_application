@@ -46,7 +46,7 @@ class Boundary
     puts 'Enter Name and Press Enter'
     name = gets.chomp
     message = @controller.create_holder name
-    puts message.output
+    puts_with_sleep message.output
   end
 
   def option_2
@@ -56,7 +56,16 @@ class Boundary
     puts_with_sleep 'Enter Holder ID'
     holder_id = gets.chomp.to_i
     message = @controller.open_account(type, with: holder_id)
-    puts message.output
+    puts_with_sleep message.output
+  end
+
+  def option_3
+    puts_with_sleep 'Enter Account ID to deposit into and Press Enter'
+    account_id = gets.chomp.to_i
+    puts_with_sleep "Enter Amount you would like to Deposit and Press Enter"
+    amount = gets.chomp.to_i
+    message = @controller.deposit amount, into: account_id
+    puts_with_sleep message.output
   end
 
   def puts_with_sleep(string)
