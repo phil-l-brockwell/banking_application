@@ -1,5 +1,6 @@
 require 'require_all'
 require_all 'lib'
+require 'rufus-scheduler'
 # Definition of Boundary Class
 class Boundary
   MENU_ITEMS = { 1 => { op: :op_1, output: 'Create New Holder'         },
@@ -116,5 +117,11 @@ class Boundary
   end
 end
 
+scheduler = Rufus::Scheduler.new
 test = Boundary.new
 test.start
+scheduler.join
+
+scheduler.every '3s' do
+  puts 'hello'
+end
