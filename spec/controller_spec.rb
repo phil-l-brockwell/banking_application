@@ -118,11 +118,18 @@ describe 'Controller' do
       test_controller.transfer(10.00, from: id, to: id_2)
     end
 
-    it 'returns an error message if the donar account has insufficient funds' do
+    it 'returns an error if the donar account has insufficient funds' do
       id = open_account_and_return_id
       id_2 = open_account_and_return_id
       message = test_controller.transfer(10.00, from: id, to: id_2)
       expect(message.output).to eq("Transaction Error. Account ID: #{id} has insufficient funds.")
+    end
+
+    it 'returns an error if a withdrawal is more than the account limit' do
+      id = open_account_and_return_id
+      test_controller.deposit 1000, into: id
+      message = test_controller.withdraw 501, from: id
+      expect(message.output).to eq("Transaction Error. Account ID: #{id} has reached its daily withdrawal limit.")
     end
 
     it 'can pay the interest on an account' do

@@ -33,6 +33,7 @@ class Controller
   def withdraw(amount, from:)
     return InvalidAccountMessage.new(from) unless account = account_exist?(from)
     return InsufficientFundsMessage.new(account) unless check account, has: amount
+    return OverLimitMessage.new(account) if check_limit_of account, with: amount
     account.withdraw amount
   end
 
@@ -81,6 +82,10 @@ class Controller
 
   def check(account, has:)
     account.balance >= has
+  end
+
+  def check_limit_of(account, with:)
+    with > account.limit
   end
 
   def add_account(new_account)
