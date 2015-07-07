@@ -74,7 +74,8 @@ class Controller
 
   def get_accounts_of(holder_id)
     return InvalidHolderMessage.new(holder_id) unless holder = holder_exist?(holder_id)
-    @accounts.select { |_, account| account.main_holder.id == holder.id }.values
+    accounts = @accounts.select { |_, account| account.main_holder.id == holder.id }.values
+    DisplayAccountsMessage.new(accounts)
   end
 
   ACCOUNT_CLASSES = { :Current  => CurrentAccount,

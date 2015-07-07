@@ -28,7 +28,6 @@ class Boundary
     input = verify(gets.chomp.to_i, with: MENU_ITEMS)
     message = send MENU_ITEMS[input][:op]
     puts_with_sleep message.output
-    puts
     start
   end
 
