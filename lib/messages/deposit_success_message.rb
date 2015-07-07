@@ -5,6 +5,6 @@ class DepositSuccessMessage < SuccessMessage
   def initialize(amount)
     super
     @amount = amount
-    @main = "£#{@amount} deposited."
+    @main = ["£#{@amount} deposited."]
   end
 end

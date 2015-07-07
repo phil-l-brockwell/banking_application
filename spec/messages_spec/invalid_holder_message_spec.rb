@@ -10,7 +10,7 @@ describe 'InvalidHolderMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main)
+      expect(test_message.main[0])
         .to eq('Holder ID: 69 does not exist.')
     end
   end

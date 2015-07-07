@@ -9,7 +9,7 @@ describe 'TransferSuccessMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq('£5000 transferred.')
+      expect(test_message.main[0]).to eq('£5000 transferred.')
     end
   end
 end

@@ -9,7 +9,7 @@ describe 'WithdrawSuccessMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq('£200.0 withdrawn.')
+      expect(test_message.main[0]).to eq('£200.0 withdrawn.')
     end
   end
 end

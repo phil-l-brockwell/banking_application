@@ -6,6 +6,6 @@ class BalanceMessage < SuccessMessage
     super
     @balance = account.balance
     @account_id = account.id
-    @main = "Balance of Account ID: #{@account_id} is £#{balance}"
+    @main = ["Balance of Account ID: #{@account_id} is £#{balance}"]
   end
 end

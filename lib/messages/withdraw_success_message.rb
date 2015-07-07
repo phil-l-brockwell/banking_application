@@ -5,6 +5,6 @@ class WithdrawSuccessMessage < SuccessMessage
   def initialize(amount)
     super
     @amount = amount
-    @main = "£#{@amount} withdrawn."
+    @main = ["£#{@amount} withdrawn."]
   end
 end

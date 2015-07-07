@@ -15,7 +15,7 @@ describe 'AddHolderSuccessMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq('Holder ID: 7 added to Account ID: 1')
+      expect(test_message.main[0]).to eq('Holder ID: 7 added to Account ID: 1')
     end
   end
 end

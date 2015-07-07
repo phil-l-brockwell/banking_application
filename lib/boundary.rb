@@ -26,7 +26,9 @@ class Boundary
   def start
     show(MENU_ITEMS)
     input = verify(gets.chomp.to_i, with: MENU_ITEMS)
-    send MENU_ITEMS[input][:op]
+    message = send MENU_ITEMS[input][:op]
+    puts_with_sleep message.output
+    puts
     start
   end
 
@@ -43,9 +45,7 @@ class Boundary
 
   def op_1
     puts 'Enter Name and Press Enter'
-    name = gets.chomp
-    message = @controller.create_holder name
-    puts_with_sleep message.output
+    @controller.create_holder gets.chomp
   end
 
   def op_2
@@ -54,8 +54,7 @@ class Boundary
     type = ACCOUNT_TYPES[input][:output]
     puts_with_sleep 'Enter Holder ID'
     holder_id = gets.chomp.to_i
-    message = @controller.open_account(type, with: holder_id)
-    puts_with_sleep message.output
+    @controller.open_account(type, with: holder_id)
   end
 
   def op_3
@@ -63,15 +62,12 @@ class Boundary
     account_id = gets.chomp.to_i
     puts_with_sleep 'Enter Amount you would like to Deposit and Press Enter'
     amount = gets.chomp.to_i
-    message = @controller.deposit amount, into: account_id
-    puts_with_sleep message.output
+    @controller.deposit amount, into: account_id
   end
 
   def op_4
     puts_with_sleep 'Enter Account ID and Press Enter'
-    account_id = gets.chomp.to_i
-    message = @controller.get_balance_of account_id
-    puts_with_sleep message.output
+    @controller.get_balance_of gets.chomp.to_i
   end
 
   def op_5
@@ -79,8 +75,7 @@ class Boundary
     account_id = gets.chomp.to_i
     puts_with_sleep 'Enter Amount you would like to Withdraw and Press Enter'
     amount = gets.chomp.to_i
-    message = @controller.withdraw amount, from: account_id
-    puts_with_sleep message.output
+    @controller.withdraw amount, from: account_id
   end
 
   def op_6
@@ -90,8 +85,7 @@ class Boundary
     recipitent_id = gets.chomp.to_i
     puts_with_sleep 'Enter Amount you would like to transfer'
     amount = gets.chomp.to_i
-    message = @controller.transfer amount, from: donar_id, to: recipitent_id
-    puts_with_sleep message.output
+    @controller.transfer amount, from: donar_id, to: recipitent_id
   end
 
   def op_7
@@ -99,16 +93,17 @@ class Boundary
     account_id = gets.chomp.to_i
     puts_with_sleep 'Enter Holder ID you wish to add and Press Enter'
     new_holder_id = gets.chomp.to_i
-    message = @controller.add_holder new_holder_id, to_account: account_id
-    puts_with_sleep message.output
+    @controller.add_holder new_holder_id, to_account: account_id
   end
 
   def op_8
-
+    puts_with_sleep "Enter Holder ID you wish to View Accounts of and Press Enter"
+    @controller.get_accounts_of gets.chomp.to_i
   end
 
   def op_9
-
+    puts_with_sleep 'Enter Account ID you wish to View Transactions for and Press Enter'
+    @controller.get_transactions_of gets.chomp.to_i
   end
 
   def puts_with_sleep(string)

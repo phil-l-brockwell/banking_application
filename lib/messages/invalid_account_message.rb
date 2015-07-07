@@ -5,6 +5,6 @@ class InvalidAccountMessage < ErrorMessage
   def initialize(invalid_account_id)
     super
     @invalid_account_id = invalid_account_id
-    @main = "Account ID: #{@invalid_account_id} does not exist."
+    @main = ["Account ID: #{@invalid_account_id} does not exist."]
   end
 end

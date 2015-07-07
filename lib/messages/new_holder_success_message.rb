@@ -6,6 +6,6 @@ class NewHolderSuccessMessage < SuccessMessage
     super
     @new_holder_name = new_holder.name
     @new_holder_id = new_holder.id
-    @main = "New Holder: #{new_holder_name}, created. ID is: #{new_holder_id}"
+    @main = ["New Holder: #{new_holder_name}, created. ID is: #{new_holder_id}"]
   end
 end

@@ -12,7 +12,7 @@ describe 'AccountSuccessMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main)
+      expect(test_message.main[0])
         .to eq('New Account created. ID number is: 0')
     end
   end

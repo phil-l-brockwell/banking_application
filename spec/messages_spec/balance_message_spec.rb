@@ -14,7 +14,7 @@ describe 'BalanceMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main)
+      expect(test_message.main[0])
         .to eq('Balance of Account ID: 76 is £51.52')
     end
   end

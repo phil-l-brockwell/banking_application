@@ -9,7 +9,7 @@ describe 'InvalidAccountMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq('Account ID: 43 does not exist.')
+      expect(test_message.main[0]).to eq('Account ID: 43 does not exist.')
     end
   end
 end

@@ -5,6 +5,6 @@ class InsufficientFundsMessage < ErrorMessage
   def initialize(account)
     super
     @account_id = account.id
-    @main = "Account ID: #{@account_id} has insufficient funds."
+    @main = ["Account ID: #{@account_id} has insufficient funds."]
   end
 end

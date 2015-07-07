@@ -11,7 +11,7 @@ describe 'InsufficientFundsMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq('Account ID: 2 has insufficient funds.')
+      expect(test_message.main[0]).to eq('Account ID: 2 has insufficient funds.')
     end
   end
 end

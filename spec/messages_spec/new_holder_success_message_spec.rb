@@ -14,7 +14,7 @@ describe 'NewHolderSuccessMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main)
+      expect(test_message.main[0])
         .to eq('New Holder: Phil, created. ID is: 0')
     end
   end

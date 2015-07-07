@@ -154,9 +154,10 @@ describe 'Controller' do
 
     it 'can return all transactions of a given account' do
       id = open_account_and_return_id
-      new_transaction = double :new_transaction, type: :deposit, amount: 50.00
+      new_transaction = double :new_transaction, type: :deposit, amount: 50.00, date: '1/1/01'
       test_controller.accounts[id].add_transaction(new_transaction)
-      expect(test_controller.get_transactions_of(id)).to eq([new_transaction])
+      expect(test_controller.get_transactions_of(id).transactions)
+        .to eq([new_transaction])
     end
 
     it 'can return all accounts for a given holder' do

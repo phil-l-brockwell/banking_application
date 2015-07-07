@@ -9,7 +9,7 @@ describe 'DepositSuccessMessage' do
     end
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq('£500.0 deposited.')
+      expect(test_message.main[0]).to eq('£500.0 deposited.')
     end
   end
 end
