@@ -85,13 +85,30 @@ class Boundary
 
   def op_6
     puts_with_sleep 'Enter Account ID to transfer from and Press Enter'
-    donar = gets.chomp.to_i
+    donar_id = gets.chomp.to_i
     puts_with_sleep 'Enter Account ID to transfer to and Press Enter'
-    recipitent = gets.chomp.to_i
+    recipitent_id = gets.chomp.to_i
     puts_with_sleep 'Enter Amount you would like to transfer'
     amount = gets.chomp.to_i
-    message = @controller.transfer amount, from: donar, to: recipitent
+    message = @controller.transfer amount, from: donar_id, to: recipitent_id
     puts_with_sleep message.output
+  end
+
+  def op_7
+    puts_with_sleep 'Enter Account ID you wish to Add a Holder to and Press Enter'
+    account_id = gets.chomp.to_i
+    puts_with_sleep 'Enter Holder ID you wish to add and Press Enter'
+    new_holder_id = gets.chomp.to_i
+    message = @controller.add_holder new_holder_id, to_account: account_id
+    puts_with_sleep message.output
+  end
+
+  def op_8
+
+  end
+
+  def op_9
+
   end
 
   def puts_with_sleep(string)

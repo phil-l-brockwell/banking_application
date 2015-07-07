@@ -62,11 +62,13 @@ class Controller
     return InvalidHolderMessage.new(id) unless new_holder = holder_exist?(id)
     return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
     account.add_holder new_holder
+    AddHolderSuccessMessage.new(new_holder, account)
   end
 
   def get_transactions_of(account_id)
     return InvalidAccountMessage.new(account_id) unless account = account_exist?(account_id)
     account.transactions
+    
   end
 
   def get_accounts_of(holder_id)
