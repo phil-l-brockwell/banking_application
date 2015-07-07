@@ -35,6 +35,7 @@ class Controller
     return InsufficientFundsMessage.new(account) unless check account, has: amount
     return OverLimitMessage.new(account) if check_limit_of account, with: amount
     account.withdraw amount
+    WithdrawSuccessMessage.new(amount)
   end
 
   def get_balance_of(account_id)
@@ -46,6 +47,7 @@ class Controller
     return InvalidAccountMessage.new(from) unless donar = account_exist?(from)
     return InvalidAccountMessage.new(to)   unless recipitent = account_exist?(to)
     return InsufficientFundsMessage.new(donar) unless check donar, has: amount
+    return OverLimitMessage.new(donar) if check_limit_of donar, with: amount
     donar.withdraw amount
     recipitent.deposit amount
   end
