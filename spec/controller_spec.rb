@@ -97,7 +97,7 @@ describe 'Controller' do
     it 'schedules new interest payments' do
       id = open_account_and_return_id
       first_time = Time.now
-      Timecop.scale(10000000)
+      Timecop.scale(100_000_00)
       expect(test_controller.accounts[id]).to receive(:add_interest)
       sleep(4)
       second_time = Time.now
@@ -119,8 +119,8 @@ describe 'Controller' do
       new_holder_id = create_holder_and_return_id
       message = test_controller.open_account(:Current, with: new_holder_id)
       account_id = message.new_account_id
-      expect(test_controller.add_holder(new_holder_id, to_account: account_id).class)
-        .to eq(HolderOnAccountMessage)
+      expect(test_controller.add_holder(new_holder_id, to_account: account_id)
+        .class).to eq(HolderOnAccountMessage)
     end
 
     it 'cannot add the same holder to an account twice' do
@@ -182,10 +182,10 @@ describe 'Controller' do
 
     it 'can return all transactions of a given account' do
       id = open_account_and_return_id
-      new_transaction = double :new_transaction, type: :deposit, amount: 50.00, date: '1/1/01'
-      test_controller.accounts[id].add_transaction(new_transaction)
+      transaction = double :transaction, type: :deposit, amount: 50.00, date: '1/1/01'
+      test_controller.accounts[id].add_transaction(transaction)
       expect(test_controller.get_transactions_of(id).transactions)
-        .to eq([new_transaction])
+        .to eq([transaction])
     end
 
     it 'can return all accounts for a given holder' do

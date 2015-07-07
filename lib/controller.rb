@@ -1,7 +1,6 @@
 # Definition of Controller Class
 class Controller
-  attr_reader :name, :accounts, :account_id, 
-              :holders, :holder_id, :task_manager
+  attr_reader :name, :accounts, :account_id, :holders, :holder_id, :task_manager
 
   def initialize
     @account_id = 0
@@ -15,7 +14,7 @@ class Controller
     return InvalidHolderMessage.new(with) unless holder = holder_exist?(with)
     new_account = create_account(type, holder)
     add_account new_account
-    schedule_interest_for new_account
+    init_yearly_interest_for new_account
     increment_account_id
     AccountSuccessMessage.new(new_account)
   end
@@ -48,7 +47,7 @@ class Controller
 
   def transfer(amount, from:, to:)
     return InvalidAccountMessage.new(from) unless donar = account_exist?(from)
-    return InvalidAccountMessage.new(to)   unless recipitent = account_exist?(to)
+    return InvalidAccountMessage.new(to) unless recipitent = account_exist?(to)
     return InsufficientFundsMessage.new(donar) unless check_balance_of donar, with: amount
     return OverLimitMessage.new(donar) if check_limit_of donar, with: amount
     donar.withdraw amount
@@ -72,7 +71,7 @@ class Controller
 
   def get_accounts_of(holder_id)
     return InvalidHolderMessage.new(holder_id) unless holder = holder_exist?(holder_id)
-    accounts = @accounts.select { |_, account| account.main_holder.id == holder.id }.values
+    accounts = @accounts.select { |_, account| account.main_holder == holder }.values
     DisplayAccountsMessage.new(accounts)
   end
 
@@ -85,7 +84,7 @@ class Controller
 
   private
 
-  def schedule_interest_for(account)
+  def init_yearly_interest_for(account)
     @task_manager.every '1y' do account.add_interest end
   end
 

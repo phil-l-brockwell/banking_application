@@ -1,5 +1,5 @@
+# Defintion of Islamic Account Class
 class IslamicAccount < BaseAccount
-
   undef_method :add_interest
 
   def initialize(holder, id)

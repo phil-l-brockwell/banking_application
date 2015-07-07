@@ -89,7 +89,7 @@ class Boundary
   end
 
   def op_7
-    puts_with_sleep 'Enter Account ID you wish to Add a Holder to and Press Enter'
+    puts_with_sleep 'Enter Account ID to Add a Holder to and Press Enter'
     account_id = gets.chomp.to_i
     puts_with_sleep 'Enter Holder ID you wish to add and Press Enter'
     new_holder_id = gets.chomp.to_i
@@ -97,12 +97,12 @@ class Boundary
   end
 
   def op_8
-    puts_with_sleep "Enter Holder ID you wish to View Accounts of and Press Enter"
+    puts_with_sleep 'Enter Holder ID to View Accounts of and Press Enter'
     @controller.get_accounts_of gets.chomp.to_i
   end
 
   def op_9
-    puts_with_sleep 'Enter Account ID you wish to View Transactions for and Press Enter'
+    puts_with_sleep 'Enter Account ID to View Transactions for and Press Enter'
     @controller.get_transactions_of gets.chomp.to_i
   end
 

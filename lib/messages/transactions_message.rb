@@ -1,5 +1,5 @@
+# Definition of Transactions Message Class
 class TransactionsMessage < SuccessMessage
-
   attr_reader :transactions, :main
 
   def initialize(transactions)
@@ -9,8 +9,8 @@ class TransactionsMessage < SuccessMessage
   end
 
   def build_main
-    @transactions.each_with_index.map do |transaction, index| 
-      "#{index + 1}. Type: #{transaction.type}, Date: #{transaction.date}, Amount: £#{transaction.amount}" 
+    @transactions.each_with_index.map do |transaction, index|
+      "#{index + 1}. Type: #{transaction.type}, Date: #{transaction.date}, Amount: £#{transaction.amount}"
     end
   end
 end
