@@ -1,9 +1,10 @@
-class InvalidAccountMessage < BaseMessage
-
+# Definiton of Invalid Account Message
+class InvalidAccountMessage < ErrorMessage
   attr_accessor :invalid_account_id
 
   def initialize(invalid_account_id)
+    super
     @invalid_account_id = invalid_account_id
-    @output = "Transaction Error. Account ID: #{@invalid_account_id} does not exist."
+    @main = "Account ID: #{@invalid_account_id} does not exist."
   end
 end

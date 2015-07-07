@@ -1,10 +1,11 @@
-class BalanceMessage < BaseMessage
-
+# Defintion of Balance Message Class
+class BalanceMessage < SuccessMessage
   attr_accessor :balance, :account_id
 
   def initialize(account)
+    super
     @balance = account.balance
     @account_id = account.id
-    @output = "Transaction Successful. Balance of Account ID: #{@account_id} is £#{balance}"
+    @main = "Balance of Account ID: #{@account_id} is £#{balance}"
   end
 end

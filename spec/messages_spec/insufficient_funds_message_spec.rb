@@ -1,3 +1,4 @@
+require 'messages/error_message'
 require 'messages/insufficient_funds_message'
 
 describe 'InsufficientFundsMessage' do
@@ -9,8 +10,8 @@ describe 'InsufficientFundsMessage' do
       expect(test_message.account_id).to eq(2)
     end
 
-    it 'has the correct output' do
-      expect(test_message.output).to eq('Transaction Error. Account ID: 2 has insufficient funds.')
+    it 'has the correct main text' do
+      expect(test_message.main).to eq('Account ID: 2 has insufficient funds.')
     end
   end
 end

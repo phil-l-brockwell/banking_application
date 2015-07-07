@@ -8,8 +8,8 @@ describe 'DepositSuccessMessage' do
       expect(test_message.amount).to eq(500.00)
     end
 
-    it 'has the correct output' do
-      expect(test_message.output).to eq('Transaction Successful. £500.0 deposited.')
+    it 'has the correct main text' do
+      expect(test_message.main).to eq('£500.0 deposited.')
     end
   end
 end

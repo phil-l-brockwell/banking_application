@@ -21,7 +21,7 @@ class Controller
     new_holder = Holder.new(name, @holder_id)
     increment_holder_id
     @holders[new_holder.id] = new_holder
-    HolderSuccessMessage.new(new_holder)
+    NewHolderSuccessMessage.new(new_holder)
   end
 
   def deposit(amount, into:)
@@ -50,6 +50,7 @@ class Controller
     return OverLimitMessage.new(donar) if check_limit_of donar, with: amount
     donar.withdraw amount
     recipitent.deposit amount
+    TransferSuccessMessage.new(amount)
   end
 
   def pay_interest_on(account_id)

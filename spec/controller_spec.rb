@@ -83,9 +83,9 @@ describe 'Controller' do
       expect(test_controller.accounts[id].type).to eq(:Current)
     end
 
-    it 'returns an error message if an incorrect holder number is entered' do
+    it 'returns an error message if an invalid holder number is entered' do
       message = test_controller.open_account(:Current, with: 57)
-      expect(message.output).to eq('Transaction Error. Holder ID: 57 does not exist.')
+      expect(message.class).to eq(InvalidHolderMessage)
     end
   end
 
@@ -122,14 +122,14 @@ describe 'Controller' do
       id = open_account_and_return_id
       id_2 = open_account_and_return_id
       message = test_controller.transfer(10.00, from: id, to: id_2)
-      expect(message.output).to eq("Transaction Error. Account ID: #{id} has insufficient funds.")
+      expect(message.class).to eq(InsufficientFundsMessage)
     end
 
     it 'returns an error if a withdrawal is more than the account limit' do
       id = open_account_and_return_id
       test_controller.deposit 1000, into: id
       message = test_controller.withdraw 501, from: id
-      expect(message.output).to eq("Transaction Error. Account ID: #{id} has reached its daily withdrawal limit.")
+      expect(message.class).to eq(OverLimitMessage)
     end
 
     it 'can pay the interest on an account' do
@@ -149,8 +149,7 @@ describe 'Controller' do
 
     it 'raises an error if an invalid account id is entered' do
       message = test_controller.deposit(10.00, into: 57)
-      expect(message.output)
-        .to eq('Transaction Error. Account ID: 57 does not exist.')
+      expect(message.class).to eq(InvalidAccountMessage)
     end
 
     it 'can return all transactions of a given account' do

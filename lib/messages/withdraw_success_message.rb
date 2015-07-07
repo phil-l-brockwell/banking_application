@@ -1,8 +1,10 @@
-class WithdrawSuccessMessage < BaseMessage
+# Definiton of Withdraw Success Message
+class WithdrawSuccessMessage < SuccessMessage
   attr_accessor :amount
 
   def initialize(amount)
+    super
     @amount = amount
-    @output = "Transaction Successful. £#{@amount} withdrawn."
+    @main = "£#{@amount} withdrawn."
   end
 end

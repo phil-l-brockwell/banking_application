@@ -1,9 +1,10 @@
-class DepositSuccessMessage < BaseMessage
-
+# Definition of DepositSuccessMessage Class
+class DepositSuccessMessage < SuccessMessage
   attr_reader :amount
 
   def initialize(amount)
+    super
     @amount = amount
-    @output = "Transaction Successful. £#{@amount} deposited."
+    @main = "£#{@amount} deposited."
   end
 end

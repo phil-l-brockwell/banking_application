@@ -1,4 +1,5 @@
 require 'messages/base_message'
+require 'messages/success_message'
 require 'messages/account_success_message'
 
 describe 'AccountSuccessMessage' do
@@ -10,9 +11,9 @@ describe 'AccountSuccessMessage' do
       expect(test_message.new_account_id).to eq(0)
     end
 
-    it 'has an output' do
-      expect(test_message.output)
-        .to eq('Transaction Successful. New Account created. ID number is: 0')
+    it 'has the correct main text' do
+      expect(test_message.main)
+        .to eq('New Account created. ID number is: 0')
     end
   end
 end

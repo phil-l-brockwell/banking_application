@@ -13,9 +13,9 @@ describe 'BalanceMessage' do
       expect(test_message.account_id).to eq(76)
     end
 
-    it 'has the correct output' do
-      expect(test_message.output)
-        .to eq('Transaction Successful. Balance of Account ID: 76 is £51.52')
+    it 'has the correct main text' do
+      expect(test_message.main)
+        .to eq('Balance of Account ID: 76 is £51.52')
     end
   end
 end

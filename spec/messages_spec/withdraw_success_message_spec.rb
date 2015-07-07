@@ -8,8 +8,8 @@ describe 'WithdrawSuccessMessage' do
       expect(test_message.amount).to eq(200.00)
     end
 
-    it 'has the correct output' do
-      expect(test_message.output).to eq('Transaction Successful. £200.0 withdrawn.')
+    it 'has the correct main text' do
+      expect(test_message.main).to eq('£200.0 withdrawn.')
     end
   end
 end

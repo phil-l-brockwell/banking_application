@@ -61,7 +61,7 @@ class Boundary
   def op_3
     puts_with_sleep 'Enter Account ID to deposit into and Press Enter'
     account_id = gets.chomp.to_i
-    puts_with_sleep "Enter Amount you would like to Deposit and Press Enter"
+    puts_with_sleep 'Enter Amount you would like to Deposit and Press Enter'
     amount = gets.chomp.to_i
     message = @controller.deposit amount, into: account_id
     puts_with_sleep message.output
@@ -85,6 +85,13 @@ class Boundary
 
   def op_6
     puts_with_sleep 'Enter Account ID to transfer from and Press Enter'
+    donar = gets.chomp.to_i
+    puts_with_sleep 'Enter Account ID to transfer to and Press Enter'
+    recipitent = gets.chomp.to_i
+    puts_with_sleep 'Enter Amount you would like to transfer'
+    amount = gets.chomp.to_i
+    message = @controller.transfer amount, from: donar, to: recipitent
+    puts_with_sleep message.output
   end
 
   def puts_with_sleep(string)
