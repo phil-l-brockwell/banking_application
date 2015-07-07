@@ -32,7 +32,7 @@ class Controller
 
   def withdraw(amount, from:)
     return InvalidAccountMessage.new(from) unless account = account_exist?(from)
-    return InsufficientFundsMessage.new(account) unless check account, has: amount
+    return InsufficientFundsMessage.new(account) unless check_balance_of account, with: amount
     return OverLimitMessage.new(account) if check_limit_of account, with: amount
     account.withdraw amount
     WithdrawSuccessMessage.new(amount)
@@ -46,7 +46,7 @@ class Controller
   def transfer(amount, from:, to:)
     return InvalidAccountMessage.new(from) unless donar = account_exist?(from)
     return InvalidAccountMessage.new(to)   unless recipitent = account_exist?(to)
-    return InsufficientFundsMessage.new(donar) unless check donar, has: amount
+    return InsufficientFundsMessage.new(donar) unless check_balance_of donar, with: amount
     return OverLimitMessage.new(donar) if check_limit_of donar, with: amount
     donar.withdraw amount
     recipitent.deposit amount
@@ -88,11 +88,11 @@ class Controller
   private
 
   def check_holders_of(account, with:)
-    account.main_holder == with || account.holders.has_value?(with)
+    account.main_holder == with || account.holders.value?(with)
   end
 
-  def check(account, has:)
-    account.balance >= has
+  def check_balance_of(account, with:)
+    account.balance >= with
   end
 
   def check_limit_of(account, with:)
