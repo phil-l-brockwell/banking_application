@@ -61,6 +61,7 @@ class Controller
   def add_holder(id, to_account:)
     return InvalidHolderMessage.new(id) unless new_holder = holder_exist?(id)
     return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
+    
     # Add check on account for holder
     account.add_holder new_holder
     AddHolderSuccessMessage.new(new_holder, account)

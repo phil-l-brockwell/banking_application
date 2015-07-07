@@ -168,7 +168,7 @@ describe 'Controller' do
       test_controller.open_account(:Savings, with: second_holder_id)
       message = test_controller.open_account(:Current, with: holder_id)
       id_3 = message.new_account_id
-      expect(test_controller.get_accounts_of(holder_id))
+      expect(test_controller.get_accounts_of(holder_id).accounts)
         .to eq([test_controller.accounts[id], test_controller.accounts[id_3]])
     end
   end
