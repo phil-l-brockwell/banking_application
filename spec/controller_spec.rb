@@ -1,3 +1,5 @@
+require 'rufus-scheduler'
+require 'timecop'
 require 'controller'
 
 describe 'Controller' do
@@ -29,6 +31,10 @@ describe 'Controller' do
 
     it 'has a current holder id' do
       expect(test_controller.holder_id).to eq(0)
+    end
+
+    it 'has a task manager' do
+      expect(test_controller).to respond_to(:task_manager)
     end
   end
 
@@ -86,6 +92,16 @@ describe 'Controller' do
     it 'returns an error message if an invalid holder number is entered' do
       message = test_controller.open_account(:Current, with: 57)
       expect(message.class).to eq(InvalidHolderMessage)
+    end
+
+    it 'schedules new interest payments' do
+      id = open_account_and_return_id
+      first_time = Time.now
+      Timecop.scale(100000000)
+      expect(test_controller.accounts[id]).to receive(:add_interest)
+      sleep(0.3)
+      second_time = Time.now
+      expect(second_time.year - first_time.year).to eq(1)
     end
   end
 
@@ -157,13 +173,6 @@ describe 'Controller' do
       test_controller.deposit 1000, into: id
       message = test_controller.withdraw 501, from: id
       expect(message.class).to eq(OverLimitMessage)
-    end
-
-    it 'can pay the interest on an account' do
-      id = open_account_and_return_id
-      test_controller.deposit(10.00, into: id)
-      expect { test_controller.pay_interest_on(id) }
-        .to change { test_controller.accounts[id].balance }
     end
 
     it 'raises an error if an invalid account id is entered' do

@@ -117,11 +117,11 @@ class Boundary
   end
 end
 
-scheduler = Rufus::Scheduler.new
+# scheduler = Rufus::Scheduler.new
 test = Boundary.new
 test.start
-scheduler.join
+# scheduler.join
 
-scheduler.every '3s' do
-  puts 'hello'
-end
+# scheduler.every '3s' do
+#   puts 'hello'
+# end

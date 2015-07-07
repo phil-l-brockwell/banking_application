@@ -1,18 +1,21 @@
 # Definition of Controller Class
 class Controller
-  attr_reader :name, :accounts, :account_id, :holders, :holder_id
+  attr_reader :name, :accounts, :account_id, 
+              :holders, :holder_id, :task_manager
 
   def initialize
     @account_id = 0
     @holder_id  = 0
     @accounts   = {}
     @holders    = {}
+    @task_manager = Rufus::Scheduler.new
   end
 
   def open_account(type, with:)
     return InvalidHolderMessage.new(with) unless holder = holder_exist?(with)
     new_account = create_account(type, holder)
     add_account new_account
+    schedule_interest_for new_account
     increment_account_id
     AccountSuccessMessage.new(new_account)
   end
@@ -53,9 +56,10 @@ class Controller
     TransferSuccessMessage.new(amount)
   end
 
-  def pay_interest_on(account_id)
-    return InvalidAccountMessage.new(account_id) unless account = account_exist?(account_id)
-    account.add_interest
+  def schedule_interest_for(account)
+    @task_manager.every '1d' do 
+      account.add_interest 
+    end
   end
 
   def add_holder(id, to_account:)
