@@ -61,8 +61,7 @@ class Controller
   def add_holder(id, to_account:)
     return InvalidHolderMessage.new(id) unless new_holder = holder_exist?(id)
     return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
-    
-    # Add check on account for holder
+    return HolderOnAccountMessage.new(new_holder, account) if check_holders_of account, with: new_holder
     account.add_holder new_holder
     AddHolderSuccessMessage.new(new_holder, account)
   end
@@ -87,6 +86,10 @@ class Controller
                       :Student  => StudentAccount }
 
   private
+
+  def check_holders_of(account, with:)
+    account.main_holder == with || account.holders.has_value?(with)
+  end
 
   def check(account, has:)
     account.balance >= has

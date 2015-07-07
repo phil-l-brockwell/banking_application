@@ -89,6 +89,33 @@ describe 'Controller' do
     end
   end
 
+  context 'when adding a holder to an existing account' do
+    it 'the holder is added' do
+      id = open_account_and_return_id
+      new_holder_id = create_holder_and_return_id
+      expect(test_controller.accounts[id]).to receive(:add_holder)
+        .with(test_controller.holders[new_holder_id])
+      expect(test_controller.add_holder(new_holder_id, to_account: id).class)
+        .to eq(AddHolderSuccessMessage)
+    end
+
+    it 'returns a holder exists message if the holder is the main holder' do
+      new_holder_id = create_holder_and_return_id
+      message = test_controller.open_account(:Current, with: new_holder_id)
+      account_id = message.new_account_id
+      expect(test_controller.add_holder(new_holder_id, to_account: account_id).class)
+        .to eq(HolderOnAccountMessage)
+    end
+
+    it 'cannot add the same holder to an account twice' do
+      new_holder_id = create_holder_and_return_id
+      id = open_account_and_return_id
+      test_controller.add_holder(new_holder_id, to_account: id)
+      expect(test_controller.add_holder(new_holder_id, to_account: id).class)
+        .to eq(HolderOnAccountMessage)
+    end
+  end
+
   context 'when transacting' do
     it 'can make a deposit' do
       id = open_account_and_return_id
@@ -137,14 +164,6 @@ describe 'Controller' do
       test_controller.deposit(10.00, into: id)
       expect { test_controller.pay_interest_on(id) }
         .to change { test_controller.accounts[id].balance }
-    end
-
-    it 'can add a holder to an account' do
-      id = open_account_and_return_id
-      new_holder_id = create_holder_and_return_id
-      expect(test_controller.accounts[id]).to receive(:add_holder)
-        .with(test_controller.holders[new_holder_id])
-      test_controller.add_holder(new_holder_id, to_account: id)
     end
 
     it 'raises an error if an invalid account id is entered' do
