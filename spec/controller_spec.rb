@@ -97,9 +97,9 @@ describe 'Controller' do
     it 'schedules new interest payments' do
       id = open_account_and_return_id
       first_time = Time.now
-      Timecop.scale(100000000)
+      Timecop.scale(10000000)
       expect(test_controller.accounts[id]).to receive(:add_interest)
-      sleep(0.3)
+      sleep(4)
       second_time = Time.now
       expect(second_time.year - first_time.year).to eq(1)
     end
@@ -109,7 +109,7 @@ describe 'Controller' do
     it 'the holder is added' do
       id = open_account_and_return_id
       new_holder_id = create_holder_and_return_id
-      expect(test_controller.accounts[id]).to receive(:add_holder)
+      expect(test_controller.accounts[id]).to receive(:add_holder).once
         .with(test_controller.holders[new_holder_id])
       expect(test_controller.add_holder(new_holder_id, to_account: id).class)
         .to eq(AddHolderSuccessMessage)

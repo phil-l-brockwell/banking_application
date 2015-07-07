@@ -56,12 +56,6 @@ class Controller
     TransferSuccessMessage.new(amount)
   end
 
-  def schedule_interest_for(account)
-    @task_manager.every '1d' do 
-      account.add_interest 
-    end
-  end
-
   def add_holder(id, to_account:)
     return InvalidHolderMessage.new(id) unless new_holder = holder_exist?(id)
     return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
@@ -90,6 +84,10 @@ class Controller
                       :Student  => StudentAccount }
 
   private
+
+  def schedule_interest_for(account)
+    @task_manager.every '1y' do account.add_interest end
+  end
 
   def check_holders_of(account, with:)
     account.main_holder == with || account.holders.value?(with)
