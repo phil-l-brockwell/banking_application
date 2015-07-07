@@ -21,6 +21,10 @@ describe 'BaseAccount' do
     it 'has a type' do
       expect(test_account).to respond_to(:type)
     end
+
+    it 'has a withdrawal limit' do
+      expect(test_account).to respond_to(:limit)
+    end
   end
 
   it 'can add a holder' do

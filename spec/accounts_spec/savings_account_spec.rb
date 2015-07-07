@@ -1,9 +1,16 @@
 require 'accounts/savings_account'
 
 describe 'SavingsAccount' do
-  it 'can initialise with the correct type' do
-    test_holder = double :test_holder
-    test_savings_account = SavingsAccount.new(test_holder, 1)
-    expect(test_savings_account.type).to be(:Savings)
+  context 'when initialised' do
+    let(:test_holder)  { double :test_holder                }
+    let(:test_account) { SavingsAccount.new(test_holder, 1) }
+
+    it 'can initialise with the correct type' do
+      expect(test_account.type).to be(:Savings)
+    end
+
+    it 'has the correct limit' do
+      expect(test_account.limit).to eq(300)
+    end
   end
 end
