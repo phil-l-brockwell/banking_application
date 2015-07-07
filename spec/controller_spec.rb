@@ -118,11 +118,11 @@ describe 'Controller' do
       test_controller.transfer(10.00, from: id, to: id_2)
     end
 
-    it 'raises an error if the donar account has insufficient funds' do
+    it 'returns an error message if the donar account has insufficient funds' do
       id = open_account_and_return_id
       id_2 = open_account_and_return_id
-      expect { test_controller.transfer(10.00, from: id, to: id_2) }
-        .to raise_error('The withdrawal amount exceeds current balance!')
+      message = test_controller.transfer(10.00, from: id, to: id_2)
+      expect(message.output).to eq("Transaction Error. Account ID: #{id} has insufficient funds.")
     end
 
     it 'can pay the interest on an account' do

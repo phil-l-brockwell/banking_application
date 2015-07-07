@@ -2,16 +2,16 @@ require 'require_all'
 require_all 'lib'
 # Definition of Boundary Class
 class Boundary
-  MENU_ITEMS = { 1  => { method: :option_1,  output: 'Create New Holder'         },
-                 2  => { method: :option_2,  output: 'Create an Account'         },
-                 3  => { method: :option_3,  output: 'Make a Deposit'            },
-                 4  => { method: :option_4,  output: 'Display Account Balance'   },
-                 5  => { method: :option_5,  output: 'Make a Withdrawal'         },
-                 6  => { method: :option_6,  output: 'Make a Transfer'           },
-                 7  => { method: :option_7,  output: 'Pay Interest'              },
-                 8  => { method: :option_8,  output: 'Add Holder'                },
-                 9  => { method: :option_9,  output: 'Show Customers Accounts'   },
-                 10 => { method: :option_10, output: 'View Account Transactions' }  }
+  MENU_ITEMS = { 1  => { method: :op_1,  output: 'Create New Holder'         },
+                 2  => { method: :op_2,  output: 'Create an Account'         },
+                 3  => { method: :op_3,  output: 'Make a Deposit'            },
+                 4  => { method: :op_4,  output: 'Display Account Balance'   },
+                 5  => { method: :op_5,  output: 'Make a Withdrawal'         },
+                 6  => { method: :op_6,  output: 'Make a Transfer'           },
+                 7  => { method: :op_7,  output: 'Pay Interest'              },
+                 8  => { method: :op_8,  output: 'Add Holder'                },
+                 9  => { method: :op_9,  output: 'Show Customers Accounts'   },
+                 10 => { method: :op_10, output: 'View Account Transactions' }  }
 
   ACCOUNT_TYPES = {  1 => { output: :Current  },
                      2 => { output: :Savings  },
@@ -42,14 +42,14 @@ class Boundary
     input
   end
 
-  def option_1
+  def op_1
     puts 'Enter Name and Press Enter'
     name = gets.chomp
     message = @controller.create_holder name
     puts_with_sleep message.output
   end
 
-  def option_2
+  def op_2
     show(ACCOUNT_TYPES)
     input = verify(gets.chomp.to_i, with: ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
@@ -59,7 +59,7 @@ class Boundary
     puts_with_sleep message.output
   end
 
-  def option_3
+  def op_3
     puts_with_sleep 'Enter Account ID to deposit into and Press Enter'
     account_id = gets.chomp.to_i
     puts_with_sleep "Enter Amount you would like to Deposit and Press Enter"
@@ -68,10 +68,19 @@ class Boundary
     puts_with_sleep message.output
   end
 
-  def option_4
+  def op_4
     puts_with_sleep 'Enter Account ID and Press Enter'
     account_id = gets.chomp.to_i
     message = @controller.get_balance_of account_id
+    puts_with_sleep message.output
+  end
+
+  def op_5
+    puts_with_sleep 'Enter Account ID to withdraw from and Press Enter'
+    account_id = gets.chomp.to_i
+    puts_with_sleep 'Enter Amount you would like to Withdraw and Press Enter'
+    amount = gets.chomp.to_i
+    message = @controller.withdraw amount, from: account_id
     puts_with_sleep message.output
   end
 

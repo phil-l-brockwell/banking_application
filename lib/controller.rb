@@ -32,7 +32,7 @@ class Controller
 
   def withdraw(amount, from:)
     return InvalidAccountMessage.new(from) unless account = account_exist?(from)
-    check account, has: amount
+    return InsufficientFundsMessage.new(account) unless check account, has: amount
     account.withdraw amount
   end
 
@@ -44,7 +44,7 @@ class Controller
   def transfer(amount, from:, to:)
     return InvalidAccountMessage.new(from) unless donar = account_exist?(from)
     return InvalidAccountMessage.new(to)   unless recipitent = account_exist?(to)
-    check donar, has: amount
+    return InsufficientFundsMessage.new(donar) unless check donar, has: amount
     donar.withdraw amount
     recipitent.deposit amount
   end
@@ -80,7 +80,7 @@ class Controller
   private
 
   def check(account, has:)
-    fail 'The withdrawal amount exceeds current balance!' if has > account.balance
+    account.balance >= has
   end
 
   def add_account(new_account)
