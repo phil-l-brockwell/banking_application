@@ -155,7 +155,19 @@ describe 'Controller' do
     it 'can reset the limit on an account' do
       id = open_account_and_return_id
       expect(test_controller.accounts[id]).to receive(:reset_limit)
-      test_controller.reset_limit_on(id)
+      test_controller.reset_limit_on(test_controller.accounts[id])
+    end
+
+    it 'can schedule a limit to be reset when a withdrawal is made' do
+      id = open_account_and_return_id
+      test_controller.deposit(50.00, into: id)
+      test_controller.withdraw(50.00, from: id)
+      first_time = Time.now
+      Timecop.scale(100000)
+      expect(test_controller.accounts[id]).to receive(:reset_limit)
+      sleep(1)
+      second_time = Time.now
+      expect(second_time.day - first_time.day).to eq(1)
     end
 
     it 'can make a transfer between two accounts' do

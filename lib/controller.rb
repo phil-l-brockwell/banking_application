@@ -37,6 +37,7 @@ class Controller
     return InsufficientFundsMessage.new(account) unless check_balance_of account, with: amount
     return OverLimitMessage.new(account) if check_limit_of account, with: amount
     account.withdraw amount
+    init_limit_reset_for account
     WithdrawSuccessMessage.new(amount)
   end
 
@@ -75,9 +76,12 @@ class Controller
     DisplayAccountsMessage.new(accounts)
   end
 
-  def reset_limit_on(id)
-    account = account_exist? id
+  def reset_limit_on(account)
     account.reset_limit
+  end
+
+  def pay_interest_on(account)
+    account.add_interest
   end
 
   ACCOUNT_CLASSES = { :Current  => CurrentAccount,
@@ -90,7 +94,11 @@ class Controller
   private
 
   def init_yearly_interest_for(account)
-    @task_manager.every '1y' do account.add_interest end
+    @task_manager.every '1y' do pay_interest_on account end
+  end
+
+  def init_limit_reset_for(account)
+    @task_manager.in '1d' do reset_limit_on account end
   end
 
   def check_holders_of(account, with:)
