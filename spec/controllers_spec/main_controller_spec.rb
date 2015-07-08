@@ -22,11 +22,7 @@ describe 'MainController' do
     end
 
     it 'has a current account id' do
-      expect(test_controller.account_id).to eq(0)
-    end
-
-    it 'has a task manager' do
-      expect(test_controller).to respond_to(:task_manager)
+      expect(test_controller.account_id).to eq(1)
     end
   end
 
@@ -65,12 +61,9 @@ describe 'MainController' do
 
     it 'schedules new interest payments' do
       id = open_account_and_return_id
-      first_time = Time.now
       Timecop.scale(100_000_00)
       expect(test_controller.accounts[id]).to receive(:deposit)
       sleep(4)
-      second_time = Time.now
-      expect(second_time.year - first_time.year).to eq(1)
     end
   end
 
@@ -107,11 +100,6 @@ describe 'MainController' do
       expect(test_controller.accounts[id]).to receive(:deposit).with(50.00)
       test_controller.deposit(50.00, into: id)
     end
-
-    it 'raises an error if an invalid account id is entered' do
-      message = test_controller.deposit(10.00, into: 57)
-      expect(message.class).to eq(InvalidAccountMessage)
-    end
   end
 
   context 'when withdrawing' do
@@ -133,12 +121,9 @@ describe 'MainController' do
       id = open_account_and_return_id
       test_controller.deposit(50.00, into: id)
       test_controller.withdraw(50.00, from: id)
-      first_time = Time.now
       Timecop.scale(100000)
       expect(test_controller.accounts[id]).to receive(:reset_limit)
       sleep(1)
-      second_time = Time.now
-      expect(second_time.day - first_time.day).to eq(1)
     end
 
     it 'does not schedule a limit reset if one is already scheduled' do
@@ -168,6 +153,11 @@ describe 'MainController' do
   end
 
   context 'when transacting' do
+    it 'raises an error if an invalid account id is entered' do
+      message = test_controller.deposit(10.00, into: 57)
+      expect(message.class).to eq(InvalidAccountMessage)
+    end
+
     it 'can give the balance of an account' do
       id = open_account_and_return_id
       message = test_controller.get_balance_of(id)

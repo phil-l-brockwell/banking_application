@@ -13,12 +13,16 @@ class Boundary
                  8 => { op: :op_8, output: 'Show Customers Accounts'   },
                  9 => { op: :op_9, output: 'View Account Transactions' } }
 
-  ACCOUNT_TYPES = { 1 => { output: :Current  },
-                    2 => { output: :Savings  },
-                    3 => { output: :Business },
-                    4 => { output: :IR       },
-                    5 => { output: :SMB      },
-                    6 => { output: :Student  } }
+  ACCOUNT_TYPES = { 1  => { output: :Current      },
+                    2  => { output: :Savings      },
+                    3  => { output: :Business     },
+                    4  => { output: :IR           },
+                    5  => { output: :SMB          },
+                    6  => { output: :Student      },
+                    7  => { output: :HighInterest },
+                    8  => { output: :Islamic      },
+                    9  => { output: :Private      },
+                    10 => { output: :LCR          } }
 
   def initialize
     @controller = MainController.new
@@ -45,7 +49,7 @@ class Boundary
 
   def op_1
     puts 'Enter Name and Press Enter'
-    @controller.create_holder gets.chomp
+    @controller.create_holder gets.chomp.capitalize
   end
 
   def op_2

@@ -9,8 +9,10 @@ describe 'HighInterestAccount' do
       expect(test_account.type).to eq(:HighInterest)
     end
 
-    it 'has a higher interest rate' do
-      expect(test_account.interest_rate).to eq(0.2)
+    it 'has a higher interest rate than a current account' do
+      current_account = CurrentAccount.new(holder, 1)
+      expect(test_account.interest_rate)
+        .to be > (current_account.interest_rate)
     end
   end
 end

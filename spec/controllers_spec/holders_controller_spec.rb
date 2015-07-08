@@ -15,7 +15,7 @@ describe 'HoldersController' do
     end
 
     it 'has a current holder id' do
-      expect(test_controller.holder_id).to eq(0)
+      expect(test_controller.holder_id).to eq(1)
     end
   end
 

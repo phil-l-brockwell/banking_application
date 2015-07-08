@@ -4,6 +4,6 @@ class IslamicAccount < CustomerAccount
   def initialize(holder, id)
     super
     @type = :Islamic
-    @interest_rate = nil
+    @interest_rate = 0
   end
 end

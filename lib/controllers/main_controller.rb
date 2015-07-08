@@ -3,7 +3,7 @@ class MainController
   attr_reader :name, :accounts, :account_id, :holders, :task_manager
 
   def initialize
-    @account_id   = 0
+    @account_id   = 1
     @accounts     = {}
     @holders      = HoldersController.new
     @interest     = InterestController.new
@@ -82,12 +82,16 @@ class MainController
     account.deposit amount
   end
 
-  ACCOUNT_CLASSES = { :Current  => CurrentAccount,
-                      :Savings  => SavingsAccount,
-                      :Business => BusinessAccount,
-                      :IR       => IRAccount,
-                      :SMB      => SMBAccount,
-                      :Student  => StudentAccount }
+  ACCOUNT_CLASSES = { :Current      => CurrentAccount,
+                      :Savings      => SavingsAccount,
+                      :Business     => BusinessAccount,
+                      :IR           => IRAccount,
+                      :SMB          => SMBAccount,
+                      :Student      => StudentAccount,
+                      :HighInterest => HighInterestAccount,
+                      :Islamic      => IslamicAccount,
+                      :Private      => PrivateAccount,
+                      :LCR          => LCRAccount          }
 
   private
 

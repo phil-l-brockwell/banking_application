@@ -4,7 +4,7 @@ class HoldersController
 
   def initialize
     @holders = {}
-    @holder_id = 0
+    @holder_id = 1
   end
 
   def create_holder(name)
