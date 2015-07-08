@@ -1,17 +1,16 @@
 # Definition of Controller Class
-class AccountsController
-  attr_reader :name, :accounts, :account_id, :holders, :holder_id, :task_manager
+class MainController
+  attr_reader :name, :accounts, :account_id, :holders, :task_manager
 
   def initialize
-    @account_id = 0
-    @holder_id  = 0
-    @accounts   = {}
-    @holders    = {}
+    @account_id   = 0
+    @accounts     = {}
+    @holders      = HoldersController.new
     @task_manager = Rufus::Scheduler.new
   end
 
   def open_account(type, with:)
-    return InvalidHolderMessage.new(with) unless holder = holder_exist?(with)
+    return InvalidHolderMessage.new(with) unless holder = @holders.holder_exist?(with)
     new_account = create_account(type, holder)
     add_account new_account
     init_yearly_interest_for new_account
@@ -20,10 +19,7 @@ class AccountsController
   end
 
   def create_holder(name)
-    new_holder = Holder.new(name, @holder_id)
-    increment_holder_id
-    @holders[new_holder.id] = new_holder
-    NewHolderSuccessMessage.new(new_holder)
+    @holders.create_holder(name)
   end
 
   def deposit(amount, into:)
@@ -57,7 +53,7 @@ class AccountsController
   end
 
   def add_holder(id, to_account:)
-    return InvalidHolderMessage.new(id) unless new_holder = holder_exist?(id)
+    return InvalidHolderMessage.new(id) unless new_holder = @holders.holder_exist?(id)
     return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
     return HolderOnAccountMessage.new(new_holder, account) if check_holders_of account, with: new_holder
     account.add_holder new_holder
@@ -71,7 +67,7 @@ class AccountsController
   end
 
   def get_accounts_of(holder_id)
-    return InvalidHolderMessage.new(holder_id) unless holder = holder_exist?(holder_id)
+    return InvalidHolderMessage.new(holder_id) unless holder = @holders.holder_exist?(holder_id)
     accounts = @accounts.select { |_, account| account.main_holder == holder }.values
     DisplayAccountsMessage.new(accounts)
   end
@@ -117,10 +113,6 @@ class AccountsController
     @accounts[new_account.id] = new_account
   end
 
-  def holder_exist?(holder_id)
-    @holders[holder_id]
-  end
-
   def account_exist?(account_id)
     @accounts[account_id]
   end
@@ -132,9 +124,5 @@ class AccountsController
 
   def increment_account_id
     @account_id += 1
-  end
-
-  def increment_holder_id
-    @holder_id += 1
   end
 end

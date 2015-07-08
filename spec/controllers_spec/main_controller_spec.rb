@@ -1,11 +1,9 @@
-require 'require_all'
-require_all 'lib/accounts'
 require 'rufus-scheduler'
 require 'timecop'
-require 'controllers/accounts_controller'
+require 'controllers/main_controller'
 
-describe 'AccountsController' do
-  let(:test_controller) { AccountsController.new }
+describe 'MainController' do
+  let(:test_controller) { MainController.new }
 
   def create_holder_and_return_id
     message = test_controller.create_holder('Robert Pulson')
@@ -81,7 +79,7 @@ describe 'AccountsController' do
       id = open_account_and_return_id
       new_holder_id = create_holder_and_return_id
       expect(test_controller.accounts[id]).to receive(:add_holder).once
-        .with(test_controller.holders[new_holder_id])
+        .with(test_controller.holders.holders[new_holder_id])
       expect(test_controller.add_holder(new_holder_id, to_account: id).class)
         .to eq(AddHolderSuccessMessage)
     end

@@ -14,6 +14,10 @@ class HoldersController
     NewHolderSuccessMessage.new(new_holder)
   end
 
+  def holder_exist?(holder_id)
+    holders[holder_id]
+  end
+
   private
 
   def increment_holder_id

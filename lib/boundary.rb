@@ -21,7 +21,7 @@ class Boundary
                     6 => { output: :Student  } }
 
   def initialize
-    @controller = AccountsController.new
+    @controller = MainController.new
   end
 
   def start
