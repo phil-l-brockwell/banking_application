@@ -1,5 +1,5 @@
 # Definition of IR Account Class
-class IRAccount < BaseAccount
+class IRAccount < CustomerAccount
   def initialize(holder, account_number)
     super
     @type = :IR

@@ -1,7 +1,7 @@
 # Definition of Current Account Class
-class CurrentAccount < BaseAccount
+class CurrentAccount < CustomerAccount
 
-  def initialize(holder, account_number)
+  def initialize(holder, id)
     super
     @type = :Current
   end

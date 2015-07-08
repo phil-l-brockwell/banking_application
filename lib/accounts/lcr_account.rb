@@ -1,5 +1,5 @@
 # Definition of LCR Account Class
-class LCRAccount < BaseAccount
+class LCRAccount < CustomerAccount
   def initialize(holder, id)
     super
     @type = :LCR

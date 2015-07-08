@@ -1,6 +1,5 @@
 # Defintion of Islamic Account Class
-class IslamicAccount < BaseAccount
-  undef_method :add_interest
+class IslamicAccount < CustomerAccount
 
   def initialize(holder, id)
     super

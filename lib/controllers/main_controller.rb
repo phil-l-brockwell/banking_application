@@ -77,7 +77,7 @@ class MainController
   end
 
   def pay_interest_on(account)
-    account.add_interest
+
   end
 
   ACCOUNT_CLASSES = { :Current  => CurrentAccount,

@@ -1,5 +1,5 @@
 # Definition of Savings Account Class
-class SavingsAccount < BaseAccount
+class SavingsAccount < CustomerAccount
   def initialize(holder, account_number)
     super
     @type = :Savings

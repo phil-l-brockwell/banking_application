@@ -1,9 +1,9 @@
 # Definition of Business Account Class
-class BusinessAccount < BaseAccount
+class BusinessAccount < CustomerAccount
 
   LIMIT = 500
 
-  def initialize(holder, account_number)
+  def initialize(holder, id)
     super
     @type = :Business
     @daily_limit = LIMIT

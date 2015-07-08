@@ -1,5 +1,5 @@
 # Definition of Private Account Class
-class PrivateAccount < BaseAccount
+class PrivateAccount < CustomerAccount
   def initialize(holder, id)
     super
     @type = :Private

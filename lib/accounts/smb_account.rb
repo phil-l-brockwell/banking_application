@@ -1,5 +1,5 @@
 # Definition of SMB Account Class
-class SMBAccount < BaseAccount
+class SMBAccount < CustomerAccount
   def initialize(holder, account_number)
     super
     @type = :SMB

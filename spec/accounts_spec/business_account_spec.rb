@@ -1,3 +1,4 @@
+require 'accounts/customer_account'
 require 'accounts/business_account'
 
 describe 'BusinessAccount' do

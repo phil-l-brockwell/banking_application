@@ -1,5 +1,5 @@
 # Definition of High Interest Account Class
-class HighInterestAccount < BaseAccount
+class HighInterestAccount < CustomerAccount
   def initialize(holder, id)
     super
     @type = :HighInterest
