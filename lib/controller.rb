@@ -36,8 +36,8 @@ class Controller
     return InvalidAccountMessage.new(from) unless account = account_exist?(from)
     return InsufficientFundsMessage.new(account) unless check_balance_of account, with: amount
     return OverLimitMessage.new(account) if check_limit_of account, with: amount
+    init_limit_reset_for account unless account.under_limit?
     account.withdraw amount
-    init_limit_reset_for account
     WithdrawSuccessMessage.new(amount)
   end
 

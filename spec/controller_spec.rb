@@ -170,6 +170,13 @@ describe 'Controller' do
       expect(second_time.day - first_time.day).to eq(1)
     end
 
+    it 'does not schedule a limit reset if one is already scheduled' do
+      id = open_account_and_return_id
+      test_controller.deposit(50.00, into: id)
+      expect(test_controller.task_manager).to receive(:in).once
+      2.times { test_controller.withdraw(10.00, from: id) }
+    end
+
     it 'can make a transfer between two accounts' do
       id = open_account_and_return_id
       test_controller.deposit(10.00, into: id)
