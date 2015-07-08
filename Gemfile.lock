@@ -3,6 +3,7 @@ GEM
   specs:
     colorize (0.7.7)
     diff-lcs (1.2.5)
+    require_all (1.3.2)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -24,6 +25,7 @@ PLATFORMS
 
 DEPENDENCIES
   colorize
+  require_all
   rspec
   rufus-scheduler
   timecop

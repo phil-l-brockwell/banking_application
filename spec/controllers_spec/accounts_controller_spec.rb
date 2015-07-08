@@ -1,9 +1,11 @@
+require 'require_all'
+require_all 'lib/accounts'
 require 'rufus-scheduler'
 require 'timecop'
-require 'controller'
+require 'controllers/accounts_controller'
 
-describe 'Controller' do
-  let(:test_controller) { Controller.new }
+describe 'AccountsController' do
+  let(:test_controller) { AccountsController.new }
 
   def create_holder_and_return_id
     message = test_controller.create_holder('Robert Pulson')
@@ -21,43 +23,12 @@ describe 'Controller' do
       expect(test_controller).to respond_to(:accounts)
     end
 
-    it 'has a hash of holders' do
-      expect(test_controller).to respond_to(:holders)
-    end
-
     it 'has a current account id' do
       expect(test_controller.account_id).to eq(0)
     end
 
-    it 'has a current holder id' do
-      expect(test_controller.holder_id).to eq(0)
-    end
-
     it 'has a task manager' do
       expect(test_controller).to respond_to(:task_manager)
-    end
-  end
-
-  context 'when creating a holder' do
-    it 'increments the holder number' do
-      expect { create_holder_and_return_id }
-        .to change { test_controller.holder_id }.by(1)
-    end
-
-    it 'returns a message with the new holders id' do
-      id = test_controller.holder_id
-      new_holder_id = create_holder_and_return_id
-      expect(new_holder_id).to eq(id)
-    end
-
-    it 'gives the new holder the correct holder id' do
-      id = create_holder_and_return_id
-      expect(test_controller.holders[id].id).to eq(id)
-    end
-
-    it 'adds the new holder to the holders hash' do
-      id = create_holder_and_return_id
-      expect(test_controller.holders[id].name).to eq('Robert Pulson')
     end
   end
 
@@ -132,19 +103,20 @@ describe 'Controller' do
     end
   end
 
-  context 'when transacting' do
+  context 'when depositing' do
     it 'can make a deposit' do
       id = open_account_and_return_id
       expect(test_controller.accounts[id]).to receive(:deposit).with(50.00)
       test_controller.deposit(50.00, into: id)
     end
 
-    it 'can give the balance of an account' do
-      id = open_account_and_return_id
-      message = test_controller.get_balance_of(id)
-      expect(message.balance).to eq(0.00)
+    it 'raises an error if an invalid account id is entered' do
+      message = test_controller.deposit(10.00, into: 57)
+      expect(message.class).to eq(InvalidAccountMessage)
     end
+  end
 
+  context 'when withdrawing' do
     it 'can make a withdrawal' do
       id = open_account_and_return_id
       test_controller.deposit(50.00, into: id)
@@ -152,10 +124,11 @@ describe 'Controller' do
       test_controller.withdraw(50.00, from: id)
     end
 
-    it 'can reset the limit on an account' do
+    it 'returns an error if a withdrawal is more than the account limit' do
       id = open_account_and_return_id
-      expect(test_controller.accounts[id]).to receive(:reset_limit)
-      test_controller.reset_limit_on(test_controller.accounts[id])
+      test_controller.deposit 1000, into: id
+      message = test_controller.withdraw 501, from: id
+      expect(message.class).to eq(OverLimitMessage)
     end
 
     it 'can schedule a limit to be reset when a withdrawal is made' do
@@ -176,7 +149,9 @@ describe 'Controller' do
       expect(test_controller.task_manager).to receive(:in).once
       2.times { test_controller.withdraw(10.00, from: id) }
     end
+  end
 
+  context 'when making a transfer' do
     it 'can make a transfer between two accounts' do
       id = open_account_and_return_id
       test_controller.deposit(10.00, into: id)
@@ -192,17 +167,19 @@ describe 'Controller' do
       message = test_controller.transfer(10.00, from: id, to: id_2)
       expect(message.class).to eq(InsufficientFundsMessage)
     end
+  end
 
-    it 'returns an error if a withdrawal is more than the account limit' do
+  context 'when transacting' do
+    it 'can give the balance of an account' do
       id = open_account_and_return_id
-      test_controller.deposit 1000, into: id
-      message = test_controller.withdraw 501, from: id
-      expect(message.class).to eq(OverLimitMessage)
+      message = test_controller.get_balance_of(id)
+      expect(message.balance).to eq(0.00)
     end
 
-    it 'raises an error if an invalid account id is entered' do
-      message = test_controller.deposit(10.00, into: 57)
-      expect(message.class).to eq(InvalidAccountMessage)
+    it 'can reset the limit on an account' do
+      id = open_account_and_return_id
+      expect(test_controller.accounts[id]).to receive(:reset_limit)
+      test_controller.reset_limit_on(test_controller.accounts[id])
     end
 
     it 'can return all transactions of a given account' do

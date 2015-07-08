@@ -1,5 +1,5 @@
 # Definition of Controller Class
-class Controller
+class AccountsController
   attr_reader :name, :accounts, :account_id, :holders, :holder_id, :task_manager
 
   def initialize

@@ -1,7 +1,6 @@
 require 'require_all'
 require_all 'lib'
 require 'rufus-scheduler'
-require 'colorize'
 # Definition of Boundary Class
 class Boundary
   MENU_ITEMS = { 1 => { op: :op_1, output: 'Create New Holder'         },
@@ -22,7 +21,7 @@ class Boundary
                     6 => { output: :Student  } }
 
   def initialize
-    @controller = Controller.new
+    @controller = AccountsController.new
   end
 
   def start
