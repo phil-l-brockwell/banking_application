@@ -8,6 +8,7 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Added Gemfile with Rspec, Timecop and Rufus
 * Added message classes: Error/Success.
 * Added Boundary class
+* Added automated interest payments using Rufus
 
 # Next...
 * More thorough testing
