@@ -63,11 +63,11 @@ describe 'MainController' do
       expect(message.class).to eq(InvalidHolderMessage)
     end
 
-    xit 'schedules new interest payments' do
+    it 'schedules new interest payments' do
       id = open_account_and_return_id
       first_time = Time.now
       Timecop.scale(100_000_00)
-      expect(test_controller.accounts[id]).to receive(:add_interest)
+      expect(test_controller.accounts[id]).to receive(:deposit)
       sleep(4)
       second_time = Time.now
       expect(second_time.year - first_time.year).to eq(1)

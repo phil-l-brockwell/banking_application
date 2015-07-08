@@ -6,6 +6,7 @@ class MainController
     @account_id   = 0
     @accounts     = {}
     @holders      = HoldersController.new
+    @interest     = InterestController.new
     @task_manager = Rufus::Scheduler.new
   end
 
@@ -77,7 +78,8 @@ class MainController
   end
 
   def pay_interest_on(account)
-
+    amount = @interest.calculate_interest_on account
+    account.deposit amount
   end
 
   ACCOUNT_CLASSES = { :Current  => CurrentAccount,
