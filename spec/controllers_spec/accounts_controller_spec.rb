@@ -1,5 +1,6 @@
 require 'rufus-scheduler'
 require 'timecop'
+require 'controllers/base_controller'
 require 'controllers/accounts_controller'
 
 describe 'AccountsController' do
@@ -14,16 +15,6 @@ describe 'AccountsController' do
     holder_id = create_holder_and_return_id
     message = accounts_ctrl.open_account(type, with: holder_id)
     message.new_account_id
-  end
-
-  context 'when initialised' do
-    it 'has a hash of accounts' do
-      expect(accounts_ctrl).to respond_to(:store)
-    end
-
-    it 'has a current account id' do
-      expect(accounts_ctrl.id).to eq(1)
-    end
   end
 
   context 'when opening an account' do

@@ -1,10 +1,6 @@
-class LoanController
-
-  attr_reader :loans, :id
+class LoanController < BaseController
 
   def initialize
-    @loans = {}
-    @id = 1
+    super
   end
-
 end

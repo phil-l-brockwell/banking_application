@@ -8,17 +8,6 @@ describe 'HoldersController' do
     message.new_holder_id
   end
 
-  context 'when initialised' do
-
-    it 'has a hash of holders' do
-      expect(holders_ctrl).to respond_to(:store)
-    end
-
-    it 'has a current holder id' do
-      expect(holders_ctrl.id).to eq(1)
-    end
-  end
-
   context 'when creating a holder' do
     it 'increments the holder number' do
       expect { create_holder_and_return_id }
