@@ -11,5 +11,10 @@ describe 'Holder' do
     it 'has an id' do
       expect(test_holder.id).to eq(0)
     end
+
+    it 'capitalises the holders name' do
+      test_holder = Holder.new('robert pulson', 0)
+      expect(test_holder.name).to eq('Robert Pulson')
+    end
   end
 end
