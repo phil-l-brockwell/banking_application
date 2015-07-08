@@ -3,6 +3,8 @@ class BaseAccount
   attr_reader :balance, :main_holder, :holders, :id,
               :transactions, :type, :interest_rate, :limit
 
+  LIMIT = 300
+
   def initialize(holder, id)
     @balance = 0.00
     @main_holder = holder
@@ -10,6 +12,7 @@ class BaseAccount
     @transactions = []
     @id = id
     @interest_rate = 0.1
+    @limit = 300
   end
 
   def add_holder(holder)
@@ -24,6 +27,7 @@ class BaseAccount
 
   def withdraw(amount)
     @balance -= amount
+    deduct_from_limit amount
     new_transaction = Transaction.new(:withdrawal, amount)
     add_transaction new_transaction
   end
@@ -34,5 +38,15 @@ class BaseAccount
 
   def add_transaction(transaction)
     @transactions << transaction
+  end
+
+  def reset_limit
+    @limit = LIMIT
+  end
+
+  private
+
+  def deduct_from_limit(amount)
+    @limit -= amount
   end
 end

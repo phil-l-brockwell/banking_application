@@ -8,9 +8,5 @@ describe 'CurrentAccount' do
     it 'it has the correct type' do
       expect(test_account.type).to be(:Current)
     end
-
-    it 'has the correct limit' do
-      expect(test_account.limit).to eq(500)
-    end
   end
 end

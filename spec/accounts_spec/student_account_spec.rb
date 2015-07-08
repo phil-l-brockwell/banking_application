@@ -8,9 +8,5 @@ describe 'StudentAccount' do
     it 'has the correct type' do
       expect(test_account.type).to be(:Student)
     end
-
-    it 'has the correct limit' do
-      expect(test_account.limit).to eq(300)
-    end
   end
 end

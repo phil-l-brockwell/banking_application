@@ -43,6 +43,22 @@ describe 'BaseAccount' do
     expect(test_account.balance).to eq(0.00)
   end
 
+  it 'has a default limit of 300' do
+    expect(test_account.limit).to eq(300)
+  end
+
+  it 'updates its limit everytime a withdrawal is made' do
+    test_account.deposit(100.00)
+    expect { test_account.withdraw(100.00) }
+      .to change { test_account.limit }.by(-100.00)
+  end
+
+  it 'can reset its limit' do
+    test_account.withdraw(100.00)
+    test_account.reset_limit
+    expect(test_account.limit).to eq(300.00)
+  end
+
   it 'can add the interest to the balance' do
     test_account.deposit(100.00)
     test_account.add_interest

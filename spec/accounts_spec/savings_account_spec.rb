@@ -8,9 +8,5 @@ describe 'SavingsAccount' do
     it 'can initialise with the correct type' do
       expect(test_account.type).to be(:Savings)
     end
-
-    it 'has the correct limit' do
-      expect(test_account.limit).to eq(300)
-    end
   end
 end
