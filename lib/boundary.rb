@@ -25,7 +25,7 @@ class Boundary
                     10 => { output: :LCR          } }
 
   def initialize
-    @controller = MainController.new
+    @controller = AccountsController.new
   end
 
   def start

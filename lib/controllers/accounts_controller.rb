@@ -1,21 +1,21 @@
 # Definition of Controller Class
-class MainController
-  attr_reader :name, :accounts, :account_id, :holders, :task_manager
+class AccountsController
+  attr_reader :store, :id, :holders, :task_manager
 
   def initialize
-    @account_id   = 1
-    @accounts     = {}
+    @id           = 1
+    @store        = {}
     @holders      = HoldersController.new
     @interest     = InterestController.new
     @task_manager = Rufus::Scheduler.new
   end
 
   def open_account(type, with:)
-    return InvalidHolderMessage.new(with) unless holder = @holders.holder_exist?(with)
+    return InvalidHolderMessage.new(with) unless holder = holders.holder_exist?(with)
     new_account = create_account(type, holder)
     add_account new_account
     init_yearly_interest_for new_account
-    increment_account_id
+    increment_id
     AccountSuccessMessage.new(new_account)
   end
 
@@ -54,7 +54,7 @@ class MainController
   end
 
   def add_holder(id, to_account:)
-    return InvalidHolderMessage.new(id) unless new_holder = @holders.holder_exist?(id)
+    return InvalidHolderMessage.new(id) unless new_holder = holders.holder_exist?(id)
     return InvalidAccountMessage.new(to_account) unless account = account_exist?(to_account)
     return HolderOnAccountMessage.new(new_holder, account) if check_holders_of account, with: new_holder
     account.add_holder new_holder
@@ -68,8 +68,8 @@ class MainController
   end
 
   def get_accounts_of(holder_id)
-    return InvalidHolderMessage.new(holder_id) unless holder = @holders.holder_exist?(holder_id)
-    accounts = @accounts.select { |_, account| account.main_holder == holder }.values
+    return InvalidHolderMessage.new(holder_id) unless holder = holders.holder_exist?(holder_id)
+    accounts = @store.select { |_, account| account.main_holder == holder }.values
     DisplayAccountsMessage.new(accounts)
   end
 
@@ -116,19 +116,19 @@ class MainController
   end
 
   def add_account(new_account)
-    @accounts[new_account.id] = new_account
+    store[new_account.id] = new_account
   end
 
   def account_exist?(account_id)
-    @accounts[account_id]
+    store[account_id]
   end
 
   def create_account(type, holder)
     account_class = ACCOUNT_CLASSES[type]
-    account_class.new(holder, @account_id)
+    account_class.new(holder, @id)
   end
 
-  def increment_account_id
-    @account_id += 1
+  def increment_id
+    @id += 1
   end
 end
