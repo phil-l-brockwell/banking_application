@@ -21,10 +21,6 @@ describe 'BaseAccount' do
     it 'has a type' do
       expect(test_account).to respond_to(:type)
     end
-
-    it 'has a withdrawal limit' do
-      expect(test_account).to respond_to(:limit)
-    end
   end
 
   it 'can add a holder' do
@@ -43,20 +39,29 @@ describe 'BaseAccount' do
     expect(test_account.balance).to eq(0.00)
   end
 
-  it 'has a default limit of 300' do
-    expect(test_account.limit).to eq(300)
+  it 'has a default daily limit of 300' do
+    expect(test_account.daily_limit).to eq(300)
   end
 
   it 'updates its limit everytime a withdrawal is made' do
     test_account.deposit(100.00)
     expect { test_account.withdraw(100.00) }
-      .to change { test_account.limit }.by(-100.00)
+      .to change { test_account.daily_limit }.by(-100.00)
   end
 
   it 'can reset its limit' do
     test_account.withdraw(100.00)
     test_account.reset_limit
-    expect(test_account.limit).to eq(300.00)
+    expect(test_account.daily_limit).to eq(300.00)
+  end
+
+  it 'knows when its daily limit is under' do
+    test_account.withdraw(100.00)
+    expect(test_account.under_limit?).to eq(true)
+  end
+
+  it 'knows when it is not under its daily limit' do
+    expect(test_account.under_limit?).to eq(false)
   end
 
   it 'can add the interest to the balance' do

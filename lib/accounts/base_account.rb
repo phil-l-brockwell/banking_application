@@ -1,7 +1,7 @@
 # Definition of Base Account Class
 class BaseAccount
-  attr_reader :balance, :main_holder, :holders, :id,
-              :transactions, :type, :interest_rate, :limit
+  attr_reader :balance, :main_holder, :holders, :id, :type,
+              :transactions, :interest_rate, :daily_limit
 
   LIMIT = 300
 
@@ -12,7 +12,7 @@ class BaseAccount
     @transactions = []
     @id = id
     @interest_rate = 0.1
-    @limit = 300
+    @daily_limit = LIMIT
   end
 
   def add_holder(holder)
@@ -27,7 +27,7 @@ class BaseAccount
 
   def withdraw(amount)
     @balance -= amount
-    deduct_from_limit amount
+    deduct_from_daily_limit amount
     new_transaction = Transaction.new(:withdrawal, amount)
     add_transaction new_transaction
   end
@@ -41,12 +41,16 @@ class BaseAccount
   end
 
   def reset_limit
-    @limit = LIMIT
+    @daily_limit = LIMIT
+  end
+
+  def under_limit?
+    @daily_limit < LIMIT
   end
 
   private
 
-  def deduct_from_limit(amount)
-    @limit -= amount
+  def deduct_from_daily_limit(amount)
+    @daily_limit -= amount
   end
 end

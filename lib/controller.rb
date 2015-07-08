@@ -75,6 +75,11 @@ class Controller
     DisplayAccountsMessage.new(accounts)
   end
 
+  def reset_limit_on(id)
+    account = account_exist? id
+    account.reset_limit
+  end
+
   ACCOUNT_CLASSES = { :Current  => CurrentAccount,
                       :Savings  => SavingsAccount,
                       :Business => BusinessAccount,
@@ -97,7 +102,7 @@ class Controller
   end
 
   def check_limit_of(account, with:)
-    with > account.limit
+    with > account.daily_limit
   end
 
   def add_account(new_account)

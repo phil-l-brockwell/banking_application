@@ -152,6 +152,12 @@ describe 'Controller' do
       test_controller.withdraw(50.00, from: id)
     end
 
+    it 'can reset the limit on an account' do
+      id = open_account_and_return_id
+      expect(test_controller.accounts[id]).to receive(:reset_limit)
+      test_controller.reset_limit_on(id)
+    end
+
     it 'can make a transfer between two accounts' do
       id = open_account_and_return_id
       test_controller.deposit(10.00, into: id)

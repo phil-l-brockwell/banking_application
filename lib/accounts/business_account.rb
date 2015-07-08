@@ -6,6 +6,6 @@ class BusinessAccount < BaseAccount
   def initialize(holder, account_number)
     super
     @type = :Business
-    @limit = LIMIT
+    @daily_limit = LIMIT
   end
 end

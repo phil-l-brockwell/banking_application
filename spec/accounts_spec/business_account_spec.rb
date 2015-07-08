@@ -9,8 +9,8 @@ describe 'BusinessAccount' do
       expect(test_account.type).to be(:Business)
     end
 
-    it 'has the correct limit' do
-      expect(test_account.limit).to eq(500)
+    it 'has a daily limit of 500' do
+      expect(test_account.daily_limit).to eq(500)
     end
   end
 end
