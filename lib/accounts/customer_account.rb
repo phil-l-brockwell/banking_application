@@ -1,6 +1,6 @@
 # Definition of Customer Account Class
 class CustomerAccount < BaseAccount
-  attr_accessor :interest_rate, :holders, :daily_limit
+  attr_reader :interest_rate, :holders, :daily_limit
 
   LIMIT = 300
 

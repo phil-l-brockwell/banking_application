@@ -3,7 +3,7 @@ require_all 'lib'
 require 'rufus-scheduler'
 # Definition of Boundary Class
 class Boundary
-  attr_accessor :accounts, :holders
+  attr_accessor :accounts, :holders, :loans
 
   MENU_ITEMS = { 1 => { op: :op_1, output: 'Create New Holder'         },
                  2 => { op: :op_2, output: 'Create an Account'         },
@@ -110,7 +110,7 @@ class Boundary
     puts_with_sleep 'Enter Holder ID you wish to add and Press Enter'
     h_id = gets.chomp.to_i
     return InvalidHolderMessage.new(h_id) unless holders.exist? h_id
-    accounts.add_holder h_id, to_account: a_id
+    accounts.add_holder h_id, to: a_id
   end
 
   def op_8

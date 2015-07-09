@@ -17,7 +17,7 @@ class AccountsController
 
   def open(type, with:)
     holder = holders.exist? with
-    account = create_account type, holder
+    account = create type, holder
     add account
     init_yearly_interest_for account
     AccountSuccessMessage.new(account)
@@ -53,9 +53,9 @@ class AccountsController
     TransferSuccessMessage.new(amount)
   end
 
-  def add_holder(id, to_account:)
+  def add_holder(id, to:)
     holder = holders.exist? id
-    account = exist? to_account
+    account = exist? to
     return HolderOnAccountMessage.new(holder, account) if account.has_holder? holder
     account.add_holder holder
     AddHolderSuccessMessage.new(holder, account)
@@ -107,7 +107,7 @@ class AccountsController
     end
   end
 
-  def create_account(type, holder)
+  def create(type, holder)
     account_class = ACCOUNT_CLASSES[type]
     account_class.new(holder, current_id)
   end

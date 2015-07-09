@@ -63,7 +63,7 @@ describe 'AccountsController' do
       new_holder_id = create_holder_and_return_id
       expect(accounts_ctrl.store[id]).to receive(:add_holder).once
         .with(accounts_ctrl.holders.store[new_holder_id])
-      expect(accounts_ctrl.add_holder(new_holder_id, to_account: id).class)
+      expect(accounts_ctrl.add_holder(new_holder_id, to: id).class)
         .to eq(AddHolderSuccessMessage)
     end
 
@@ -71,15 +71,15 @@ describe 'AccountsController' do
       new_holder_id = create_holder_and_return_id
       message = accounts_ctrl.open(:Current, with: new_holder_id)
       account_id = message.new_account_id
-      expect(accounts_ctrl.add_holder(new_holder_id, to_account: account_id)
+      expect(accounts_ctrl.add_holder(new_holder_id, to: account_id)
         .class).to eq(HolderOnAccountMessage)
     end
 
     it 'cannot add the same holder to an account twice' do
       new_holder_id = create_holder_and_return_id
       id = open_account_and_return_id
-      accounts_ctrl.add_holder(new_holder_id, to_account: id)
-      expect(accounts_ctrl.add_holder(new_holder_id, to_account: id).class)
+      accounts_ctrl.add_holder(new_holder_id, to: id)
+      expect(accounts_ctrl.add_holder(new_holder_id, to: id).class)
         .to eq(HolderOnAccountMessage)
     end
   end
