@@ -29,6 +29,7 @@ class Boundary
   def initialize
     @accounts = AccountsController.instance
     @holders  = HoldersController.instance
+    @loans    = LoansController.instance
   end
 
   def start

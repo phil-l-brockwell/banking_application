@@ -1,6 +1,8 @@
+require 'singleton'
 require_relative 'controller_item_store'
 # Definition of Loan Controller Class
-class LoanController
+class LoansController
+  include Singleton
   include ControllerItemStore
 
   def create_loan(options)

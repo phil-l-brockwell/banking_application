@@ -1,5 +1,7 @@
 # Definition of Interest Controller
+require 'singleton'
 class InterestController
+  include Singleton
   attr_reader :account
 
   def initialize
@@ -11,6 +13,8 @@ class InterestController
     deduct_interest interest
     interest
   end
+
+  private
 
   def deduct_interest(amount)
     @account.withdraw amount

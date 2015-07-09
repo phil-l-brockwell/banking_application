@@ -1,8 +1,8 @@
-require 'controllers/loan_controller'
+require 'controllers/loans_controller'
 
-describe 'LoanController' do
-  let(:holder)    { double :holder     }
-  let(:loan_ctrl) { LoanController.new }
+describe 'LoansController' do
+  let(:holder)    { double :holder           }
+  let(:loan_ctrl) { LoansController.instance }
 
   context 'when creating a loan' do
     it 'adds it to the store' do

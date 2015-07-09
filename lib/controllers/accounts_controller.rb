@@ -1,5 +1,6 @@
 require 'singleton'
 require_relative 'controller_item_store'
+require 'controllers/loans_controller'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore
@@ -10,7 +11,8 @@ class AccountsController
   def initialize
     super
     @holders      = HoldersController.instance
-    @interest     = InterestController.new
+    @interest     = InterestController.instance
+    @loans        = LoansController.instance
     @task_manager = Rufus::Scheduler.new
   end
 

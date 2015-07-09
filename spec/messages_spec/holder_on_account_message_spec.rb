@@ -17,7 +17,7 @@ describe 'HolderOnAccountMessage' do
 
     it 'has the correct main text' do
       expect(test_message.main)
-        .to eq(['Holder ID: 9 already exists on Account ID: 2'])
+        .to eq(['Holder ID: 9 exists on Account ID: 2'])
     end
   end
 end

@@ -12,7 +12,7 @@ describe 'OverLimitMessage' do
 
     it 'has the correct main text' do
       expect(test_message.main[0])
-        .to eq('Account ID: 3 has reached its daily withdrawal limit.')
+        .to eq('Account ID: 3 has reached its daily limit.')
     end
   end
 end
