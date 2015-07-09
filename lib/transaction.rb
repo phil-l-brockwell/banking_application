@@ -5,6 +5,6 @@ class Transaction
   def initialize(type, amount)
     @type = type
     @amount = amount
-    @date = Time.now
+    @date = Time.now.strftime('%a %d %b %Y')
   end
 end

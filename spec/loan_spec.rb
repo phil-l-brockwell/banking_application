@@ -42,12 +42,6 @@ describe 'Loan' do
       expect(loan.term).to eq(2)
     end
 
-    it 'calculates the repayment date' do
-      loan = create_loan
-      today = DateTime.now
-      expect(loan.repayment_date.year - today.year).to be(2)
-    end
-
     it 'has an empty transactions array' do
       loan = create_loan
       expect(loan.transactions).to eq([])
@@ -67,7 +61,7 @@ describe 'Loan' do
       loan.make_payment(100)
       expect(loan.transactions.last.type).to eq(:loan_payment)
       expect(loan.transactions.last.amount).to eq(100)
-      expect(loan.transactions.last.date).to eq(Time.now)
+      expect(loan.transactions.last.date).to eq(Time.now.strftime('%a %d %b %Y'))
       Timecop.return
     end
   end

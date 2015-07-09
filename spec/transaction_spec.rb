@@ -10,7 +10,7 @@ describe 'Transaction' do
 
   it 'is initialised with the current date and time' do
     Timecop.freeze
-    expect(new_transaction.date).to eq(Time.now)
+    expect(new_transaction.date).to eq(Time.now.strftime('%a %d %b %Y'))
     Timecop.return
   end
 

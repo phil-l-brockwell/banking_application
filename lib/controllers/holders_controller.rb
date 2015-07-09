@@ -6,8 +6,8 @@ class HoldersController
   include Singleton
 
   def create(name)
-    new_holder = Holder.new(name, current_id)
-    add new_holder
-    NewHolderSuccessMessage.new(new_holder)
+    holder = Holder.new(name, current_id)
+    add holder
+    NewHolderSuccessMessage.new(holder)
   end
 end

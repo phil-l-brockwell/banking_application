@@ -11,7 +11,7 @@ class Loan
     @holder = options[:holder]
     @term = options[:term]
     @rate = options[:rate]
-    @repayment_date = DateTime.now >> (12 * @term)
+    @repayment_date = (DateTime.now >> (12 * @term)).strftime('%a %d %b %Y')
     @transactions = []
     @outstanding = @amount_borrowed + (amount_borrowed * rate)
   end

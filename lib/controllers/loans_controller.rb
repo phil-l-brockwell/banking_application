@@ -6,8 +6,13 @@ class LoansController
   include ControllerItemStore
 
   def create_loan(options)
-    new_loan = Loan.new(options, current_id)
-    add new_loan
-    LoanSuccessMessage.new(new_loan)
+    loan = Loan.new(options, current_id)
+    add loan
+    LoanSuccessMessage.new(loan)
+  end
+
+  def show(id)
+    loan = exist? id
+    ShowLoanMessage.new(loan)
   end
 end

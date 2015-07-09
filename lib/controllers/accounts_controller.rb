@@ -11,7 +11,6 @@ class AccountsController
     super
     @holders      = HoldersController.instance
     @interest     = InterestController.instance
-    @loans        = LoansController.instance
     @task_manager = Rufus::Scheduler.new
   end
 
@@ -48,6 +47,7 @@ class AccountsController
     recipitent = exist? to
     return InsufficientFundsMessage.new(donar) unless donar.contains? amount
     return OverLimitMessage.new(donar) unless donar.limit_allow? amount
+    init_limit_reset_for donar unless donar.breached?
     donar.withdraw amount
     recipitent.deposit amount
     TransferSuccessMessage.new(amount)
