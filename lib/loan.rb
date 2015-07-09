@@ -3,9 +3,10 @@ require 'date'
 class Loan
   attr_accessor :amount_borrowed, :holder, :rate,
                 :term, :repayment_date, :transactions,
-                :outstanding
+                :outstanding, :id
 
-  def initialize(options = {})
+  def initialize(options = {}, id)
+    @id = id
     @amount_borrowed = options[:borrowed]
     @holder = options[:holder]
     @term = options[:term]

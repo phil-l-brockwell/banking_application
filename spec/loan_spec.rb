@@ -6,10 +6,15 @@ describe 'Loan' do
 
   def create_loan
     options = { holder: test_holder, borrowed: 1000, term: 2, rate: 2 }
-    Loan.new(options)
+    Loan.new(options, 5)
   end
 
   context 'when initialised' do
+    it 'has an id' do
+      loan = create_loan
+      expect(loan.id).to eq(5)
+    end
+
     it 'knows how much was borrowed' do
       loan = create_loan
       expect(loan.amount_borrowed).to eq(1000)

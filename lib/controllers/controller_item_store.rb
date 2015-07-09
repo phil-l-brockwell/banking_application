@@ -7,17 +7,19 @@ module ControllerItemStore
     @id = 1
   end
 
-  def item_exist?(item_id)
-    store[item_id]
+  def exist?(id)
+    store[id]
   end
 
   private
 
-  def increment_id
+  def current_id
+    new_id = @id
     @id += 1
+    new_id
   end
 
-  def add_item(item)
+  def add(item)
     store[item.id] = item
   end
 end
