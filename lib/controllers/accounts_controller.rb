@@ -1,12 +1,11 @@
 require 'singleton'
 require_relative 'controller_item_store'
-require 'controllers/loans_controller'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore
   include Singleton
 
-  attr_reader :holders, :task_manager
+  attr_reader :holders, :task_manager, :interest
 
   def initialize
     super
@@ -32,9 +31,9 @@ class AccountsController
 
   def withdraw(amount, from:)
     account = exist? from
-    return InsufficientFundsMessage.new(account) unless check_balance_of account, with: amount
-    return OverLimitMessage.new(account) if check_limit_of account, with: amount
-    init_limit_reset_for account unless account.under_limit?
+    return InsufficientFundsMessage.new(account) unless account.contains? amount
+    return OverLimitMessage.new(account) unless account.limit_allow? amount
+    init_limit_reset_for account unless account.breached?
     account.withdraw amount
     WithdrawSuccessMessage.new(amount)
   end
@@ -47,8 +46,8 @@ class AccountsController
   def transfer(amount, from:, to:)
     donar = exist? from
     recipitent = exist? to
-    return InsufficientFundsMessage.new(donar) unless check_balance_of donar, with: amount
-    return OverLimitMessage.new(donar) if check_limit_of donar, with: amount
+    return InsufficientFundsMessage.new(donar) unless donar.contains? amount
+    return OverLimitMessage.new(donar) unless donar.limit_allow? amount
     donar.withdraw amount
     recipitent.deposit amount
     TransferSuccessMessage.new(amount)
@@ -57,7 +56,7 @@ class AccountsController
   def add_holder(id, to_account:)
     holder = holders.exist? id
     account = exist? to_account
-    return HolderOnAccountMessage.new(holder, account) if check_holders_of account, with: holder
+    return HolderOnAccountMessage.new(holder, account) if account.has_holder? holder
     account.add_holder holder
     AddHolderSuccessMessage.new(holder, account)
   end
@@ -79,7 +78,7 @@ class AccountsController
   end
 
   def pay_interest_on(account)
-    amount = @interest.calculate_interest_on account
+    amount = interest.calculate_interest_on account
     account.deposit amount
   end
 
@@ -97,23 +96,15 @@ class AccountsController
   private
 
   def init_yearly_interest_for(account)
-    @task_manager.every '1y' do pay_interest_on account end
+    task_manager.every '1y' do 
+      pay_interest_on account 
+    end
   end
 
   def init_limit_reset_for(account)
-    @task_manager.in '1d' do reset_limit_on account end
-  end
-
-  def check_holders_of(account, with:)
-    account.main_holder == with || account.holders.value?(with)
-  end
-
-  def check_balance_of(account, with:)
-    account.balance >= with
-  end
-
-  def check_limit_of(account, with:)
-    with > account.daily_limit
+    task_manager.in '1d' do 
+      reset_limit_on account 
+    end
   end
 
   def create_account(type, holder)

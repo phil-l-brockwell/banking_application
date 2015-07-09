@@ -15,7 +15,7 @@ class CustomerAccount < BaseAccount
 
   def withdraw(amount)
     @balance -= amount
-    deduct_from_daily_limit amount
+    @daily_limit -= amount
     new_transaction = Transaction.new(:withdrawal, amount)
     add_transaction new_transaction
   end
@@ -28,13 +28,19 @@ class CustomerAccount < BaseAccount
     @daily_limit = LIMIT
   end
 
-  def under_limit?
+  def breached?
     @daily_limit < LIMIT
   end
 
-  private
+  def contains?(amount)
+    @balance >= amount
+  end
 
-  def deduct_from_daily_limit(amount)
-    @daily_limit -= amount
+  def limit_allow?(amount)
+    daily_limit >= amount
+  end
+
+  def has_holder?(holder)
+    main_holder == holder || holders.value?(holder)
   end
 end
