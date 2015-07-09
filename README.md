@@ -17,4 +17,3 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Refactor controller testing
 * Add overdraft facilities
 * Add rollback facility
-* Add Web UI using Sinatra and deploy with Heroku
