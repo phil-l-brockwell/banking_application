@@ -1,12 +1,11 @@
 require 'date'
-
+# Definition of Loan Class
 class Loan
-
   attr_accessor :amount_borrowed, :holder, :rate,
                 :term, :repayment_date, :transactions,
                 :outstanding
 
-  def initialize(options={})
+  def initialize(options = {})
     @amount_borrowed = options[:borrowed]
     @holder = options[:holder]
     @term = options[:term]

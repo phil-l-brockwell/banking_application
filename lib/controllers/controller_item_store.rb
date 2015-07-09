@@ -1,5 +1,5 @@
+# Definition of Controller Item Store module
 module ControllerItemStore
-
   attr_reader :store, :id
 
   def initialize

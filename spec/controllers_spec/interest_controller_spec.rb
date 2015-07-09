@@ -1,7 +1,7 @@
 require 'controllers/interest_controller'
 
 describe 'InterestController' do
-  let(:test_account)    { double :account, balance: 2500.00, interest_rate: 0.1 }
+  let(:test_account)    { double :account, balance: 2500, interest_rate: 0.1 }
   let(:test_controller) { InterestController.new }
 
   context 'when initialised' do

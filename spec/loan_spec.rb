@@ -6,7 +6,7 @@ describe 'Loan' do
 
   def create_loan
     options = { holder: test_holder, borrowed: 1000, term: 2, rate: 2 }
-    loan = Loan.new(options)
+    Loan.new(options)
   end
 
   context 'when initialised' do
@@ -53,7 +53,7 @@ describe 'Loan' do
     it 'can make a payment' do
       loan = create_loan
       expect { loan.make_payment(100) }
-        .to change { loan.outstanding }.by (-100)
+        .to change { loan.outstanding }.by(-100)
     end
 
     it 'adds a transaction to the array' do

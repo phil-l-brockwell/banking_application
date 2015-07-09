@@ -1,5 +1,6 @@
 require 'controllers/controller_item_store'
 
+# Holder class to include ControllerItemStore and run tests on
 class ControllerStoreHolder; include ControllerItemStore; end
 
 describe 'ControllerItemStore' do

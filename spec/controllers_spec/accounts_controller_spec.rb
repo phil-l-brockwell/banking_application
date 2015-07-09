@@ -112,7 +112,7 @@ describe 'AccountsController' do
       id = open_account_and_return_id
       accounts_ctrl.deposit(50.00, into: id)
       accounts_ctrl.withdraw(50.00, from: id)
-      Timecop.scale(100000)
+      Timecop.scale(100_000)
       expect(accounts_ctrl.store[id]).to receive(:reset_limit)
       sleep(1)
     end

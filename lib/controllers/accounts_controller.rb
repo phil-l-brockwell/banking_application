@@ -1,7 +1,6 @@
 require_relative 'controller_item_store'
 # Definition of Controller Class
 class AccountsController
-
   include ControllerItemStore
 
   attr_reader :holders, :task_manager
@@ -72,7 +71,7 @@ class AccountsController
 
   def get_accounts_of(holder_id)
     return InvalidHolderMessage.new(holder_id) unless holder = holders.item_exist?(holder_id)
-    accounts = store.select { |_, account| account.main_holder == holder }.values
+    accounts = store.select { |_, a| a.main_holder == holder }.values
     DisplayAccountsMessage.new(accounts)
   end
 

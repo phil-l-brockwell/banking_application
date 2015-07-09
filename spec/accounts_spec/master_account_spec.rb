@@ -9,7 +9,7 @@ describe 'MasterAccount' do
     end
 
     it 'has a balance of one million' do
-      expect(test_account.balance).to eq(1000000)
+      expect(test_account.balance).to eq(100_000_0)
     end
 
     it 'has no daily limit' do
@@ -19,7 +19,7 @@ describe 'MasterAccount' do
 
   context 'when making withdrawals' do
     it 'is never under limit' do
-      test_account.withdraw(1000000000)
+      test_account.withdraw(100_000_000_0)
       expect(test_account.under_limit?).to eq(false)
     end
   end

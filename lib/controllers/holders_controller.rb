@@ -1,7 +1,6 @@
 require_relative 'controller_item_store'
-
+# Definition of Holders Controller Class
 class HoldersController
-
   include ControllerItemStore
 
   def create_holder(name)

@@ -1,10 +1,10 @@
+# Definition of Master Account Class
 class MasterAccount < BaseAccount
-
   def initialize
     super
     @id = :master
     @main_holder = :master
-    @balance = 1000000.00
+    @balance = 100_000_0.00
     @type = :Master
   end
 

@@ -7,7 +7,7 @@ class Holder
     @id = id
   end
 
-  def normalise(string)
-    string.split.map { |word| word.capitalize.gsub(/[^0-9A-Za-z]/, '') }.join(' ')
+  def normalise(name)
+    name.split.map { |word| word.capitalize.gsub(/[^0-9A-Za-z]/, '') }.join(' ')
   end
 end

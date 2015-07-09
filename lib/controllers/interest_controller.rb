@@ -1,5 +1,5 @@
+# Definition of Interest Controller
 class InterestController
-
   attr_reader :account
 
   def initialize
@@ -13,6 +13,6 @@ class InterestController
   end
 
   def deduct_interest(amount)
-    @account.withdraw 500
+    @account.withdraw amount
   end
 end
