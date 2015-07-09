@@ -3,6 +3,9 @@ require_all 'lib'
 require 'rufus-scheduler'
 # Definition of Boundary Class
 class Boundary
+
+  attr_accessor :accounts, :holders
+
   MENU_ITEMS = { 1 => { op: :op_1, output: 'Create New Holder'         },
                  2 => { op: :op_2, output: 'Create an Account'         },
                  3 => { op: :op_3, output: 'Make a Deposit'            },
@@ -25,7 +28,8 @@ class Boundary
                     10 => { output: :LCR          } }
 
   def initialize
-    @controller = AccountsController.new
+    @accounts = AccountsController.instance
+    @holders = HoldersController.instance
   end
 
   def start
@@ -49,7 +53,7 @@ class Boundary
 
   def op_1
     puts 'Enter Name and Press Enter'
-    @controller.create_holder gets.chomp.capitalize
+    holders.create gets.chomp.capitalize
   end
 
   def op_2
@@ -58,20 +62,23 @@ class Boundary
     type = ACCOUNT_TYPES[input][:output]
     puts_with_sleep 'Enter Holder ID'
     holder_id = gets.chomp.to_i
-    @controller.open_account(type, with: holder_id)
+    accounts.open_account(type, with: holder_id)
   end
 
   def op_3
     puts_with_sleep 'Enter Account ID to deposit into and Press Enter'
-    account_id = gets.chomp.to_i
+    id = gets.chomp.to_i
+    return InvalidAccountMessage.new(id) unless accounts.exist? id
     puts_with_sleep 'Enter Amount you would like to Deposit and Press Enter'
     amount = gets.chomp.to_i
-    @controller.deposit amount, into: account_id
+    accounts.deposit amount, into: id
   end
 
   def op_4
     puts_with_sleep 'Enter Account ID and Press Enter'
-    @controller.get_balance_of gets.chomp.to_i
+    id = gets.chomp.to_i
+    return InvalidAccountMessage.new(id) unless accounts.exist? id
+    accounts.get_balance_of id
   end
 
   def op_5
@@ -79,7 +86,7 @@ class Boundary
     account_id = gets.chomp.to_i
     puts_with_sleep 'Enter Amount you would like to Withdraw and Press Enter'
     amount = gets.chomp.to_i
-    @controller.withdraw amount, from: account_id
+    accounts.withdraw amount, from: account_id
   end
 
   def op_6
@@ -89,7 +96,7 @@ class Boundary
     recipitent_id = gets.chomp.to_i
     puts_with_sleep 'Enter Amount you would like to transfer'
     amount = gets.chomp.to_i
-    @controller.transfer amount, from: donar_id, to: recipitent_id
+    accounts.transfer amount, from: donar_id, to: recipitent_id
   end
 
   def op_7
@@ -97,17 +104,17 @@ class Boundary
     account_id = gets.chomp.to_i
     puts_with_sleep 'Enter Holder ID you wish to add and Press Enter'
     new_holder_id = gets.chomp.to_i
-    @controller.add_holder new_holder_id, to_account: account_id
+    accounts.add_holder new_holder_id, to_account: account_id
   end
 
   def op_8
     puts_with_sleep 'Enter Holder ID to View Accounts of and Press Enter'
-    @controller.get_accounts_of gets.chomp.to_i
+    accounts.get_accounts_of gets.chomp.to_i
   end
 
   def op_9
     puts_with_sleep 'Enter Account ID to View Transactions for and Press Enter'
-    @controller.get_transactions_of gets.chomp.to_i
+    accounts.get_transactions_of gets.chomp.to_i
   end
 
   def puts_with_sleep(string)

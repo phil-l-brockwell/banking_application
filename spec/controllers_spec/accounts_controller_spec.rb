@@ -4,10 +4,10 @@ require 'controllers/controller_item_store'
 require 'controllers/accounts_controller'
 
 describe 'AccountsController' do
-  let(:accounts_ctrl) { AccountsController.new }
+  let(:accounts_ctrl) { AccountsController.instance }
 
   def create_holder_and_return_id
-    message = accounts_ctrl.create_holder('Robert Pulson')
+    message = accounts_ctrl.holders.create('Robert Pulson')
     message.new_holder_id
   end
 

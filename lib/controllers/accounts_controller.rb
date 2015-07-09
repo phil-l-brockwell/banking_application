@@ -1,13 +1,15 @@
+require 'singleton'
 require_relative 'controller_item_store'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore
+  include Singleton
 
   attr_reader :holders, :task_manager
 
   def initialize
     super
-    @holders      = HoldersController.new
+    @holders      = HoldersController.instance
     @interest     = InterestController.new
     @task_manager = Rufus::Scheduler.new
   end
@@ -20,12 +22,8 @@ class AccountsController
     AccountSuccessMessage.new(new_account)
   end
 
-  def create_holder(name)
-    holders.create_holder(name)
-  end
-
   def deposit(amount, into:)
-    return InvalidAccountMessage.new(into) unless account = exist?(into)
+    account = exist? into
     account.deposit amount
     DepositSuccessMessage.new(amount)
   end
@@ -39,8 +37,8 @@ class AccountsController
     WithdrawSuccessMessage.new(amount)
   end
 
-  def get_balance_of(account_id)
-    return InvalidAccountMessage.new(account_id) unless account = exist?(account_id)
+  def get_balance_of(id)
+    account = exist? id
     BalanceMessage.new(account)
   end
 

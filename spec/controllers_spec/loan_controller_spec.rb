@@ -5,7 +5,6 @@ describe 'LoanController' do
   let(:loan_ctrl) { LoanController.new }
 
   context 'when creating a loan' do
-
     it 'adds it to the store' do
       options = { holder: holder, borrowed: 10000, term: 5, rate: 1 }
       expect { loan_ctrl.create_loan(options) }
@@ -28,6 +27,12 @@ describe 'LoanController' do
       expect(loan.amount_borrowed).to eq(10000)
       expect(loan.term).to eq(5)
       expect(loan.rate).to eq(1)
+    end
+  end
+
+  context 'when making payments' do
+    it 'deducts the amount from the loan' do
+
     end
   end
 end

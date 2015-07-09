@@ -1,10 +1,10 @@
 require 'controllers/holders_controller'
 
 describe 'HoldersController' do
-  let(:holders_ctrl) { HoldersController.new }
+  let(:holders_ctrl) { HoldersController.instance }
 
   def create_holder_and_return_id
-    message = holders_ctrl.create_holder('Robert Pulson')
+    message = holders_ctrl.create('Robert Pulson')
     message.new_holder_id
   end
 
