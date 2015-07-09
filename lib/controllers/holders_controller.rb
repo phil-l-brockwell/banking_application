@@ -1,8 +1,8 @@
-class HoldersController < BaseController
+require_relative 'controller_item_store'
 
-  def initialize
-    super
-  end
+class HoldersController
+
+  include ControllerItemStore
 
   def create_holder(name)
     new_holder = Holder.new(name, id)

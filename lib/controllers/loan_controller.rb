@@ -1,6 +1,7 @@
-class LoanController < BaseController
+require_relative 'controller_item_store'
 
-  def initialize
-    super
-  end
+class LoanController
+
+  include ControllerItemStore
+
 end

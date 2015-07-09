@@ -1,5 +1,9 @@
+require_relative 'controller_item_store'
 # Definition of Controller Class
-class AccountsController < BaseController
+class AccountsController
+
+  include ControllerItemStore
+
   attr_reader :holders, :task_manager
 
   def initialize

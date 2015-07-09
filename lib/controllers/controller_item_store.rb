@@ -1,4 +1,4 @@
-class BaseController
+module ControllerItemStore
 
   attr_reader :store, :id
 

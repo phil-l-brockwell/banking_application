@@ -1,6 +1,6 @@
 require 'rufus-scheduler'
 require 'timecop'
-require 'controllers/base_controller'
+require 'controllers/controller_item_store'
 require 'controllers/accounts_controller'
 
 describe 'AccountsController' do
