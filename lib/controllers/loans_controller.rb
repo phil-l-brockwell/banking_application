@@ -15,4 +15,10 @@ class LoansController
     loan = exist? id
     ShowLoanMessage.new(loan)
   end
+
+  def pay(amount, off:)
+    loan = exist? off
+    loan.make_payment amount
+    LoanPaidMessage.new(loan)
+  end
 end

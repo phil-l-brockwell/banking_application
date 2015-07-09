@@ -15,7 +15,8 @@ class Boundary
                  8  => { op: :op_8,  output: 'Show Customers Accounts'   },
                  9  => { op: :op_9,  output: 'View Account Transactions' },
                  10 => { op: :op_10, output: 'New Loan'                  },
-                 11 => { op: :op_11, output: 'View Loan'                 } }
+                 11 => { op: :op_11, output: 'View Loan'                 },
+                 12 => { op: :op_12, output: 'Make Loan Payment'         } }
 
   ACCOUNT_TYPES = { 1  => { output: :Current      },
                     2  => { output: :Savings      },
@@ -149,6 +150,15 @@ class Boundary
     id = gets.chomp.to_i
     return InvalidLoanMessage.new unless loans.exist? id
     loans.show id
+  end
+
+  def op_12
+    puts_with_sleep 'Enter Loan ID'
+    id = gets.chomp.to_i
+    return InvalidLoanMessage.new unless loans.exist? id
+    puts_with_sleep 'Enter Amount'
+    amount = gets.chomp.to_i
+    loans.pay amount, off: id
   end
 
   def puts_with_sleep(string)

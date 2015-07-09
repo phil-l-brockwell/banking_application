@@ -11,15 +11,15 @@ module ControllerItemStore
     store[id]
   end
 
+  def add(item)
+    store[item.id] = item
+  end
+
   private
 
   def current_id
     new_id = @id
     @id += 1
     new_id
-  end
-
-  def add(item)
-    store[item.id] = item
   end
 end

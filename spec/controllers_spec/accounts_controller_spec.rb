@@ -45,10 +45,6 @@ describe 'AccountsController' do
       expect(accounts_ctrl.store[id].type).to eq(:Current)
     end
 
-    it 'knows if a holder exists' do
-      expect(accounts_ctrl.holders.exist?(67)).not_to eq(true)
-    end
-
     it 'schedules new interest payments' do
       id = open_account_and_return_id
       Timecop.scale(100_000_00)
