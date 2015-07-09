@@ -37,7 +37,8 @@ class Boundary
 
   def start
     show(MENU_ITEMS)
-    input = verify(gets.chomp.to_i, with: MENU_ITEMS)
+    input = gets.chomp
+    input = verify(input, with: MENU_ITEMS)
     message = send MENU_ITEMS[input][:op]
     puts_with_sleep message.output
     start
@@ -46,12 +47,13 @@ class Boundary
   private
 
   def verify(input, with:)
-    until with.key? input
+    until with.key? input.to_i
+      abort('Have a Nice Day!') if input == 'exit'
       puts_with_sleep 'Unrecognised option, try again...'
       show(with)
-      input = gets.chomp.to_i
+      input = gets.chomp
     end
-    input
+    input.to_i
   end
 
   def op_1
@@ -168,7 +170,7 @@ class Boundary
 
   def show(list)
     list.each { |key, value| puts_with_sleep "#{key}. #{value[:output]}" }
-    puts_with_sleep 'Make a selection and Press Enter'
+    puts_with_sleep "Make a selection or type 'exit' to quit."
   end
 end
 
