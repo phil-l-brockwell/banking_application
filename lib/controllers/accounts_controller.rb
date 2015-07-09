@@ -14,9 +14,9 @@ class AccountsController
     @task_manager = Rufus::Scheduler.new
   end
 
-  def open_account(type, with:)
-    return InvalidHolderMessage.new(with) unless holder = holders.exist?(with)
-    new_account = create_account(type, holder)
+  def open(type, with:)
+    holder = holders.exist? with
+    new_account = create_account type, holder
     add new_account
     init_yearly_interest_for new_account
     AccountSuccessMessage.new(new_account)
@@ -29,7 +29,7 @@ class AccountsController
   end
 
   def withdraw(amount, from:)
-    return InvalidAccountMessage.new(from) unless account = exist?(from)
+    account = exist? from
     return InsufficientFundsMessage.new(account) unless check_balance_of account, with: amount
     return OverLimitMessage.new(account) if check_limit_of account, with: amount
     init_limit_reset_for account unless account.under_limit?
@@ -43,8 +43,8 @@ class AccountsController
   end
 
   def transfer(amount, from:, to:)
-    return InvalidAccountMessage.new(from) unless donar = exist?(from)
-    return InvalidAccountMessage.new(to) unless recipitent = exist?(to)
+    donar = exist? from
+    recipitent = exist? to
     return InsufficientFundsMessage.new(donar) unless check_balance_of donar, with: amount
     return OverLimitMessage.new(donar) if check_limit_of donar, with: amount
     donar.withdraw amount
@@ -53,21 +53,21 @@ class AccountsController
   end
 
   def add_holder(id, to_account:)
-    return InvalidHolderMessage.new(id) unless new_holder = holders.exist?(id)
-    return InvalidAccountMessage.new(to_account) unless account = exist?(to_account)
-    return HolderOnAccountMessage.new(new_holder, account) if check_holders_of account, with: new_holder
-    account.add_holder new_holder
-    AddHolderSuccessMessage.new(new_holder, account)
+    holder = holders.exist? id
+    account = exist? to_account
+    return HolderOnAccountMessage.new(holder, account) if check_holders_of account, with: holder
+    account.add_holder holder
+    AddHolderSuccessMessage.new(holder, account)
   end
 
-  def get_transactions_of(account_id)
-    return InvalidAccountMessage.new(account_id) unless account = exist?(account_id)
+  def get_transactions_of(id)
+    account = exist? id
     transactions = account.transactions
     TransactionsMessage.new(transactions)
   end
 
-  def get_accounts_of(holder_id)
-    return InvalidHolderMessage.new(holder_id) unless holder = holders.exist?(holder_id)
+  def get_accounts_of(id)
+    holder = holders.exist? id
     accounts = store.select { |_, a| a.main_holder == holder }.values
     DisplayAccountsMessage.new(accounts)
   end

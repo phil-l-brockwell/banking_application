@@ -13,7 +13,7 @@ describe 'AccountsController' do
 
   def open_account_and_return_id(type = :Savings)
     holder_id = create_holder_and_return_id
-    message = accounts_ctrl.open_account(type, with: holder_id)
+    message = accounts_ctrl.open(type, with: holder_id)
     message.new_account_id
   end
 
@@ -45,9 +45,8 @@ describe 'AccountsController' do
       expect(accounts_ctrl.store[id].type).to eq(:Current)
     end
 
-    it 'returns an error message if an invalid holder number is entered' do
-      message = accounts_ctrl.open_account(:Current, with: 57)
-      expect(message.class).to eq(InvalidHolderMessage)
+    it 'knows if a holder exists' do
+      expect(accounts_ctrl.holders.exist?(67)).not_to eq(true)
     end
 
     it 'schedules new interest payments' do
@@ -70,7 +69,7 @@ describe 'AccountsController' do
 
     it 'returns a holder exists message if the holder is the main holder' do
       new_holder_id = create_holder_and_return_id
-      message = accounts_ctrl.open_account(:Current, with: new_holder_id)
+      message = accounts_ctrl.open(:Current, with: new_holder_id)
       account_id = message.new_account_id
       expect(accounts_ctrl.add_holder(new_holder_id, to_account: account_id)
         .class).to eq(HolderOnAccountMessage)
@@ -144,9 +143,8 @@ describe 'AccountsController' do
   end
 
   context 'when transacting' do
-    it 'raises an error if an invalid account id is entered' do
-      message = accounts_ctrl.deposit(10.00, into: 57)
-      expect(message.class).to eq(InvalidAccountMessage)
+    it 'knows if it contains an account in its store' do
+      expect(accounts_ctrl.exist?(57)).not_to eq(true)
     end
 
     it 'can give the balance of an account' do
@@ -172,10 +170,10 @@ describe 'AccountsController' do
     it 'can return all accounts for a given holder' do
       holder_id = create_holder_and_return_id
       second_holder_id = create_holder_and_return_id
-      message = accounts_ctrl.open_account(:Savings, with: holder_id)
+      message = accounts_ctrl.open(:Savings, with: holder_id)
       id = message.new_account_id
-      accounts_ctrl.open_account(:Savings, with: second_holder_id)
-      message = accounts_ctrl.open_account(:Current, with: holder_id)
+      accounts_ctrl.open(:Savings, with: second_holder_id)
+      message = accounts_ctrl.open(:Current, with: holder_id)
       id_3 = message.new_account_id
       expect(accounts_ctrl.get_accounts_of(holder_id).accounts)
         .to eq([accounts_ctrl.store[id], accounts_ctrl.store[id_3]])
