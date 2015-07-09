@@ -3,7 +3,6 @@ require_all 'lib'
 require 'rufus-scheduler'
 # Definition of Boundary Class
 class Boundary
-
   attr_accessor :accounts, :holders
 
   MENU_ITEMS = { 1 => { op: :op_1, output: 'Create New Holder'         },

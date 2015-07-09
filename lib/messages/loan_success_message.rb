@@ -1,5 +1,5 @@
+# Definition of Loan Success Message Class
 class LoanSuccessMessage < SuccessMessage
-
   attr_reader :loan_id, :outstanding, :repayment_date
 
   def initialize(loan)
@@ -12,7 +12,7 @@ class LoanSuccessMessage < SuccessMessage
 
   def build_main
     ["New Loan created. ID number is: #{@loan_id}.",
-      "Total outstanding is £#{@outstanding}.",
-      "Repayment Date is #{@repayment_date}"]
+     "Total outstanding is £#{@outstanding}.",
+     "Repayment Date is #{@repayment_date}"]
   end
 end

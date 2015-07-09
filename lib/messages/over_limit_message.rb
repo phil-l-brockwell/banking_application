@@ -5,6 +5,6 @@ class OverLimitMessage < ErrorMessage
   def initialize(account)
     super
     @account_id = account.id
-    @main = ["Account ID: #{@account_id} has reached its daily withdrawal limit."]
+    @main = ["Account ID: #{@account_id} has reached its daily limit."]
   end
 end

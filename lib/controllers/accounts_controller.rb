@@ -16,10 +16,10 @@ class AccountsController
 
   def open(type, with:)
     holder = holders.exist? with
-    new_account = create_account type, holder
-    add new_account
-    init_yearly_interest_for new_account
-    AccountSuccessMessage.new(new_account)
+    account = create_account type, holder
+    add account
+    init_yearly_interest_for account
+    AccountSuccessMessage.new(account)
   end
 
   def deposit(amount, into:)

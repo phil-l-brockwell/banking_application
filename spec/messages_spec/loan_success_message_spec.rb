@@ -2,7 +2,7 @@ require 'messages/loan_success_message'
 
 describe 'LoanSuccessMessage' do
   context 'when initialised' do
-    let(:loan) { double :loan, id: 6, outstanding: 100000, repayment_date: '1/1/1' }
+    let(:loan) { double :loan, id: 6, outstanding: 100_000, repayment_date: '1/1/1' }
     let(:test_message) { LoanSuccessMessage.new(loan) }
 
     it 'knows the loan id' do
@@ -10,7 +10,7 @@ describe 'LoanSuccessMessage' do
     end
 
     it 'knows the outstanding amount' do
-      expect(test_message.outstanding).to eq(100000)
+      expect(test_message.outstanding).to eq(100_000)
     end
 
     it 'knows the repayment_date' do
