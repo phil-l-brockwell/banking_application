@@ -14,12 +14,12 @@ class ShowLoanMessage < SuccessMessage
 
   def loan_details
     ["Holder Name: #{@holder_name}",
-     "Repayment Date: #{@repayment_date}",
+     "Final Repayment Date: #{@repayment_date}",
      "Outstanding Amount: £#{@outstanding}"]
   end
 
   def transaction_details
-    a = @transactions.each_with_index.map do |t, index|
+    a = @transactions.map.each_with_index.map do |t, index|
       "#{index + 1}. Date: #{t.date}, Amount: £#{t.amount}"
     end
     a.unshift('Transactions:')

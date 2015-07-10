@@ -10,7 +10,7 @@ class DisplayAccountsMessage < SuccessMessage
 
   def build_main
     @accounts.map do |account|
-      "ID: #{account.id}, Balance: £#{account.balance}, Type: #{account.type}"
+      "ID: #{account.id}, Balance: #{account.output_balance}, Type: #{account.type}"
     end
   end
 end

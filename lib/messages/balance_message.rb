@@ -4,8 +4,8 @@ class BalanceMessage < SuccessMessage
 
   def initialize(account)
     super
-    @balance = account.balance
+    @balance = account.output_balance
     @account_id = account.id
-    @main = ["Balance of Account ID: #{@account_id} is £#{balance}"]
+    @main = ["Balance of Account ID: #{@account_id} is #{balance}"]
   end
 end

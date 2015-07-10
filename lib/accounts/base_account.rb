@@ -10,14 +10,12 @@ class BaseAccount
 
   def deposit(amount)
     @balance += amount
-    new_transaction = Transaction.new(:deposit, amount)
-    add_transaction new_transaction
+    add_transaction Transaction.new(:deposit, amount)
   end
 
   def withdraw(amount)
     @balance -= amount
-    new_transaction = Transaction.new(:withdrawal, amount)
-    add_transaction new_transaction
+    add_transaction Transaction.new(:withdrawal, amount)
   end
 
   def add_transaction(transaction)

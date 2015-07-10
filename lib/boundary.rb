@@ -40,7 +40,7 @@ class Boundary
     input = gets.chomp
     input = verify(input, with: MENU_ITEMS)
     message = send MENU_ITEMS[input][:op]
-    p_sleep message.output
+    say message.output
     start
   end
 
@@ -49,22 +49,55 @@ class Boundary
   def verify(input, with:)
     until with.key? input.to_i
       abort('Have a Nice Day!') if input == 'exit'
-      p_sleep 'Unrecognised option, try again...'
+      say 'Unrecognised option, try again.'
       show(with)
       input = gets.chomp
     end
     input.to_i
   end
 
+  def get_holder_id
+    say 'Enter Holder ID'
+    id = gets.chomp.to_i
+    until holders.exist? id
+      say InvalidHolderMessage.new(id).output
+      id = gets.chomp.to_i
+    end
+    id
+  end
+
+  def get_account_id
+    say 'Enter Account ID'
+    id = gets.chomp.to_i
+    until accounts.exist? id
+      say InvalidAccountMessage.new(id).output
+      id = gets.chomp.to_i
+    end
+    id
+  end
+
+  def get_loan_id
+    say 'Enter Loan ID'
+    id = gets.chomp.to_i
+    until loans.exist? id
+      say InvalidLoanMessage.new(id).output
+      id = gets.chomp.to_i
+    end
+    id
+  end
+
+  def get_amount
+    say 'Enter Amount'
+    gets.chomp.to_i
+  end
+
   def op_1
-    p_sleep 'Enter Name'
+    say 'Enter Name'
     holders.create gets.chomp
   end
 
   def op_2
-    p_sleep 'Enter Holder ID'
-    id = gets.chomp.to_i
-    return InvalidHolderMessage.new(id) unless holders.exist? id
+    id = get_holder_id
     show(ACCOUNT_TYPES)
     input = verify(gets.chomp.to_i, with: ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
@@ -72,105 +105,78 @@ class Boundary
   end
 
   def op_3
-    p_sleep 'Enter Account ID'
-    id = gets.chomp.to_i
-    return InvalidAccountMessage.new(id) unless accounts.exist? id
-    puts_with_sleep 'Enter Amount you would like to Deposit and Press Enter'
-    amount = gets.chomp.to_i
+    id = get_account_id
+    amount = get_amount
     accounts.deposit amount, into: id
   end
 
   def op_4
-    p_sleep 'Enter Account ID'
-    id = gets.chomp.to_i
-    return InvalidAccountMessage.new(id) unless accounts.exist? id
+    id = get_account_id
     accounts.get_balance_of id
   end
 
   def op_5
-    p_sleep 'Enter Account ID'
-    id = gets.chomp.to_i
-    return InvalidAccountMessage.new(id) unless accounts.exist? id
-    p_sleep 'Enter Amount you would like to Withdraw'
-    amount = gets.chomp.to_i
+    id = get_account_id
+    amount = get_amount
     accounts.withdraw amount, from: id
   end
 
   def op_6
-    p_sleep 'Enter Account ID to transfer from'
-    donar_id = gets.chomp.to_i
-    return InvalidAccountMessage.new(donar_id) unless holders.exist? donar_id
-    p_sleep 'Enter Account ID to transfer to'
-    rec_id = gets.chomp.to_i
-    return InvalidAccountMessage.new(rec_id) unless holders.exist? rec_id
-    p_sleep 'Enter Amount you would like to transfer'
-    amount = gets.chomp.to_i
-    accounts.transfer amount, from: donar_id, to: recipitent_id
+    say 'Donar Account'
+    donar_id = get_account_id
+    say 'Recipitent Account'
+    rec_id = get_account_id
+    amount = get_amount
+    accounts.transfer amount, from: donar_id, to: rec_id
   end
 
   def op_7
-    p_sleep 'Enter Account ID'
-    a_id = gets.chomp.to_i
-    return InvalidAccountMessage.new(a_id) unless accounts.exist? a_id
-    p_sleep 'Enter Holder ID you wish to add'
-    h_id = gets.chomp.to_i
-    return InvalidHolderMessage.new(h_id) unless holders.exist? h_id
+    a_id = get_account_id
+    h_id = get_user_id
     accounts.add_holder h_id, to: a_id
   end
 
   def op_8
-    p_sleep 'Enter Holder ID to View Accounts of'
-    id = gets.chomp.to_i
-    return InvalidHolderMessage.new(id) unless holders.exist? id
+    id = get_holder_id
     accounts.get_accounts_of id
   end
 
   def op_9
-    p_sleep 'Enter Account ID'
-    id = gets.chomp.to_i
-    return InvalidAccountMessage.new(id) unless accounts.exist? id
+    id = get_account_id
     accounts.get_transactions_of id
   end
 
   def op_10
-    p_sleep 'Enter Holder ID'
-    id = gets.chomp.to_i
-    return InvalidHolderMessage.new(id) unless holders.exist? id
+    id = get_holder_id
     options = {}
     options[:holder] = holders.exist? id
-    p_sleep 'Enter Amount to borrow'
-    options[:borrowed] = gets.chomp.to_i
-    p_sleep 'Enter the term to borrow over'
+    options[:borrowed] = get_amount
+    say 'Enter the term'
     options[:term] = gets.chomp.to_i
-    p_sleep 'Enter the Interest Rate'
-    options[:rate] = gets.chomp.to_i
+    say 'Enter the Interest Rate'
+    options[:rate] = gets.chomp.to_f
     loans.create_loan options
   end
 
   def op_11
-    p_sleep 'Enter Loan ID'
-    id = gets.chomp.to_i
-    return InvalidLoanMessage.new unless loans.exist? id
+    id = get_loan_id
     loans.show id
   end
 
   def op_12
-    p_sleep 'Enter Loan ID'
-    id = gets.chomp.to_i
-    return InvalidLoanMessage.new unless loans.exist? id
-    p_sleep 'Enter Amount'
-    amount = gets.chomp.to_i
+    id = get_loan_id
+    amount = get_amount
     loans.pay amount, off: id
   end
 
-  def p_sleep(string)
+  def say(string)
     puts string
     sleep(0.2)
   end
 
   def show(list)
-    list.each { |key, value| p_sleep "#{key}. #{value[:output]}" }
-    p_sleep "Make a selection or type 'exit' to quit."
+    list.each { |key, value| say "#{key}. #{value[:output]}" }
+    say "Make a selection or type 'exit' to quit."
   end
 end
 

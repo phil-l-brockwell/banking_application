@@ -25,7 +25,7 @@ describe 'ShowLoanMessage' do
 
     it 'has the correct main text' do
       expect(test_message.main).to eq(['Holder Name: Robert Pulson',
-                                       'Repayment Date: 1/1/1',
+                                       'Final Repayment Date: 1/1/1',
                                        'Outstanding Amount: £10000',
                                        'Transactions:',
                                        '1. Date: 1/2/3, Amount: £10'])

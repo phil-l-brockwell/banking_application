@@ -13,11 +13,14 @@ class CustomerAccount < BaseAccount
     @daily_limit = LIMIT
   end
 
+  def output_balance
+    '£' + '%.2f' % @balance
+  end
+
   def withdraw(amount)
     @balance -= amount
     @daily_limit -= amount
-    new_transaction = Transaction.new(:withdrawal, amount)
-    add_transaction new_transaction
+    add_transaction Transaction.new(:withdrawal, amount)
   end
 
   def add_holder(holder)

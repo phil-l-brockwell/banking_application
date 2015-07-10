@@ -5,6 +5,7 @@ class InvalidLoanMessage < ErrorMessage
   def initialize(id)
     super
     @id = id
-    @main = ["Loan ID: #{id} does not exist."]
+    @main = ["Loan ID: #{id} does not exist.",
+             'Try again']
   end
 end

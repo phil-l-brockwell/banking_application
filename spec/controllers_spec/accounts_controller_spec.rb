@@ -146,7 +146,7 @@ describe 'AccountsController' do
     it 'can give the balance of an account' do
       id = open_account_and_return_id
       message = accounts_ctrl.get_balance_of(id)
-      expect(message.balance).to eq(0.00)
+      expect(message.balance).to eq('£0.00')
     end
 
     it 'can reset the limit on an account' do

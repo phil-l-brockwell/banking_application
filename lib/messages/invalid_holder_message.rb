@@ -5,6 +5,7 @@ class InvalidHolderMessage < ErrorMessage
   def initialize(invalid_holder_id)
     super
     @invalid_holder_id = invalid_holder_id
-    @main = ["Holder ID: #{invalid_holder_id} does not exist."]
+    @main = ["Holder ID: #{invalid_holder_id} does not exist.",
+             'Try again.']
   end
 end
