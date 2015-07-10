@@ -16,7 +16,9 @@ class Boundary
                  9  => { op: :op_9,  output: 'View Account Transactions' },
                  10 => { op: :op_10, output: 'New Loan'                  },
                  11 => { op: :op_11, output: 'View Loan'                 },
-                 12 => { op: :op_12, output: 'Make Loan Payment'         } }
+                 12 => { op: :op_12, output: 'Make Loan Payment'         },
+                 13 => { op: :op_13, output: 'Enable/Edit Overdraft'     },
+                 14 => { op: :op_14, output: 'Disable Overdraft'         } }
 
   ACCOUNT_TYPES = { 1  => { output: :Current      },
                     2  => { output: :Savings      },
@@ -45,51 +47,6 @@ class Boundary
   end
 
   private
-
-  def verify(input, with:)
-    until with.key? input.to_i
-      abort('Have a Nice Day!') if input == 'exit'
-      say 'Unrecognised option, try again.'
-      show(with)
-      input = gets.chomp
-    end
-    input.to_i
-  end
-
-  def get_holder_id
-    say 'Enter Holder ID'
-    id = gets.chomp.to_i
-    until holders.exist? id
-      say InvalidHolderMessage.new(id).output
-      id = gets.chomp.to_i
-    end
-    id
-  end
-
-  def get_account_id
-    say 'Enter Account ID'
-    id = gets.chomp.to_i
-    until accounts.exist? id
-      say InvalidAccountMessage.new(id).output
-      id = gets.chomp.to_i
-    end
-    id
-  end
-
-  def get_loan_id
-    say 'Enter Loan ID'
-    id = gets.chomp.to_i
-    until loans.exist? id
-      say InvalidLoanMessage.new(id).output
-      id = gets.chomp.to_i
-    end
-    id
-  end
-
-  def get_amount
-    say 'Enter Amount'
-    gets.chomp.to_i
-  end
 
   def op_1
     say 'Enter Name'
@@ -169,6 +126,18 @@ class Boundary
     loans.pay amount, off: id
   end
 
+  def op_13
+    id = get_account_id
+    say 'Enter overdraft limit'
+    amount = gets.chomp.to_i
+    loans.activate id amount
+  end
+
+  def op_14
+    id = get_account_id
+    loans.deactivate id
+  end
+
   def say(string)
     puts string
     sleep(0.2)
@@ -178,7 +147,51 @@ class Boundary
     list.each { |key, value| say "#{key}. #{value[:output]}" }
     say "Make a selection or type 'exit' to quit."
   end
+
+  def verify(input, with:)
+    until with.key? input.to_i
+      abort('Have a Nice Day!') if input == 'exit'
+      say 'Unrecognised option, try again.'
+      show(with)
+      input = gets.chomp
+    end
+    input.to_i
+  end
+
+  def get_holder_id
+    say 'Enter Holder ID'
+    id = gets.chomp.to_i
+    until holders.exist? id
+      say InvalidHolderMessage.new(id).output
+      id = gets.chomp.to_i
+    end
+    id
+  end
+
+  def get_account_id
+    say 'Enter Account ID'
+    id = gets.chomp.to_i
+    until accounts.exist? id
+      say InvalidAccountMessage.new(id).output
+      id = gets.chomp.to_i
+    end
+    id
+  end
+
+  def get_loan_id
+    say 'Enter Loan ID'
+    id = gets.chomp.to_i
+    until loans.exist? id
+      say InvalidLoanMessage.new(id).output
+      id = gets.chomp.to_i
+    end
+    id
+  end
+
+  def get_amount
+    say 'Enter Amount'
+    gets.chomp.to_i
+  end
 end
 
-test = Boundary.new
-test.start
+Boundary.new.start

@@ -1,6 +1,7 @@
 # Definition of Customer Account Class
 class CustomerAccount < BaseAccount
   attr_reader :interest_rate, :holders, :daily_limit
+  attr_accessor :overdraft, :overdraft_on
 
   LIMIT = 300
 
@@ -11,6 +12,8 @@ class CustomerAccount < BaseAccount
     @holders = {}
     @interest_rate = 0.1
     @daily_limit = LIMIT
+    @overdraft_on = false
+    @overdraft
   end
 
   def output_balance

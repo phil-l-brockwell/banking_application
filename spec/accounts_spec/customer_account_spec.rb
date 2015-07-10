@@ -62,6 +62,13 @@ describe 'CustomerAccount' do
     end
   end
 
+  context 'overdraft' do
+    it 'can sets its overdraft' do
+      test_account.overdraft = 300
+      expect(test_account.overdraft).to eq(300)
+    end
+  end
+
   context 'new holders' do
     it 'can add a holder' do
       test_account.add_holder(second_holder)
