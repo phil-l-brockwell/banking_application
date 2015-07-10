@@ -56,7 +56,7 @@ class AccountsController
   def add_holder(id, to:)
     holder = holders.exist? id
     account = exist? to
-    return HolderOnAccountMessage.new(holder, account) if account.has_holder? holder
+    return HolderOnAccountMessage.new(holder, account) if account.holder? holder
     account.add_holder holder
     AddHolderSuccessMessage.new(holder, account)
   end
@@ -96,14 +96,14 @@ class AccountsController
   private
 
   def init_yearly_interest_for(account)
-    task_manager.every '1y' do 
-      pay_interest_on account 
+    task_manager.every '1y' do
+      pay_interest_on account
     end
   end
 
   def init_limit_reset_for(account)
-    task_manager.in '1d' do 
-      reset_limit_on account 
+    task_manager.in '1d' do
+      reset_limit_on account
     end
   end
 

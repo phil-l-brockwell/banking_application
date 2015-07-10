@@ -40,7 +40,7 @@ class CustomerAccount < BaseAccount
     daily_limit >= amount
   end
 
-  def has_holder?(holder)
+  def holder?(holder)
     main_holder == holder || holders.value?(holder)
   end
 end

@@ -61,7 +61,8 @@ describe 'Loan' do
       loan.make_payment(100)
       expect(loan.transactions.last.type).to eq(:loan_payment)
       expect(loan.transactions.last.amount).to eq(100)
-      expect(loan.transactions.last.date).to eq(Time.now.strftime('%a %d %b %Y'))
+      expect(loan.transactions.last.date)
+        .to eq(Time.now.strftime('%a %d %b %Y'))
       Timecop.return
     end
   end

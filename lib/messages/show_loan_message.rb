@@ -1,6 +1,6 @@
+# Definition of ShowLoanMessage Class
 class ShowLoanMessage < SuccessMessage
-
-  attr_reader :outstanding, :holder_name, 
+  attr_reader :outstanding, :holder_name,
               :repayment_date, :transactions
 
   def initialize(loan)

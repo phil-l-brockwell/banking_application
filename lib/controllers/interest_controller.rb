@@ -1,5 +1,5 @@
-# Definition of Interest Controller
 require 'singleton'
+# Definition of InterestController
 class InterestController
   include Singleton
   attr_reader :account

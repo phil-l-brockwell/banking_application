@@ -69,13 +69,13 @@ describe 'CustomerAccount' do
     end
 
     it 'knows if it has a certain holder' do
-      expect(test_account.has_holder?(holder)).to eq(true)
+      expect(test_account.holder?(holder)).to eq(true)
       test_account.add_holder(second_holder)
-      expect(test_account.has_holder?(second_holder)).to eq(true)
+      expect(test_account.holder?(second_holder)).to eq(true)
     end
 
     it 'knows if it does not have a certain holder' do
-      expect(test_account.has_holder?(second_holder)).to eq(false)
+      expect(test_account.holder?(second_holder)).to eq(false)
     end
   end
 end

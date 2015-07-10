@@ -1,3 +1,4 @@
+# Definition of InvalidLoanMessage Class
 class InvalidLoanMessage < ErrorMessage
   attr_reader :id
 
