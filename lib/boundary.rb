@@ -3,7 +3,7 @@ require_all 'lib'
 require 'rufus-scheduler'
 # Definition of Boundary Class
 class Boundary
-  attr_accessor :accounts, :holders, :loans
+  attr_accessor :accounts, :holders, :loans, :overdraft
 
   MENU_ITEMS = { 1  => { op: :op_1,  output: 'Create New Holder'         },
                  2  => { op: :op_2,  output: 'Create an Account'         },
@@ -18,7 +18,8 @@ class Boundary
                  11 => { op: :op_11, output: 'View Loan'                 },
                  12 => { op: :op_12, output: 'Make Loan Payment'         },
                  13 => { op: :op_13, output: 'Enable/Edit Overdraft'     },
-                 14 => { op: :op_14, output: 'Disable Overdraft'         } }
+                 14 => { op: :op_14, output: 'Disable Overdraft'         },
+                 15 => { op: :op_15, output: 'View Overdraft Status'     } }
 
   ACCOUNT_TYPES = { 1  => { output: :Current      },
                     2  => { output: :Savings      },
@@ -35,6 +36,7 @@ class Boundary
     @accounts = AccountsController.instance
     @holders  = HoldersController.instance
     @loans    = LoansController.instance
+    @overdraft = OverdraftController.instance
   end
 
   def start
@@ -43,6 +45,7 @@ class Boundary
     input = verify(input, with: MENU_ITEMS)
     message = send MENU_ITEMS[input][:op]
     say message.output
+    say message.header
     start
   end
 
@@ -130,12 +133,17 @@ class Boundary
     id = get_account_id
     say 'Enter overdraft limit'
     amount = gets.chomp.to_i
-    loans.activate id amount
+    overdraft.activate id, amount
   end
 
   def op_14
     id = get_account_id
-    loans.deactivate id
+    overdraft.deactivate id
+  end
+
+  def op_15
+    id =get_account_id
+    overdraft.show id
   end
 
   def say(string)

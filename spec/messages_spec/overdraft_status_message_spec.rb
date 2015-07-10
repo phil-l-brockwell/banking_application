@@ -1,9 +1,9 @@
 require 'messages/overdraft_status_message'
 
-describe 'OverDraftStatusMessage' do
+describe 'OverdraftStatusMessage' do
   context 'when initialised' do
     let(:account) { double :account, id: 1, overdraft: 100, overdraft_on: true }
-    let(:test_message) { OverDraftStatusMessage.new(account) }
+    let(:test_message) { OverdraftStatusMessage.new(account) }
     
     it 'knows the account id' do
       expect(test_message.account_id).to eq(1)
@@ -24,7 +24,7 @@ describe 'OverDraftStatusMessage' do
 
   context 'when initialised with a deactivated overdraft account' do
     let(:account) { double :account, id: 1, overdraft: 0, overdraft_on: false }
-    let(:test_message) { OverDraftStatusMessage.new(account) }
+    let(:test_message) { OverdraftStatusMessage.new(account) }
 
     it 'has the correct main text' do
       expect(test_message.main).to eq(['Account ID: 1 has no active overdraft'])
