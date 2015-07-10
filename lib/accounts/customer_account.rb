@@ -13,7 +13,7 @@ class CustomerAccount < BaseAccount
     @interest_rate = 0.1
     @daily_limit = LIMIT
     @overdraft_on = false
-    @overdraft
+    @overdraft = 0
   end
 
   def output_balance
@@ -21,6 +21,7 @@ class CustomerAccount < BaseAccount
   end
 
   def withdraw(amount)
+    raise 'Funds not available' unless contains? amount
     @balance -= amount
     @daily_limit -= amount
     add_transaction Transaction.new(:withdrawal, amount)
@@ -39,7 +40,7 @@ class CustomerAccount < BaseAccount
   end
 
   def contains?(amount)
-    @balance >= amount
+    @balance + @overdraft >= amount
   end
 
   def limit_allow?(amount)
