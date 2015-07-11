@@ -12,8 +12,9 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Added Holder, Interest and Loans controllers
 * Added Holder storage module
 * Used singleton pattern on Account, Holder and Loan Controllers
+* Added overdraft controller and facility
 
 # Next...
 * Refactor controller testing
-* Add overdraft facilities
+* Rework Interest Controller to receive interest from negative balances
 * Add rollback facility
