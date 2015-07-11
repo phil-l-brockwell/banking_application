@@ -21,7 +21,6 @@ class CustomerAccount < BaseAccount
   end
 
   def withdraw(amount)
-    raise 'Funds not available' unless contains? amount
     @balance -= amount
     @daily_limit -= amount
     add_transaction Transaction.new(:withdrawal, amount)

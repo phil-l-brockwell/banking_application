@@ -45,7 +45,6 @@ class Boundary
     input = verify(input, with: MENU_ITEMS)
     message = send MENU_ITEMS[input][:op]
     say message.output
-    say message.header
     start
   end
 
@@ -57,7 +56,7 @@ class Boundary
   end
 
   def op_2
-    id = get_holder_id
+    id = verify_holder_id
     show(ACCOUNT_TYPES)
     input = verify(gets.chomp.to_i, with: ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
@@ -65,52 +64,52 @@ class Boundary
   end
 
   def op_3
-    id = get_account_id
-    amount = get_amount
+    id = verify_account_id
+    amount = verify_amount
     accounts.deposit amount, into: id
   end
 
   def op_4
-    id = get_account_id
+    id = verify_account_id
     accounts.get_balance_of id
   end
 
   def op_5
-    id = get_account_id
-    amount = get_amount
+    id = verify_account_id
+    amount = verify_amount
     accounts.withdraw amount, from: id
   end
 
   def op_6
     say 'Donar Account'
-    donar_id = get_account_id
+    donar_id = verify_account_id
     say 'Recipitent Account'
-    rec_id = get_account_id
-    amount = get_amount
+    rec_id = verify_account_id
+    amount = verify_amount
     accounts.transfer amount, from: donar_id, to: rec_id
   end
 
   def op_7
-    a_id = get_account_id
-    h_id = get_user_id
+    a_id = verify_account_id
+    h_id = verify_user_id
     accounts.add_holder h_id, to: a_id
   end
 
   def op_8
-    id = get_holder_id
+    id = verify_holder_id
     accounts.get_accounts_of id
   end
 
   def op_9
-    id = get_account_id
+    id = verify_account_id
     accounts.get_transactions_of id
   end
 
   def op_10
-    id = get_holder_id
+    id = verify_holder_id
     options = {}
     options[:holder] = holders.exist? id
-    options[:borrowed] = get_amount
+    options[:borrowed] = verify_amount
     say 'Enter the term'
     options[:term] = gets.chomp.to_i
     say 'Enter the Interest Rate'
@@ -119,30 +118,29 @@ class Boundary
   end
 
   def op_11
-    id = get_loan_id
+    id = verify_loan_id
     loans.show id
   end
 
   def op_12
-    id = get_loan_id
-    amount = get_amount
+    id = verify_loan_id
+    amount = verify_amount
     loans.pay amount, off: id
   end
 
   def op_13
-    id = get_account_id
-    say 'Enter overdraft limit'
-    amount = gets.chomp.to_i
+    id = verify_account_id
+    amount = verify_amount
     overdraft.activate id, amount
   end
 
   def op_14
-    id = get_account_id
+    id = verify_account_id
     overdraft.deactivate id
   end
 
   def op_15
-    id =get_account_id
+    id = verify_account_id
     overdraft.show id
   end
 
@@ -166,7 +164,7 @@ class Boundary
     input.to_i
   end
 
-  def get_holder_id
+  def verify_holder_id
     say 'Enter Holder ID'
     id = gets.chomp.to_i
     until holders.exist? id
@@ -176,7 +174,7 @@ class Boundary
     id
   end
 
-  def get_account_id
+  def verify_account_id
     say 'Enter Account ID'
     id = gets.chomp.to_i
     until accounts.exist? id
@@ -186,7 +184,7 @@ class Boundary
     id
   end
 
-  def get_loan_id
+  def verify_loan_id
     say 'Enter Loan ID'
     id = gets.chomp.to_i
     until loans.exist? id
@@ -196,9 +194,14 @@ class Boundary
     id
   end
 
-  def get_amount
+  def verify_amount
     say 'Enter Amount'
-    gets.chomp.to_i
+    amount = gets.chomp.to_i
+    until amount > 0
+      say 'Enter an amount greater than 0'
+      amount = gets.chomp.to_i
+    end
+    amount
   end
 end
 
