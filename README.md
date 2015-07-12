@@ -22,3 +22,4 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Raise errors from accounts and catch in controller
 * Create interest and overdrafts module
 * Add try statements to controller
+* Add message colours
