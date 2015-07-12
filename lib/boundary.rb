@@ -36,10 +36,10 @@ class Boundary
                     10 => { output: :LCR          } }
 
   def initialize
-    @accounts  ||= AccountsController.instance
-    @holders   ||= HoldersController.instance
-    @loans     ||= LoansController.instance
-    @overdraft ||= OverdraftController.instance
+    @accounts  = AccountsController.instance
+    @holders   = HoldersController.instance
+    @loans     = LoansController.instance
+    @overdraft = OverdraftController.instance
   end
 
   def render(message)
