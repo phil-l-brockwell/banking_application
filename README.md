@@ -18,3 +18,7 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Refactor controller testing
 * Rework Interest Controller to receive interest from negative balances
 * Add rollback facility
+* Add id verification back into controllers and test
+* Raise errors from accounts and catch in controller
+* Create interest and overdrafts module
+* Add try statements to controller
