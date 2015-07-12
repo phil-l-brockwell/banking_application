@@ -39,7 +39,6 @@ class Boundary
     @accounts  = AccountsController.instance
     @holders   = HoldersController.instance
     @loans     = LoansController.instance
-    @overdraft = OverdraftController.instance
   end
 
   def render(message)
@@ -115,15 +114,15 @@ class Boundary
   end
 
   def op_13
-    overdraft.activate get_('account id'), get_('amount')
+    accounts.activate_overdraft get_('account id'), get_('amount')
   end
 
   def op_14
-    overdraft.deactivate get_('account id')
+    accounts.deactivate_overdraft get_('account id')
   end
 
   def op_15
-    overdraft.show get_('account id')
+    accounts.show_overdraft get_('account id')
   end
 
   def say(string)
