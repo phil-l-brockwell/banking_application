@@ -1,8 +1,11 @@
+require 'singleton'
 require 'require_all'
 require_all 'lib'
 require 'rufus-scheduler'
+require 'colorize'
 # Definition of Boundary Class
 class Boundary
+  include Singleton
   attr_accessor :accounts, :holders, :loans, :overdraft
 
   MENU_ITEMS = { 1  => { op: :op_1,  output: 'Create New Holder'         },
@@ -33,19 +36,21 @@ class Boundary
                     10 => { output: :LCR          } }
 
   def initialize
-    @accounts = AccountsController.instance
-    @holders  = HoldersController.instance
-    @loans    = LoansController.instance
+    @accounts  = AccountsController.instance
+    @holders   = HoldersController.instance
+    @loans     = LoansController.instance
     @overdraft = OverdraftController.instance
+  end
+
+  def render(message)
+    say message.output
+    start
   end
 
   def start
     show(MENU_ITEMS)
-    input = gets.chomp
-    input = verify(input, with: MENU_ITEMS)
-    message = send MENU_ITEMS[input][:op]
-    say message.output
-    start
+    input = verify(gets.chomp, with: MENU_ITEMS)
+    send MENU_ITEMS[input][:op]
   end
 
   private
@@ -56,92 +61,69 @@ class Boundary
   end
 
   def op_2
-    id = verify_holder_id
+    id = get_('holder id')
     show(ACCOUNT_TYPES)
-    input = verify(gets.chomp.to_i, with: ACCOUNT_TYPES)
+    input = verify(gets.chomp, with: ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
     accounts.open type, with: id
   end
 
   def op_3
-    id = verify_account_id
-    amount = verify_amount
-    accounts.deposit amount, into: id
+    accounts.deposit get_('amount'), into: get_('account id')
   end
 
   def op_4
-    id = verify_account_id
-    accounts.get_balance_of id
+    accounts.get_balance_of get_('account id')
   end
 
   def op_5
-    id = verify_account_id
-    amount = verify_amount
-    accounts.withdraw amount, from: id
+    accounts.withdraw get_('amount'), from: get_('account id')
   end
 
   def op_6
-    say 'Donar Account'
-    donar_id = verify_account_id
-    say 'Recipitent Account'
-    rec_id = verify_account_id
-    amount = verify_amount
-    accounts.transfer amount, from: donar_id, to: rec_id
+    accounts.transfer get_('amount'), from: get_('donar id'), to: get_('recipitent id')
   end
 
   def op_7
-    a_id = verify_account_id
-    h_id = verify_user_id
-    accounts.add_holder h_id, to: a_id
+    accounts.add_holder get_('holder id'), to: get_('account id')
   end
 
   def op_8
-    id = verify_holder_id
-    accounts.get_accounts_of id
+    accounts.get_accounts_of get_('holder id')
   end
 
   def op_9
-    id = verify_account_id
-    accounts.get_transactions_of id
+    accounts.get_transactions_of get_('account id')
   end
 
   def op_10
-    id = verify_holder_id
     options = {}
-    options[:holder] = holders.exist? id
-    options[:borrowed] = verify_amount
-    say 'Enter the term'
-    options[:term] = gets.chomp.to_i
+    options[:holder] = holders.exist? get_('holder id')
+    options[:borrowed] = get_('amount')
+    options[:term] = get_('term')
     say 'Enter the Interest Rate'
     options[:rate] = gets.chomp.to_f
     loans.create_loan options
   end
 
   def op_11
-    id = verify_loan_id
-    loans.show id
+    loans.show get_('loan id')
   end
 
   def op_12
-    id = verify_loan_id
-    amount = verify_amount
-    loans.pay amount, off: id
+    loans.pay get_('amount'), off: get_('loan id')
   end
 
   def op_13
-    id = verify_account_id
-    amount = verify_amount
-    overdraft.activate id, amount
+    overdraft.activate get_('account id'), get_('amount')
   end
 
   def op_14
-    id = verify_account_id
-    overdraft.deactivate id
+    overdraft.deactivate get_('account id')
   end
 
   def op_15
-    id = verify_account_id
-    overdraft.show id
+    overdraft.show get_('account id')
   end
 
   def say(string)
@@ -164,45 +146,10 @@ class Boundary
     input.to_i
   end
 
-  def verify_holder_id
-    say 'Enter Holder ID'
-    id = gets.chomp.to_i
-    until holders.exist? id
-      say InvalidHolderMessage.new(id).output
-      id = gets.chomp.to_i
-    end
-    id
-  end
-
-  def verify_account_id
-    say 'Enter Account ID'
-    id = gets.chomp.to_i
-    until accounts.exist? id
-      say InvalidAccountMessage.new(id).output
-      id = gets.chomp.to_i
-    end
-    id
-  end
-
-  def verify_loan_id
-    say 'Enter Loan ID'
-    id = gets.chomp.to_i
-    until loans.exist? id
-      say InvalidLoanMessage.new(id).output
-      id = gets.chomp.to_i
-    end
-    id
-  end
-
-  def verify_amount
-    say 'Enter Amount'
-    amount = gets.chomp.to_i
-    until amount > 0
-      say 'Enter an amount greater than 0'
-      amount = gets.chomp.to_i
-    end
-    amount
+  def get_(input)
+    say "Enter the #{input.capitalize}"
+    gets.chomp.to_i
   end
 end
 
-Boundary.new.start
+Boundary.instance.start

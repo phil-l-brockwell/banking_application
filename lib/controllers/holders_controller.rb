@@ -8,6 +8,6 @@ class HoldersController
   def create(name)
     holder = Holder.new(name, current_id)
     add holder
-    NewHolderSuccessMessage.new(holder)
+    Boundary.instance.render NewHolderSuccessMessage.new(holder)
   end
 end

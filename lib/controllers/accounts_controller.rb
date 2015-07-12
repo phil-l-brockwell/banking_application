@@ -9,6 +9,7 @@ class AccountsController
 
   def initialize
     super
+    # @boundary     = Boundary.instance
     @holders      = HoldersController.instance
     @interest     = InterestController.instance
     @task_manager = Rufus::Scheduler.new
@@ -19,13 +20,13 @@ class AccountsController
     account = create type, holder
     add account
     init_yearly_interest_for account
-    AccountSuccessMessage.new(account)
+    Boundary.instance.render AccountSuccessMessage.new(account)
   end
 
   def deposit(amount, into:)
     account = exist? into
     account.deposit amount
-    DepositSuccessMessage.new(amount)
+    Boundary.instance.render DepositSuccessMessage.new(amount)
   end
 
   def withdraw(amount, from:)
@@ -34,12 +35,12 @@ class AccountsController
     return OverLimitMessage.new(account) unless account.limit_allow? amount
     init_limit_reset_for account unless account.breached?
     account.withdraw amount
-    WithdrawSuccessMessage.new(amount)
+    Boundary.instance.render WithdrawSuccessMessage.new(amount)
   end
 
   def get_balance_of(id)
     account = exist? id
-    BalanceMessage.new(account)
+    Boundary.instance.render BalanceMessage.new(account)
   end
 
   def transfer(amount, from:, to:)
@@ -50,7 +51,7 @@ class AccountsController
     init_limit_reset_for donar unless donar.breached?
     donar.withdraw amount
     recipitent.deposit amount
-    TransferSuccessMessage.new(amount)
+    Boundary.instance.render TransferSuccessMessage.new(amount)
   end
 
   def add_holder(id, to:)
@@ -58,19 +59,19 @@ class AccountsController
     account = exist? to
     return HolderOnAccountMessage.new(holder, account) if account.holder? holder
     account.add_holder holder
-    AddHolderSuccessMessage.new(holder, account)
+    Boundary.instance.render AddHolderSuccessMessage.new(holder, account)
   end
 
   def get_transactions_of(id)
     account = exist? id
     transactions = account.transactions
-    TransactionsMessage.new(transactions)
+    Boundary.instance.render TransactionsMessage.new(transactions)
   end
 
   def get_accounts_of(id)
     holder = holders.exist? id
-    accounts = store.select { |_, a| a.main_holder == holder }.values
-    DisplayAccountsMessage.new(accounts)
+    accounts = store.select { |_, a| a.holder? holder }.values
+    Boundary.instance.render DisplayAccountsMessage.new(accounts)
   end
 
   def reset_limit_on(account)
