@@ -1,7 +1,4 @@
-require 'singleton'
-# Definition of InterestController
-class InterestController
-  include Singleton
+module Interest
   attr_reader :account
 
   def initialize

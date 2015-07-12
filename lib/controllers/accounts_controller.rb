@@ -3,16 +3,13 @@ require 'singleton'
 require_relative 'controller_item_store'
 # Definition of Controller Class
 class AccountsController
-  include ControllerItemStore
-  include Overdrafts
-  include Singleton
+  include ControllerItemStore, Overdrafts, Interest, Singleton
 
-  attr_reader :holders, :task_manager, :interest
+  attr_reader :holders, :task_manager
 
   def initialize
     super
     @holders      = HoldersController.instance
-    @interest     = InterestController.instance
     @task_manager = Rufus::Scheduler.new
   end
 
@@ -80,7 +77,7 @@ class AccountsController
   end
 
   def pay_interest_on(account)
-    amount = interest.calculate_interest_on account
+    amount = calculate_interest_on account
     account.deposit amount
   end
 

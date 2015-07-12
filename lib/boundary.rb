@@ -6,7 +6,7 @@ require 'colorize'
 # Definition of Boundary Class
 class Boundary
   include Singleton
-  attr_accessor :accounts, :holders, :loans, :overdraft
+  attr_accessor :accounts, :holders, :loans
 
   MENU_ITEMS = { 1  => { op: :op_1,  output: 'Create New Holder'         },
                  2  => { op: :op_2,  output: 'Create an Account'         },
