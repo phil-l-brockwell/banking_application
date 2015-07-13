@@ -1,12 +1,12 @@
 require 'singleton'
-# require 'boundary'
+require 'boundary'
 require_relative '../modules/controller_item_store'
 require_relative '../modules/overdraft_module'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore, Overdrafts, Singleton
 
-  attr_reader :holders, :task_manager
+  attr_reader :holders, :task_manager, :master
 
   def initialize
     super
@@ -87,9 +87,14 @@ class AccountsController
   end
 
   def pay_interest_on(account)
-    interest = account.balance * account.interest_rate
-    @master.withdraw interest
-    account.deposit interest
+    interest = (account.balance * account.interest_rate).abs
+    if account.overdrawn?
+      account.withdraw interest
+      master.deposit interest
+    else
+      master.withdraw interest
+      account.deposit interest
+    end
   end
 
   ACCOUNT_CLASSES = { :Current      => CurrentAccount,

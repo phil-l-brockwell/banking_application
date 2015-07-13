@@ -69,6 +69,12 @@ describe 'CustomerAccount' do
       test_account.overdraft = 300
       expect(test_account.overdraft).to eq(300)
     end
+
+    it 'knows when it is overdrawn' do
+      test_account.overdraft = 100
+      test_account.withdraw(50.00)
+      expect(test_account.overdrawn?).to eq(true)
+    end
   end
 
   context 'new holders' do

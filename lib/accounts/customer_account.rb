@@ -76,4 +76,8 @@ class CustomerAccount < BaseAccount
   def holder?(holder)
     main_holder == holder || holders.value?(holder)
   end
+
+  def overdrawn?
+    @balance < 0
+  end
 end
