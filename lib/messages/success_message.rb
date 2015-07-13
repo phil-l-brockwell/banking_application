@@ -1,7 +1,13 @@
 # Definition of Success Message Class
-class SuccessMessage < BaseMessage
+class SuccessMessage
+
+  attr_reader :output, :header, :main
+
   def initialize(*)
-    super
     @header = 'Transaction Successful.'
+  end
+
+  def output
+    @main.unshift(@header)
   end
 end

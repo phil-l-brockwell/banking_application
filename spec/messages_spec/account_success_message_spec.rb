@@ -1,4 +1,3 @@
-require 'messages/base_message'
 require 'messages/success_message'
 require 'messages/account_success_message'
 
