@@ -5,20 +5,39 @@ class LoansController
   include Singleton
   include ControllerItemStore
 
-  def create_loan(options)
-    loan = Loan.new(options, current_id)
-    add loan
-    boundary.render LoanSuccessMessage.new(loan)
+  attr_reader :holders
+
+  def initialize
+    super
+    @holders = HoldersController.instance
+  end
+
+  def create_loan(id, options)
+    begin
+      options[:holder] = holders.find id
+      loan = Loan.new(options, current_id)
+      add loan
+      boundary.render LoanSuccessMessage.new(loan)
+    rescue ItemExistError => message
+      boundary.render message  
+    end
   end
 
   def show(id)
-    loan = find id
-    boundary.render ShowLoanMessage.new(loan)
+    begin
+      boundary.render ShowLoanMessage.new(find id)
+    rescue ItemExistError => message
+      boundary.render message
+    end
   end
 
   def pay(amount, off:)
-    loan = find off
-    loan.make_payment amount
-    boundary.render LoanPaidMessage.new(loan)
+    begin
+      loan = find off
+      loan.make_payment amount
+      boundary.render LoanPaidMessage.new(loan)
+    rescue ItemExistError => message
+      boundary.render message
+    end
   end
 end

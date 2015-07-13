@@ -42,8 +42,8 @@ class Boundary
   end
 
   def render(message)
-    # say message.output
-    # start
+    say message.output
+    start
   end
 
   def start
@@ -97,12 +97,12 @@ class Boundary
 
   def op_10
     options = {}
-    options[:holder] = holders.find get_('holder id')
+    id = get_('holder id')
     options[:borrowed] = get_('amount')
     options[:term] = get_('term')
     say 'Enter the Interest Rate'
     options[:rate] = gets.chomp.to_f
-    loans.create_loan options
+    loans.create_loan id, options
   end
 
   def op_11
@@ -151,4 +151,4 @@ class Boundary
   end
 end
 
-# Boundary.instance.start
+Boundary.instance.start
