@@ -1,8 +1,10 @@
-require 'controllers/interest_controller'
+require 'modules/interest_module'
 
-describe 'InterestController' do
+class InterestHolder; include Interest; end
+
+describe 'InterestHolder' do
   let(:test_account)    { double :account, balance: 2500, interest_rate: 0.1 }
-  let(:test_controller) { InterestController.instance }
+  let(:test_controller) { InterestHolder.new }
 
   context 'when initialised' do
     it 'has a master account' do

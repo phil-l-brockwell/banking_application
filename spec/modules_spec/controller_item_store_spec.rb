@@ -1,5 +1,4 @@
-require 'controllers/controller_item_store'
-
+require 'modules/controller_item_store'
 # Holder class to include ControllerItemStore and run tests on
 class ControllerStoreHolder; include ControllerItemStore; end
 
@@ -8,7 +7,7 @@ describe 'ControllerItemStore' do
   let(:item_store) { ControllerStoreHolder.new }
 
   context 'when initialised' do
-    it 'has a hash of items' do
+    it 'has an empty hash of items' do
       expect(item_store.store).to eq({})
     end
 
@@ -22,6 +21,11 @@ describe 'ControllerItemStore' do
       expect(item_store.store.length).to eq(0)
       item_store.add(item)
       expect(item_store.store.length).to eq(1)
+    end
+
+    it 'can locate the item with its id' do
+      item_store.add(item)
+      expect(item_store.store[0]).to eq(item)
     end
 
     it 'knows it has an item' do

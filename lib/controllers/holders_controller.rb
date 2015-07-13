@@ -1,5 +1,5 @@
 require 'singleton'
-require_relative 'controller_item_store'
+require_relative '../modules/controller_item_store'
 # Definition of Holders Controller Class
 class HoldersController
   include ControllerItemStore

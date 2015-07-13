@@ -3,31 +3,18 @@ require 'controllers/holders_controller'
 describe 'HoldersController' do
   let(:holders_ctrl) { HoldersController.instance }
 
-  def create_holder_and_return_id
-    message = holders_ctrl.create('Robert Pulson')
-    message.new_holder_id
-  end
-
   context 'when creating a holder' do
     it 'increments the holder number' do
-      expect { create_holder_and_return_id }
+      expect { holders_ctrl.create('Robert Pulson') }
         .to change { holders_ctrl.id }.by(1)
     end
 
-    it 'returns a message with the new holders id' do
-      id = holders_ctrl.id
-      new_holder_id = create_holder_and_return_id
-      expect(new_holder_id).to eq(id)
-    end
-
-    it 'gives the new holder the correct holder id' do
-      id = create_holder_and_return_id
-      expect(holders_ctrl.store[id].id).to eq(id)
-    end
-
     it 'adds the new holder to the holders hash' do
-      id = create_holder_and_return_id
-      expect(holders_ctrl.store[id].name).to eq('Robert Pulson')
+      id = holders_ctrl.id
+      holders_ctrl.create('Robert Pulson')
+      holder = holders_ctrl.exist?(id)
+      expect(holder.name).to eq('Robert Pulson')
+      expect(holder.id).to eq(id)
     end
   end
 end

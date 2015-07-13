@@ -1,6 +1,8 @@
 require 'singleton'
-# require 'boundary'
-require_relative 'controller_item_store'
+require 'boundary'
+require_relative '../modules/controller_item_store'
+require_relative '../modules/overdraft_module'
+require_relative '../modules/interest_module'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore, Overdrafts, Interest, Singleton

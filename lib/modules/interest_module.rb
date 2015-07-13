@@ -2,6 +2,7 @@ module Interest
   attr_reader :account
 
   def initialize
+    super
     @account = MasterAccount.new
   end
 
