@@ -1,4 +1,4 @@
-require 'messages/loan_success_message'
+require 'messages/loan_success'
 
 describe 'LoanSuccessMessage' do
   context 'when initialised' do

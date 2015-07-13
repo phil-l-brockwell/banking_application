@@ -1,4 +1,4 @@
-require 'messages/transfer_success_message'
+require 'messages/transfer_success'
 
 describe 'TransferSuccessMessage' do
   context 'when initialised' do

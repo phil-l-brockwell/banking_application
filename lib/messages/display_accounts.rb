@@ -1,5 +1,5 @@
 # Definition of DisplayAccountsMessage Class
-class DisplayAccountsMessage < SuccessMessage
+class DisplayAccountsMessage < Message
   attr_reader :accounts
 
   def initialize(accounts)

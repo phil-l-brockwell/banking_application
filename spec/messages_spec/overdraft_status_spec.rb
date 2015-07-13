@@ -1,4 +1,4 @@
-require 'messages/overdraft_status_message'
+require 'messages/overdraft_status'
 
 describe 'OverdraftStatusMessage' do
   context 'when initialised' do

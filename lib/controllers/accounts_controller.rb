@@ -1,7 +1,7 @@
 require 'singleton'
 require 'boundary'
 require_relative '../modules/controller_item_store'
-require_relative '../modules/overdraft_module'
+require_relative '../modules/overdraft'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore, Overdrafts, Singleton
@@ -20,7 +20,7 @@ class AccountsController
     add account
     init_yearly_interest_for account
     boundary.render AccountSuccessMessage.new(account)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     boundary.render message
   end
 
@@ -28,7 +28,7 @@ class AccountsController
     account = find into
     account.deposit amount
     boundary.render DepositSuccessMessage.new(amount)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     boundary.render message
   end
 
@@ -37,14 +37,14 @@ class AccountsController
     init_limit_reset_for account unless account.breached?
     account.withdraw amount
     boundary.render WithdrawSuccessMessage.new(amount)
-  rescue ItemExistError, OverLimit, InsufficientFunds => message
+  rescue ItemExist, OverLimit, InsufficientFunds => message
     boundary.render message
   end
 
   def get_balance_of(id)
     account = find id
     boundary.render BalanceMessage.new(account)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     boundary.render message
   end
 
@@ -54,7 +54,7 @@ class AccountsController
     (find to).deposit amount
     init_limit_reset_for donar unless donar.breached?
     boundary.render TransferSuccessMessage.new(amount)
-  rescue ItemExistError, OverLimit, InsufficientFunds => message
+  rescue ItemExist, OverLimit, InsufficientFunds => message
     boundary.render message
   end
 
@@ -63,14 +63,14 @@ class AccountsController
     account = find to
     account.add_holder holder
     boundary.render AddHolderSuccessMessage.new(holder, account)
-  rescue ItemExistError, HolderOnAccount => message
+  rescue ItemExist, HolderOnAccount => message
     boundary.render message
   end
 
   def get_transactions_of(id)
     transactions = (find id).transactions
     boundary.render TransactionsMessage.new(transactions)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     boundary.render message
   end
 
@@ -78,7 +78,7 @@ class AccountsController
     holder = holders.find id
     accounts = store.select { |_, a| a.holder? holder }.values
     boundary.render DisplayAccountsMessage.new(accounts)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     boundary.render message
   end
 

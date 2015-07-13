@@ -1,5 +1,5 @@
 # Definition of Transactions Message Class
-class TransactionsMessage < SuccessMessage
+class TransactionsMessage < Message
   attr_reader :transactions, :main
 
   def initialize(transactions)

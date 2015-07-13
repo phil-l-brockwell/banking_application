@@ -1,5 +1,5 @@
 # Definition of DepositSuccessMessage Class
-class DepositSuccessMessage < SuccessMessage
+class DepositSuccessMessage < Message
   attr_reader :amount
 
   def initialize(amount)

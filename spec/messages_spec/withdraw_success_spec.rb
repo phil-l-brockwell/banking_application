@@ -1,4 +1,4 @@
-require 'messages/withdraw_success_message'
+require 'messages/withdraw_success'
 
 describe 'WithdrawSuccessMessage' do
   context 'when initialised' do

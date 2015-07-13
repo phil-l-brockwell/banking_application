@@ -1,5 +1,5 @@
 # Definiton of Withdraw Success Message
-class WithdrawSuccessMessage < SuccessMessage
+class WithdrawSuccessMessage < Message
   attr_reader :amount
 
   def initialize(amount)

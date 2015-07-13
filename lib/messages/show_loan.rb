@@ -1,5 +1,5 @@
 # Definition of ShowLoanMessage Class
-class ShowLoanMessage < SuccessMessage
+class ShowLoanMessage < Message
   attr_reader :outstanding, :holder_name,
               :repayment_date, :transactions
 

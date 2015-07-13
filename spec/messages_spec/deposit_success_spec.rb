@@ -1,4 +1,4 @@
-require 'messages/deposit_success_message'
+require 'messages/deposit_success'
 
 describe 'DepositSuccessMessage' do
   context 'when initialised' do

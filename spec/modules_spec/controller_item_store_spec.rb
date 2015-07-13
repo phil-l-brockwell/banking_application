@@ -37,7 +37,7 @@ describe 'ControllerItemStore' do
 
     it 'raises an error if an item does not exist' do
       expect { item_store.find(69) }
-        .to raise_error(ItemExistError)
+        .to raise_error(ItemExist)
     end
   end
 end

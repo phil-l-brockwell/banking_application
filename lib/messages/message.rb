@@ -1,5 +1,5 @@
 # Definition of Success Message Class
-class SuccessMessage
+class Message
   attr_reader :output, :header, :main, :colour
 
   def initialize(*)

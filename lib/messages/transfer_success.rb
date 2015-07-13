@@ -1,5 +1,5 @@
 # Defintion of Transfer Success Message Class
-class TransferSuccessMessage < SuccessMessage
+class TransferSuccessMessage < Message
   attr_reader :amount
 
   def initialize(amount)

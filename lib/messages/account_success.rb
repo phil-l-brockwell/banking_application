@@ -1,5 +1,5 @@
 # Defintion of Account Success Message Class
-class AccountSuccessMessage < SuccessMessage
+class AccountSuccessMessage < Message
   attr_reader :new_account_id
 
   def initialize(new_account)

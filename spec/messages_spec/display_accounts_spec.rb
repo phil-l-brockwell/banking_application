@@ -1,4 +1,4 @@
-require 'messages/display_accounts_message'
+require 'messages/display_accounts'
 
 describe 'DisplayAccountsMessage' do
   context 'when initialised' do

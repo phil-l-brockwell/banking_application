@@ -1,5 +1,5 @@
 # Definition of AddHolderSuccessMessage
-class AddHolderSuccessMessage < SuccessMessage
+class AddHolderSuccessMessage < Message
   attr_reader :account_id, :holder_id
 
   def initialize(holder, account)

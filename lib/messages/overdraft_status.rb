@@ -1,5 +1,5 @@
 # Definition of Overdraft Status Message Class
-class OverdraftStatusMessage < SuccessMessage
+class OverdraftStatusMessage < Message
   attr_reader :account_id, :overdraft, :overdraft_on
 
   def initialize(account)

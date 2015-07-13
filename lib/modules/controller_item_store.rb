@@ -8,7 +8,7 @@ module ControllerItemStore
   end
 
   def find(id)
-    fail ItemExistError unless store[id]
+    fail ItemExist unless store[id]
     store[id]
   end
 

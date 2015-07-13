@@ -1,8 +1,8 @@
-require 'messages/success_message'
+require 'messages/message'
 
-describe 'SuccessMessage' do
+describe 'Message' do
   context 'when initialised' do
-    let(:test_message) { SuccessMessage.new }
+    let(:test_message) { Message.new }
 
     it 'has the correct header' do
       expect(test_message.header).to eq('Transaction Successful.')

@@ -1,5 +1,5 @@
 # Definition of Loan Success Message Class
-class LoanSuccessMessage < SuccessMessage
+class LoanSuccessMessage < Message
   attr_reader :loan_id, :outstanding, :repayment_date
 
   def initialize(loan)

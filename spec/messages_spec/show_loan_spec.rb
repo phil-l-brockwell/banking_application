@@ -1,4 +1,4 @@
-require 'messages/show_loan_message'
+require 'messages/show_loan'
 
 describe 'ShowLoanMessage' do
   context 'when initialised' do

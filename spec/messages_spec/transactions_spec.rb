@@ -1,4 +1,4 @@
-require 'messages/transactions_message'
+require 'messages/transactions'
 
 describe 'TransactionsMessage' do
   context 'when initialised' do

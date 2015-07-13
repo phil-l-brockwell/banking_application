@@ -1,4 +1,4 @@
-require 'messages/new_holder_success_message'
+require 'messages/new_holder_success'
 
 describe 'NewHolderSuccessMessage' do
   context 'when initialised' do

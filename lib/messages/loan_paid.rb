@@ -1,5 +1,5 @@
 # Definition of LoanPaidMessage Class
-class LoanPaidMessage < SuccessMessage
+class LoanPaidMessage < Message
   attr_reader :loan_id, :outstanding
 
   def initialize(loan)

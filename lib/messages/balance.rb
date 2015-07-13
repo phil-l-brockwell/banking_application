@@ -1,5 +1,5 @@
 # Defintion of Balance Message Class
-class BalanceMessage < SuccessMessage
+class BalanceMessage < Message
   attr_reader :balance, :account_id
 
   def initialize(account)
