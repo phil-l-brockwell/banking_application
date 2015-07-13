@@ -61,13 +61,6 @@ describe 'AccountsController' do
       accounts_ctrl.withdraw(50.00, from: id)
     end
 
-    it 'returns an error if a withdrawal is more than the account limit' do
-      id = open_account_and_return_id
-      accounts_ctrl.deposit 1000, into: id
-      message = accounts_ctrl.withdraw 501, from: id
-      expect(message.class).to eq(OverLimitMessage)
-    end
-
     it 'can schedule a limit to be reset when a withdrawal is made' do
       id = open_account_and_return_id
       accounts_ctrl.deposit(50.00, into: id)
@@ -93,13 +86,6 @@ describe 'AccountsController' do
       expect(accounts_ctrl.store[id]).to receive(:withdraw).with(10.00)
       expect(accounts_ctrl.store[id_2]).to receive(:deposit).with(10.00)
       accounts_ctrl.transfer(10.00, from: id, to: id_2)
-    end
-
-    it 'returns an error if the donar account has insufficient funds' do
-      id = open_account_and_return_id
-      id_2 = open_account_and_return_id
-      message = accounts_ctrl.transfer(10.00, from: id, to: id_2)
-      expect(message.class).to eq(InsufficientFundsMessage)
     end
   end
 

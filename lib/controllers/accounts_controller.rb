@@ -1,5 +1,5 @@
 require 'singleton'
-# require 'boundary'
+require 'boundary'
 require_relative '../modules/controller_item_store'
 require_relative '../modules/overdraft_module'
 require_relative '../modules/interest_module'
@@ -37,12 +37,18 @@ class AccountsController
   end
 
   def withdraw(amount, from:)
-    account = find from
-    return InsufficientFundsMessage.new(account) unless account.contains? amount
-    return OverLimitMessage.new(account) unless account.limit_allow? amount
-    init_limit_reset_for account unless account.breached?
-    account.withdraw amount
-    boundary.render WithdrawSuccessMessage.new(amount)
+    begin
+      account = find from
+      init_limit_reset_for account unless account.breached?
+      account.withdraw amount
+      boundary.render WithdrawSuccessMessage.new(amount)
+    rescue ItemExistError => message
+      boundary.render message
+    rescue OverLimit => message
+      boundary.render message
+    rescue InsufficientFunds => message
+      boundary.render message
+    end
   end
 
   def get_balance_of(id)
@@ -55,14 +61,20 @@ class AccountsController
   end
 
   def transfer(amount, from:, to:)
-    donar = find from
-    recipitent = find to
-    return InsufficientFundsMessage.new(donar) unless donar.contains? amount
-    return OverLimitMessage.new(donar) unless donar.limit_allow? amount
-    init_limit_reset_for donar unless donar.breached?
-    donar.withdraw amount
-    recipitent.deposit amount
-    boundary.render TransferSuccessMessage.new(amount)
+    begin
+      donar = find from
+      recipitent = find to
+      init_limit_reset_for donar unless donar.breached?
+      donar.withdraw amount
+      recipitent.deposit amount
+      boundary.render TransferSuccessMessage.new(amount)
+    rescue ItemExistError => message
+      boundary.render message
+    rescue OverLimit => message
+      boundary.render message
+    rescue InsufficientFunds => message
+      boundary.render message
+    end
   end
 
   def add_holder(id, to:)

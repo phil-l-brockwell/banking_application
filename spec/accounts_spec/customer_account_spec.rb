@@ -27,12 +27,14 @@ describe 'CustomerAccount' do
     end
 
     it 'can reset its limit' do
+      test_account.deposit(100.00)
       test_account.withdraw(100.00)
       test_account.reset_limit
       expect(test_account.daily_limit).to eq(300.00)
     end
 
     it 'knows when its daily limit is under' do
+      test_account.deposit(100.00)
       test_account.withdraw(100.00)
       expect(test_account.breached?).to eq(true)
     end

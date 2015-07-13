@@ -6,6 +6,22 @@ class HolderOnAccount < Exception
   end
 end
 
+class OverLimit < Exception
+  def output
+    ['Transaction Error',
+     'This Transaction exceeds the daily limit and cannot be proccessed',
+     'Please Try again.']
+  end
+end
+
+class InsufficientFunds < Exception
+  def output
+    ['Transaction Error',
+     'This account has Insufficient funds',
+     'Please Try again.']
+  end
+end
+
 # Definition of Customer Account Class
 class CustomerAccount < BaseAccount
   attr_reader :interest_rate, :holders, :daily_limit
@@ -29,6 +45,8 @@ class CustomerAccount < BaseAccount
   end
 
   def withdraw(amount)
+    raise InsufficientFunds unless contains? amount
+    raise OverLimit unless limit_allow? amount
     @balance -= amount
     @daily_limit -= amount
     add_transaction Transaction.new(:withdrawal, amount)
