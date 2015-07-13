@@ -66,11 +66,16 @@ class AccountsController
   end
 
   def add_holder(id, to:)
-    holder = holders.find id
-    account = find to
-    return HolderOnAccountMessage.new(holder, account) if account.holder? holder
-    account.add_holder holder
-    boundary.render AddHolderSuccessMessage.new(holder, account)
+    begin
+      holder = holders.find id
+      account = find to
+      account.add_holder holder
+      boundary.render AddHolderSuccessMessage.new(holder, account)
+    rescue ItemExistError => message
+      boundary.render message
+    rescue HolderOnAccount => message
+      boundary.render message
+    end
   end
 
   def get_transactions_of(id)

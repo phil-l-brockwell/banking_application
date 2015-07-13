@@ -1,3 +1,11 @@
+class HolderOnAccount < Exception
+  def output
+    ['Transaction Error',
+     'The Holder Selected already exists on the selected account',
+     'Please Try again.']
+  end
+end
+
 # Definition of Customer Account Class
 class CustomerAccount < BaseAccount
   attr_reader :interest_rate, :holders, :daily_limit
@@ -27,6 +35,7 @@ class CustomerAccount < BaseAccount
   end
 
   def add_holder(holder)
+    raise HolderOnAccount if holder? holder
     @holders[holder.id] = holder
   end
 

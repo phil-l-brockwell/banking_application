@@ -45,16 +45,6 @@ describe 'AccountsController' do
     end
   end
 
-  context 'when adding a holder to an existing account' do
-    it 'cannot add the same holder to an account twice' do
-      new_holder_id = create_holder_and_return_id
-      id = open_account_and_return_id
-      accounts_ctrl.add_holder(new_holder_id, to: id)
-      expect(accounts_ctrl.add_holder(new_holder_id, to: id).class)
-        .to eq(HolderOnAccountMessage)
-    end
-  end
-
   context 'when depositing' do
     it 'can make a deposit' do
       id = open_account_and_return_id

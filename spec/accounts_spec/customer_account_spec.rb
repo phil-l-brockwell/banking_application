@@ -75,14 +75,12 @@ describe 'CustomerAccount' do
       expect(test_account.holders).to include(0 => second_holder)
     end
 
-    it 'knows if it has a certain holder' do
-      expect(test_account.holder?(holder)).to eq(true)
+    it 'raises an error if it trys to add a holder that already exists' do
       test_account.add_holder(second_holder)
-      expect(test_account.holder?(second_holder)).to eq(true)
-    end
-
-    it 'knows if it does not have a certain holder' do
-      expect(test_account.holder?(second_holder)).to eq(false)
+      expect { test_account.add_holder(second_holder) }
+        .to raise_error(HolderOnAccount)
+      expect { test_account.add_holder(holder) }
+        .to raise_error(HolderOnAccount)
     end
   end
 end
