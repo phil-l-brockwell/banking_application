@@ -1,9 +1,8 @@
 module Interest
-  attr_reader :account
+  attr_reader :master_account
 
   def initialize
-    super
-    @account = MasterAccount.new
+    @master_account = MasterAccount.new
   end
 
   def calculate_interest_on(account)
@@ -12,9 +11,8 @@ module Interest
     interest
   end
 
-  private
-
   def deduct_interest(amount)
-    @account.withdraw amount
+    puts @master_account
+    @master_account.withdraw amount
   end
 end

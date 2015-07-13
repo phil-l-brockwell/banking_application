@@ -8,7 +8,7 @@ describe 'InterestHolder' do
 
   context 'when initialised' do
     it 'has a master account' do
-      expect(test_controller.account.type).to eq(:Master)
+      expect(test_controller.master_account.type).to eq(:Master)
     end
   end
 

@@ -37,7 +37,7 @@ describe 'AccountsController' do
       expect(accounts_ctrl.store[id].type).to eq(:Current)
     end
 
-    xit 'schedules new interest payments' do
+    it 'schedules new interest payments' do
       id = open_account_and_return_id
       Timecop.scale(100_000_00)
       expect(accounts_ctrl.store[id]).to receive(:deposit)
@@ -67,7 +67,7 @@ describe 'AccountsController' do
       accounts_ctrl.withdraw(50.00, from: id)
       Timecop.scale(100_000)
       expect(accounts_ctrl.store[id]).to receive(:reset_limit)
-      sleep(1)
+      sleep(2)
     end
 
     it 'does not schedule a limit reset if one is already scheduled' do

@@ -45,15 +45,15 @@ class CustomerAccount < BaseAccount
   end
 
   def withdraw(amount)
-    raise InsufficientFunds unless contains? amount
-    raise OverLimit unless limit_allow? amount
+    fail InsufficientFunds unless contains? amount
+    fail OverLimit unless limit_allow? amount
     @balance -= amount
     @daily_limit -= amount
     add_transaction Transaction.new(:withdrawal, amount)
   end
 
   def add_holder(holder)
-    raise HolderOnAccount if holder? holder
+    fail HolderOnAccount if holder? holder
     @holders[holder.id] = holder
   end
 
