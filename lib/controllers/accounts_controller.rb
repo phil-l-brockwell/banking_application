@@ -1,5 +1,5 @@
 require 'singleton'
-require 'boundary'
+# require 'boundary'
 require_relative '../modules/controller_item_store'
 require_relative '../modules/overdraft_module'
 # Definition of Controller Class
@@ -50,10 +50,9 @@ class AccountsController
 
   def transfer(amount, from:, to:)
     donar = find from
-    recipitent = find to
-    init_limit_reset_for donar unless donar.breached?
     donar.withdraw amount
-    recipitent.deposit amount
+    (find to).deposit amount
+    init_limit_reset_for donar unless donar.breached?
     boundary.render TransferSuccessMessage.new(amount)
   rescue ItemExistError, OverLimit, InsufficientFunds => message
     boundary.render message
