@@ -19,7 +19,7 @@ describe 'OverdraftStatusMessage' do
 
     it 'has the correct main text' do
       expect(test_message.main)
-        .to eq(['Account ID: 1 has an active overdraft of £100'])
+        .to eq(['Account ID: 1 has an overdraft of £100'])
     end
   end
 
@@ -28,7 +28,7 @@ describe 'OverdraftStatusMessage' do
     let(:test_message) { OverdraftStatusMessage.new(account) }
 
     it 'has the correct main text' do
-      expect(test_message.main).to eq(['Account ID: 1 has no active overdraft'])
+      expect(test_message.main).to eq(['Account ID: 1 has no overdraft'])
     end
   end
 end
