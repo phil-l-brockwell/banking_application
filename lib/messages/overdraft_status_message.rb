@@ -1,5 +1,4 @@
 class OverdraftStatusMessage < SuccessMessage
-
   attr_reader :account_id, :overdraft, :overdraft_on
 
   def initialize(account)

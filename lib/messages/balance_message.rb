@@ -1,6 +1,6 @@
 # Defintion of Balance Message Class
 class BalanceMessage < SuccessMessage
-  attr_accessor :balance, :account_id
+  attr_reader :balance, :account_id
 
   def initialize(account)
     super

@@ -1,6 +1,6 @@
 # Definiton of Withdraw Success Message
 class WithdrawSuccessMessage < SuccessMessage
-  attr_accessor :amount
+  attr_reader :amount
 
   def initialize(amount)
     super
