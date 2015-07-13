@@ -23,3 +23,4 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Create interest and overdrafts module
 * Add try statements to controller
 * Add message colours
+* Refactor new loan procedure
