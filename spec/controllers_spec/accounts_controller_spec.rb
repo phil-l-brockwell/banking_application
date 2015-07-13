@@ -7,7 +7,6 @@ describe 'AccountsController' do
   let(:accounts_ctrl) { AccountsController.instance }
   let(:holder)        { double :holder, id: 1       }
 
-
   def create_holder_and_return_id
     id = accounts_ctrl.holders.id
     accounts_ctrl.holders.create('Robert Pulson')

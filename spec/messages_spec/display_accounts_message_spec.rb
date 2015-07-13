@@ -2,11 +2,11 @@ require 'messages/display_accounts_message'
 
 describe 'DisplayAccountsMessage' do
   context 'when initialised' do
-    let(:account_1)    { double :account, id: 1,  output_balance: '£10', type: :current  }
-    let(:account_2)    { double :account, id: 15, output_balance: '£1',  type: :savings  }
-    let(:account_3)    { double :account, id: 27, output_balance: '£56', type: :business }
-    let(:accounts)     { [account_1, account_2, account_3]                     }
-    let(:test_message) { DisplayAccountsMessage.new(accounts)                  }
+    let(:a1) { double :account, id: 1,  output_balance: '£10', type: :current  }
+    let(:a2) { double :account, id: 15, output_balance: '£1',  type: :savings  }
+    let(:a3) { double :account, id: 27, output_balance: '£56', type: :business }
+    let(:accounts)     { [a1, a2, a3] }
+    let(:test_message) { DisplayAccountsMessage.new(accounts) }
 
     it 'has the array of accounts' do
       expect(test_message.accounts).to eq(accounts)

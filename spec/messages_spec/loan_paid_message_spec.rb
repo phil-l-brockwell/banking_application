@@ -15,7 +15,8 @@ describe 'LoanPaidMessage' do
 
     it 'has the correct main text' do
       expect(test_message.main)
-        .to eq(['Payment made to Loan ID: 1. Outstanding balance now £200'])
+        .to eq(['Payment made to Loan ID: 1.',
+                'Outstanding balance now £200'])
     end
   end
 end

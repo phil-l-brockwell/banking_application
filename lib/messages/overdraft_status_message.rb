@@ -1,3 +1,4 @@
+# Definition of Overdraft Status Message Class
 class OverdraftStatusMessage < SuccessMessage
   attr_reader :account_id, :overdraft, :overdraft_on
 
@@ -10,7 +11,7 @@ class OverdraftStatusMessage < SuccessMessage
   end
 
   def build_main
-    return ["Account ID: #{@account_id} has no active overdraft"] unless @overdraft_on
-    ["Account ID: #{@account_id} has an active overdraft of £#{@overdraft}"]
+    return ["Account ID: #{@account_id} has no overdraft"] unless @overdraft_on
+    ["Account ID: #{@account_id} has an overdraft of £#{@overdraft}"]
   end
 end
