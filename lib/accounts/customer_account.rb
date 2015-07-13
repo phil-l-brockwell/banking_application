@@ -1,27 +1,3 @@
-class HolderOnAccount < Exception
-  def output
-    ['Transaction Error',
-     'The Holder Selected already exists on the selected account',
-     'Please Try again.']
-  end
-end
-
-class OverLimit < Exception
-  def output
-    ['Transaction Error',
-     'This Transaction exceeds the daily limit and cannot be proccessed',
-     'Please Try again.']
-  end
-end
-
-class InsufficientFunds < Exception
-  def output
-    ['Transaction Error',
-     'This account has Insufficient funds',
-     'Please Try again.']
-  end
-end
-
 # Definition of Customer Account Class
 class CustomerAccount < BaseAccount
   attr_reader :interest_rate, :holders, :daily_limit

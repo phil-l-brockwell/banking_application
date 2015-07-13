@@ -60,11 +60,10 @@ class Boundary
   end
 
   def op_2
-    id = get_('holder id')
     show(ACCOUNT_TYPES)
     input = verify(gets.chomp, with: ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
-    accounts.open type, with: id
+    accounts.open type, with: get_('holder id')
   end
 
   def op_3
