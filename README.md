@@ -16,7 +16,6 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 
 # Next...
 * Refactor controller testing
-* Rework Interest Controller to receive interest from negative balances
 * Add rollback facility
 * Add message colours
 * Use decorator pattern
