@@ -22,7 +22,9 @@ describe 'ControllerItemStore' do
       item_store.add(item)
       expect(item_store.store.length).to eq(1)
     end
+  end
 
+  context 'when finding an item' do
     it 'can locate the item with its id' do
       item_store.add(item)
       expect(item_store.store[0]).to eq(item)
@@ -30,11 +32,12 @@ describe 'ControllerItemStore' do
 
     it 'knows it has an item' do
       item_store.add(item)
-      expect(item_store.exist?(0)).to eq(item)
+      expect(item_store.find(0)).to eq(item)
     end
 
-    it 'knows if it does not have an item' do
-      expect(item_store.exist?(0)).not_to eq(item)
+    it 'raises an error if an item does not exist' do
+      expect { item_store.find(69) }
+        .to raise_error(ItemExistError)
     end
   end
 end

@@ -12,7 +12,7 @@ describe 'HoldersController' do
     it 'adds the new holder to the holders hash' do
       id = holders_ctrl.id
       holders_ctrl.create('Robert Pulson')
-      holder = holders_ctrl.exist?(id)
+      holder = holders_ctrl.find(id)
       expect(holder.name).to eq('Robert Pulson')
       expect(holder.id).to eq(id)
     end

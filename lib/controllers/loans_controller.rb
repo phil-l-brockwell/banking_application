@@ -12,12 +12,12 @@ class LoansController
   end
 
   def show(id)
-    loan = exist? id
+    loan = find id
     boundary.render ShowLoanMessage.new(loan)
   end
 
   def pay(amount, off:)
-    loan = exist? off
+    loan = find off
     loan.make_payment amount
     boundary.render LoanPaidMessage.new(loan)
   end

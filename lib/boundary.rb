@@ -97,7 +97,7 @@ class Boundary
 
   def op_10
     options = {}
-    options[:holder] = holders.exist? get_('holder id')
+    options[:holder] = holders.find get_('holder id')
     options[:borrowed] = get_('amount')
     options[:term] = get_('term')
     say 'Enter the Interest Rate'

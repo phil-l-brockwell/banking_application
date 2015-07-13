@@ -114,10 +114,6 @@ describe 'AccountsController' do
   end
 
   context 'when transacting' do
-    it 'knows if it contains an account in its store' do
-      expect(accounts_ctrl.exist?(57)).not_to eq(true)
-    end
-
     it 'can reset the limit on an account' do
       id = open_account_and_return_id
       expect(accounts_ctrl.store[id]).to receive(:reset_limit)
