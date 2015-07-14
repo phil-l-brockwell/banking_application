@@ -42,8 +42,8 @@ class Boundary
   end
 
   def render(message)
-    say message.output, message.colour
-    start
+    # say message.output, message.colour
+    # start
   end
 
   def start
@@ -148,4 +148,4 @@ class Boundary
   end
 end
 
-Boundary.instance.start
+# Boundary.instance.start
