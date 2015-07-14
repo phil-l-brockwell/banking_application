@@ -13,9 +13,9 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Added Holder storage module
 * Used singleton pattern on Account, Holder and Loan Controllers
 * Added overdraft controller and facility
+* Used memento pattern to rollback account transfers
 
 # Next...
 * Refactor controller testing
-* Add rollback facility
 * Use decorator pattern
 * Raise error on islamic account if overdraft switched on
