@@ -17,6 +17,5 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 # Next...
 * Refactor controller testing
 * Add rollback facility
-* Add message colours
 * Use decorator pattern
 * Raise error on islamic account if overdraft switched on
