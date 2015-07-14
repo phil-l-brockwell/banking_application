@@ -96,14 +96,17 @@ describe 'CustomerAccount' do
     it 'can return a memento with its current state' do
       memento = test_account.get_state
       expect(memento.balance).to eq(test_account.balance)
-      expect(memento.account_id).to eq(test_account.id)
+      expect(memento.id).to eq(test_account.id)
     end
 
     it 'can restore a previous state when passed memento' do
       expect(test_account.balance).to eq(0)
-      memento = double :memento, balance: 200.00
+      transactions = ['transaction 1 ', 'transaction 2', 'transaction 3']
+      memento = double :memento, balance: 200.00, daily_limit: 150.00, transactions: transactions
       test_account.restore_state(memento)
       expect(test_account.balance).to eq(200.00)
+      expect(test_account.daily_limit).to eq(150.00)
+      expect(test_account.transactions).to eq(transactions)
     end
   end
 end

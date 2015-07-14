@@ -17,11 +17,13 @@ class CustomerAccount < BaseAccount
   end
 
   def get_state
-    Memento.new(@balance, @id)
+    Memento.new(self)
   end
 
   def restore_state(memento)
     @balance = memento.balance
+    @daily_limit = memento.daily_limit
+    @transactions = memento.transactions
   end
 
   def output_balance

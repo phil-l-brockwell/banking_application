@@ -1,9 +1,11 @@
 # Definition of Memento Class
 class Memento
-  attr_reader :balance, :account_id
+  attr_reader :balance, :id, :daily_limit, :transactions
 
-  def initialize(balance, account_id)
-    @balance = balance
-    @account_id = account_id
+  def initialize(account)
+    @balance = account.balance
+    @id = account.id
+    @daily_limit = account.daily_limit
+    @transactions = account.transactions
   end
 end
