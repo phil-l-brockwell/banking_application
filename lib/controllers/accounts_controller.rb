@@ -50,11 +50,13 @@ class AccountsController
 
   def transfer(amount, from:, to:)
     donar = find from
+    previous_state = donar.get_state
     donar.withdraw amount
     (find to).deposit amount
     init_limit_reset_for donar unless donar.breached?
     boundary.render TransferSuccessMessage.new(amount)
   rescue ItemExist, OverLimit, InsufficientFunds => message
+    donar.restore_state previous_state if previous_state
     boundary.render message
   end
 

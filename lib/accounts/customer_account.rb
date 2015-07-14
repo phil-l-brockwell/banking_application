@@ -16,6 +16,14 @@ class CustomerAccount < BaseAccount
     @overdraft     = 0
   end
 
+  def get_state
+    Memento.new(@balance, @id)
+  end
+
+  def restore_state(memento)
+    @balance = memento.balance
+  end
+
   def output_balance
     '£' + '%.2f' % @balance
   end

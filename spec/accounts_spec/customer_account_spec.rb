@@ -91,4 +91,19 @@ describe 'CustomerAccount' do
         .to raise_error(HolderOnAccount)
     end
   end
+
+  context 'mementos' do
+    it 'can return a memento with its current state' do
+      memento = test_account.get_state
+      expect(memento.balance).to eq(test_account.balance)
+      expect(memento.account_id).to eq(test_account.id)
+    end
+
+    it 'can restore a previous state when passed memento' do
+      expect(test_account.balance).to eq(0)
+      memento = double :memento, balance: 200.00
+      test_account.restore_state(memento)
+      expect(test_account.balance).to eq(200.00)
+    end
+  end
 end
