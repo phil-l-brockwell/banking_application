@@ -1,16 +1,17 @@
 require 'singleton'
-require 'boundary'
+# require 'boundary'
 require_relative '../modules/controller_item_store'
 require_relative '../modules/overdraft'
 # Definition of Controller Class
 class AccountsController
   include ControllerItemStore, Overdrafts, Singleton
 
-  attr_reader :holders, :task_manager, :master
+  attr_reader :holders, :task_manager, :master, :caretaker
 
   def initialize
     super
     @master       = MasterAccount.new
+    @caretaker    = Caretaker.instance
     @holders      = HoldersController.instance
     @task_manager = Rufus::Scheduler.new
   end
@@ -50,13 +51,13 @@ class AccountsController
 
   def transfer(amount, from:, to:)
     donar = find from
-    previous_state = donar.get_state
+    caretaker.add donar.get_state
     donar.withdraw amount
     (find to).deposit amount
     init_limit_reset_for donar unless donar.breached?
     boundary.render TransferSuccessMessage.new(amount)
   rescue ItemExist, OverLimit, InsufficientFunds => message
-    donar.restore_state previous_state if previous_state
+    caretaker.restore donar if donar
     boundary.render message
   end
 
