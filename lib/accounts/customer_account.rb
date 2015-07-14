@@ -7,13 +7,13 @@ class CustomerAccount < BaseAccount
 
   def initialize(holder, id)
     super
-    @main_holder = holder
-    @id = id
-    @holders = {}
+    @main_holder   = holder
+    @id            = id
+    @holders       = {}
     @interest_rate = 0.1
-    @daily_limit = LIMIT
-    @overdraft_on = false
-    @overdraft = 0
+    @daily_limit   = LIMIT
+    @overdraft_on  = false
+    @overdraft     = 0
   end
 
   def output_balance
@@ -29,8 +29,12 @@ class CustomerAccount < BaseAccount
   end
 
   def add_holder(holder)
-    fail HolderOnAccount if holder? holder
+    fail HolderOnAccount if holders_include? holder
     @holders[holder.id] = holder
+  end
+
+  def overdrawn?
+    @balance < 0
   end
 
   def reset_limit
@@ -49,11 +53,7 @@ class CustomerAccount < BaseAccount
     daily_limit >= amount
   end
 
-  def holder?(holder)
+  def holders_include?(holder)
     main_holder == holder || holders.value?(holder)
-  end
-
-  def overdrawn?
-    @balance < 0
   end
 end

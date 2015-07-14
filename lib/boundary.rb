@@ -42,8 +42,8 @@ class Boundary
   end
 
   def render(message)
-    # say message.output
-    # start
+    say message.output, message.colour
+    start
   end
 
   def start
@@ -121,8 +121,9 @@ class Boundary
     accounts.show_overdraft get_('account id')
   end
 
-  def say(string)
-    puts string
+  def say(output, colour=:blue)
+    puts output.colorize(colour) if output.is_a? String
+    output.each { |string| puts string.colorize(colour) } if output.is_a? Array
     sleep(0.2)
   end
 
@@ -147,4 +148,4 @@ class Boundary
   end
 end
 
-# Boundary.instance.start
+Boundary.instance.start
