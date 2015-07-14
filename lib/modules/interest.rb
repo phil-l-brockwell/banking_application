@@ -1,5 +1,5 @@
+# Definition of Interest Module
 module Interest
-
   def pay_interest_on(account)
     interest = calculate_interest(account)
     if account.overdrawn?

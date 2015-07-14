@@ -1,5 +1,5 @@
 require 'singleton'
-require 'boundary'
+# require 'boundary'
 require_relative '../modules/controller_item_store'
 require_relative '../modules/overdraft'
 require_relative '../modules/interest'
@@ -107,7 +107,7 @@ class AccountsController
 
   def init_limit_reset_for(account)
     task_manager.in '1d' do
-     account.reset_limit
+      account.reset_limit
     end
   end
 

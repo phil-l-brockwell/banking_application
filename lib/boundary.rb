@@ -8,21 +8,29 @@ class Boundary
   include Singleton
   attr_accessor :accounts, :holders, :loans
 
-  MENU_ITEMS = { 1  => { op: :op_1,  output: 'Create New Holder'         },
-                 2  => { op: :op_2,  output: 'Create an Account'         },
-                 3  => { op: :op_3,  output: 'Make a Deposit'            },
-                 4  => { op: :op_4,  output: 'Display Account Balance'   },
-                 5  => { op: :op_5,  output: 'Make a Withdrawal'         },
-                 6  => { op: :op_6,  output: 'Make a Transfer'           },
-                 7  => { op: :op_7,  output: 'Add Holder'                },
-                 8  => { op: :op_8,  output: 'Show Customers Accounts'   },
-                 9  => { op: :op_9,  output: 'View Account Transactions' },
-                 10 => { op: :op_10, output: 'New Loan'                  },
-                 11 => { op: :op_11, output: 'View Loan'                 },
-                 12 => { op: :op_12, output: 'Make Loan Payment'         },
-                 13 => { op: :op_13, output: 'Enable/Edit Overdraft'     },
-                 14 => { op: :op_14, output: 'Disable Overdraft'         },
-                 15 => { op: :op_15, output: 'View Overdraft Status'     } }
+  HOLDERS =    { 1 => { op: :op_1,  output: 'Create New Holder' } }
+
+  ACCOUNTS =   { 1 => { op: :op_2,  output: 'Create an Account'         },
+                 2 => { op: :op_3,  output: 'Make a Deposit'            },
+                 3 => { op: :op_4,  output: 'Display Account Balance'   },
+                 4 => { op: :op_5,  output: 'Make a Withdrawal'         },
+                 5 => { op: :op_6,  output: 'Make a Transfer'           },
+                 6 => { op: :op_7,  output: 'Add Holder'                },
+                 7 => { op: :op_8,  output: 'Show Customers Accounts'   },
+                 8 => { op: :op_9,  output: 'View Account Transactions' } }
+
+  LOANS =      { 1 => { op: :op_10, output: 'New Loan'          },
+                 2 => { op: :op_11, output: 'View Loan'         },
+                 3 => { op: :op_12, output: 'Make Loan Payment' } }
+
+  OVERDRAFTS = { 1 => { op: :op_13, output: 'Enable/Edit Overdraft' },
+                 2 => { op: :op_14, output: 'Disable Overdraft'     },
+                 3 => { op: :op_15, output: 'View Overdraft Status' } }
+
+  MAIN_MENU =  { 1 => { menu: HOLDERS,    output: 'Holders'    },
+                 2 => { menu: ACCOUNTS,   output: 'Accounts'   },
+                 3 => { menu: LOANS,      output: 'Loans'      },    
+                 4 => { menu: OVERDRAFTS, output: 'Overdrafts' } }
 
   ACCOUNT_TYPES = { 1  => { output: :Current      },
                     2  => { output: :Savings      },
@@ -42,14 +50,17 @@ class Boundary
   end
 
   def render(message)
-    # say message.output, message.colour
-    # start
+    say message.output, message.colour
+    start
   end
 
   def start
-    show(MENU_ITEMS)
-    input = verify(gets.chomp, with: MENU_ITEMS)
-    send MENU_ITEMS[input][:op]
+    show(MAIN_MENU)
+    input = verify(gets.chomp, with: MAIN_MENU)
+    menu = MAIN_MENU[input][:menu]
+    show(menu)
+    input = verify(gets.chomp, with: menu)
+    send menu[input][:op]
   end
 
   private
@@ -121,7 +132,7 @@ class Boundary
     accounts.show_overdraft get_('account id')
   end
 
-  def say(output, colour=:blue)
+  def say(output, colour = :blue)
     puts output.colorize(colour) if output.is_a? String
     output.each { |string| puts string.colorize(colour) } if output.is_a? Array
     sleep(0.2)
@@ -148,4 +159,4 @@ class Boundary
   end
 end
 
-# Boundary.instance.start
+Boundary.instance.start

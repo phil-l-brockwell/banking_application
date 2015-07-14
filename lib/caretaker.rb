@@ -1,7 +1,6 @@
 require 'singleton'
-
+# Definition of Caretaker Class
 class Caretaker
-
   include ControllerItemStore, Singleton
 
   def restore(account)
