@@ -87,12 +87,4 @@ describe 'AccountsController' do
       accounts_ctrl.transfer(10.00, from: id, to: id_2)
     end
   end
-
-  context 'when transacting' do
-    it 'can reset the limit on an account' do
-      id = open_account_and_return_id
-      expect(accounts_ctrl.store[id]).to receive(:reset_limit)
-      accounts_ctrl.reset_limit_on(accounts_ctrl.store[id])
-    end
-  end
 end

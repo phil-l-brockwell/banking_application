@@ -86,10 +86,6 @@ class AccountsController
     boundary.render message
   end
 
-  def reset_limit_on(account)
-    account.reset_limit
-  end
-
   ACCOUNT_CLASSES = { :Current      => CurrentAccount,
                       :Savings      => SavingsAccount,
                       :Business     => BusinessAccount,
@@ -111,7 +107,7 @@ class AccountsController
 
   def init_limit_reset_for(account)
     task_manager.in '1d' do
-      reset_limit_on account
+     account.reset_limit
     end
   end
 

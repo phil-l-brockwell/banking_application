@@ -1,7 +1,7 @@
 module Interest
 
   def pay_interest_on(account)
-    interest = (account.balance * account.interest_rate).abs
+    interest = calculate_interest(account)
     if account.overdrawn?
       account.withdraw interest
       master.deposit interest
@@ -11,4 +11,9 @@ module Interest
     end
   end
 
+  private
+
+  def calculate_interest(account)
+    (account.balance * account.interest_rate).abs
+  end
 end
