@@ -2,22 +2,39 @@
 
   <head>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='style.css' rel='stylesheet'>
   </head>
 
   <body>
 
-    <div class='container'>
-      <a href='/'><h1>Greenwich School of Banking</h1></a>
-
-
-      <% if @message %>
-        <div class="alert alert-warning" role="alert">
-          <%= @message.output %>
+    <nav class='navbar navbar-default navbar-fixed-top'>
+      <div class='container'>
+        <a href='/'><h1>Greenwich School of Banking</h1></a>
+        <div class="btn-group btn-group-justified" role="group">
+          <a class='btn btn-default' href='/holders'>Holders</a>
+          <a class='btn btn-default' href='/accounts'>Accounts</a>
+          <a class='btn btn-default' href='/loans'>Loans</a>
         </div>
-      <% end %>
+      </div>
+    </nav>
 
+    <% if @message %>
+      <div class="alert alert-warning" role="alert">
+        <%= @message.output %>
+      </div>
+    <% end %>
+
+    <div class='container'>
       <%= yield %>
     </div>
+
+    <nav class='navbar navbar-default navbar-fixed-bottom'>
+      <div class='container'>
+        <a href='https://github.com/robertpulson/banking_application'>Check out the GitHub Repo.</a>
+        <br>
+        All Work by <a href='http://www.philbrockwell.com/'>Phil Brockwell</a>.
+      </div>
+    </nav>
 
   </body>
 
