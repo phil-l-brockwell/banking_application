@@ -1,13 +1,9 @@
 <h2>Accounts</h2>
 
-<% if @message %>
-  <%= @message.output %>
-<% end %>
-
 <% if @accounts %>
   <div class="list-group">
     <% @accounts.each do |key, account| %>
-      <a href="" type="button" class="list-group-item">
+      <a href="/transactions" type="button" class="list-group-item">
         ID: <%= account.id %>
         Type: <%= account.type %>
         Holder Name: <%= account.main_holder.name %>
@@ -18,3 +14,8 @@
 <% end %>
 
 <a class='btn btn-default' href="/create_account">Create New Account</a>
+<a class='btn btn-default' href='/'>Deposit</a>
+<a class='btn btn-default' href='/balance'>Balance</a>
+<a class='btn btn-default' href='/withdraw'>Withdraw</a>
+<a class='btn btn-default' href='/transfer'>Transfer</a>
+<a class='btn btn-default' href='/add_holder'>Add Holder</a>

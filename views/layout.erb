@@ -5,8 +5,14 @@
   </head>
 
   <body>
+
     <div class='container'>
-      <h1>Banking Application</h1>
+      <a href='/'><h1>Banking Application</h1></a>
+
+      <% if @message %>
+        <%= @message.output %>
+      <% end %>
+
       <%= yield %>
     </div>
 
