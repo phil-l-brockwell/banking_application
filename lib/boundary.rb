@@ -1,11 +1,9 @@
-require 'singleton'
 require 'require_all'
 require_all 'lib'
 require 'rufus-scheduler'
 require 'colorize'
 # Definition of Boundary Class
 class Boundary
-  include Singleton
   attr_accessor :accounts, :holders, :loans
 
   HOLDERS = { 1 => { op: :op_1,  output: 'Create New Holder' } }
@@ -156,4 +154,4 @@ class Boundary
   end
 end
 
-Boundary.instance.start
+Boundary.new.start

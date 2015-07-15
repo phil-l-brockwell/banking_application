@@ -1,3 +1,4 @@
+require 'caretaker'
 require 'rufus-scheduler'
 require 'timecop'
 require 'modules/controller_item_store'

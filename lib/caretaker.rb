@@ -1,3 +1,4 @@
+require_relative 'modules/controller_item_store'
 require 'singleton'
 # Definition of Caretaker Class
 class Caretaker

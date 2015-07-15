@@ -1,3 +1,4 @@
+require 'exceptions/item_exist'
 require 'modules/controller_item_store'
 # Holder class to include ControllerItemStore and run tests on
 class ControllerStoreHolder; include ControllerItemStore; end

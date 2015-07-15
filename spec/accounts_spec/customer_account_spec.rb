@@ -1,3 +1,5 @@
+require 'exceptions/base_exception'
+require 'exceptions/holder_on_account'
 require 'accounts/customer_account'
 
 describe 'CustomerAccount' do
