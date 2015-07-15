@@ -9,10 +9,14 @@ class BankingApp < Sinatra::Base
   enable :sessions
   set :session_secret, 'super secret'
 
+  accounts = AccountsController.instance
+  holders = HoldersController.instance
+  loans = LoansController.instance
+
   get '/' do
-      session[:accounts] = AccountsController.instance
-  session[:holders]  = HoldersController.instance
-  session[:loans]    = LoansController.instance 
+    session[:accounts] = accounts
+    session[:holders]  = holders
+    session[:loans]    = loans
     erb :index
   end
 
