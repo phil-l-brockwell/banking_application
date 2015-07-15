@@ -17,13 +17,13 @@ class LoansController
     loan = Loan.new(options, current_id)
     add loan
     LoanSuccessMessage.new(loan)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     message
   end
 
   def show(id)
     ShowLoanMessage.new(find id)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     message
   end
 
@@ -31,7 +31,7 @@ class LoansController
     loan = find off
     loan.make_payment amount
     LoanPaidMessage.new(loan)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     message
   end
 end

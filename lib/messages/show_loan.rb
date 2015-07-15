@@ -24,4 +24,8 @@ class ShowLoanMessage < Message
     end
     a.unshift('Transactions:')
   end
+
+  def output
+    @main.unshift(@header)
+  end
 end

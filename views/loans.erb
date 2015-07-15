@@ -3,7 +3,7 @@
 <% if @loans %>
   <div class="list-group">
     <% @loans.each do |key, loan| %>
-      <a href="/transactions" type="button" class="list-group-item">
+      <a href="/loan_view?id=<%= loan.id %>" type="button" class="list-group-item">
         ID: <%= loan.id %>
         Outstanding: <%= loan.outstanding %>
         Holder Name: <%= loan.holder.name %>

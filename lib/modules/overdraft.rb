@@ -2,7 +2,7 @@
 module Overdrafts
   def show_overdraft(id)
     OverdraftStatusMessage.new(find id)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     message
   end
 
@@ -11,7 +11,7 @@ module Overdrafts
     account.overdraft_on = true
     account.overdraft = amount
     OverdraftStatusMessage.new(account)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     message
   end
 
@@ -20,7 +20,7 @@ module Overdrafts
     account.overdraft_on = false
     account.overdraft = 0
     OverdraftStatusMessage.new(account)
-  rescue ItemExistError => message
+  rescue ItemExist => message
     message
   end
 end

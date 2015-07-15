@@ -9,8 +9,11 @@
     <div class='container'>
       <a href='/'><h1>Greenwich School of Banking</h1></a>
 
+
       <% if @message %>
-        <%= @message.output %>
+        <div class="alert alert-warning" role="alert">
+          <%= @message.output %>
+        </div>
       <% end %>
 
       <%= yield %>

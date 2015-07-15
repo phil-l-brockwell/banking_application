@@ -3,11 +3,13 @@
 <% if @accounts %>
   <div class="list-group">
     <% @accounts.each do |key, account| %>
-      <a href="/transactions" type="button" class="list-group-item">
+      <a href="/transactions?id=<%= account.id %>" type="button" class="list-group-item">
         ID: <%= account.id %>
         Type: <%= account.type %>
         Holder Name: <%= account.main_holder.name %>
         Holder ID: <%= account.main_holder.id %>
+        Balance: <%= account.output_balance %>
+        Overdraft: <%= account.overdraft %>
       </a> 
     <% end %>
   </div>
