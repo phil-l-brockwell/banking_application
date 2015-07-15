@@ -52,6 +52,19 @@ class BankingApp < Sinatra::Base
     erb :accounts
   end
 
+  get '/loans' do
+    @loans = loans.store
+    erb :loans
+  end
+
+  get '/new_loan' do
+    erb :new_loan
+  end
+
+  get '/pay_loan' do
+    erb :pay_loan
+  end
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 end

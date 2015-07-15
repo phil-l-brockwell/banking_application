@@ -1,0 +1,17 @@
+<h2>Loans</h2>
+
+<% if @loans %>
+  <div class="list-group">
+    <% @loans.each do |key, loan| %>
+      <a href="/transactions" type="button" class="list-group-item">
+        ID: <%= loan.id %>
+        Outstanding: <%= loan.outstanding %>
+        Holder Name: <%= loan.holder.name %>
+        Holder ID: <%= loan.holder.id %>
+      </a> 
+    <% end %>
+  </div>
+<% end %>
+
+<a class='btn btn-default' href='/new_loan'>New Loan</a>
+<a class='btn btn-default' href='/pay_loan'>Make Loan Payment</a>
