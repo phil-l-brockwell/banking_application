@@ -52,6 +52,30 @@ class BankingApp < Sinatra::Base
     erb :accounts
   end
 
+  get '/deposit' do
+    erb :deposit
+  end
+
+  get '/withdraw' do
+    erb :withdraw
+  end
+
+  get '/transfer' do
+    erb :transfer
+  end
+
+  get '/add_holder' do
+    erb :add_holder
+  end
+
+  get '/enable_overdraft' do
+    erb :enable_overdraft
+  end
+
+  get '/disable_overdraft' do
+    erb :disable_overdraft
+  end
+
   get '/loans' do
     @loans = loans.store
     erb :loans
