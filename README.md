@@ -14,7 +14,8 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Used singleton pattern on Account, Holder and Loan Controllers
 * Added overdraft controller and facility
 * Used memento pattern to rollback account transfers
+* Built basic web ui and deployed with Heroku
 
 # Next...
-* Refactor controller testing
+* Fix sessions issue with Sinatra
 * Raise error on islamic account if overdraft switched on
