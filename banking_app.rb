@@ -7,11 +7,12 @@ require 'rufus-scheduler'
 class BankingApp < Sinatra::Base
 
   enable :sessions
+  set :session_secret, 'super secret'
 
   get '/' do
-    session[:accounts] = AccountsController.instance
-    session[:holders]  = HoldersController.instance
-    session[:loans]    = LoansController.instance 
+      session[:accounts] = AccountsController.instance
+  session[:holders]  = HoldersController.instance
+  session[:loans]    = LoansController.instance 
     erb :index
   end
 
