@@ -1,0 +1,15 @@
+<h2>Accounts of <%= @holder.name %></h2>
+
+<% if @accounts %>
+  <div class="list-group">
+    <% @accounts.each do |account| %>
+      <a href="" type="button" class="list-group-item">
+        Type: <%= account.type %>
+        ID: <%= account.id %>
+        Balance: <%= account.balance %>
+      </a> 
+    <% end %>
+  </div>
+<% end %>
+
+<a class='btn btn-default' href="/create_account">Create New Account</a>

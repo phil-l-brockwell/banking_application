@@ -79,8 +79,8 @@ class AccountsController
 
   def get_accounts_of(id)
     holder = holders.find id
-    accounts = store.select { |_, a| a.holder? holder }.values
-    DisplayAccountsMessage.new(accounts)
+    accounts = store.select { |_, a| a.holders_include? holder }.values
+    # DisplayAccountsMessage.new(accounts)
   rescue ItemExist => message
     message
   end

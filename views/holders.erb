@@ -1,0 +1,18 @@
+<h2>Holders</h2>
+
+<% if @message %>
+  <%= @message.output %>
+<% end %>
+
+<% if @holders %>
+  <div class="list-group">
+    <% @holders.each do |key, holder| %>
+      <a href="/holders_accounts?id=<%= holder.id %>" type="button" class="list-group-item">
+        Name: <%= holder.name %>
+        ID: <%= holder.id %>
+      </a> 
+    <% end %>
+  </div>
+<% end %>
+
+<a class='btn btn-default' href='/new_holder'>Create New Holder</a>
