@@ -21,33 +21,33 @@ class AccountsController
     account = create type, (holders.find with)
     add account
     init_yearly_interest_for account
-    boundary.render AccountSuccessMessage.new(account)
+    AccountSuccessMessage.new(account)
   rescue ItemExist => message
-    boundary.render message
+    message
   end
 
   def deposit(amount, into:)
     account = find into
     account.deposit amount
-    boundary.render DepositSuccessMessage.new(amount)
+    DepositSuccessMessage.new(amount)
   rescue ItemExist => message
-    boundary.render message
+    message
   end
 
   def withdraw(amount, from:)
     account = find from
     init_limit_reset_for account unless account.breached?
     account.withdraw amount
-    boundary.render WithdrawSuccessMessage.new(amount)
+    WithdrawSuccessMessage.new(amount)
   rescue ItemExist, OverLimit, InsufficientFunds => message
-    boundary.render message
+    message
   end
 
   def get_balance_of(id)
     account = find id
-    boundary.render BalanceMessage.new(account)
+    BalanceMessage.new(account)
   rescue ItemExist => message
-    boundary.render message
+    message
   end
 
   def transfer(amount, from:, to:)
@@ -56,34 +56,34 @@ class AccountsController
     donar.withdraw amount
     (find to).deposit amount
     init_limit_reset_for donar unless donar.breached?
-    boundary.render TransferSuccessMessage.new(amount)
+    TransferSuccessMessage.new(amount)
   rescue ItemExist, OverLimit, InsufficientFunds => message
     caretaker.restore donar if donar
-    boundary.render message
+    message
   end
 
   def add_holder(id, to:)
     holder = holders.find id
     account = find to
     account.add_holder holder
-    boundary.render AddHolderSuccessMessage.new(holder, account)
+    AddHolderSuccessMessage.new(holder, account)
   rescue ItemExist, HolderOnAccount => message
-    boundary.render message
+    message
   end
 
   def get_transactions_of(id)
     transactions = (find id).transactions
-    boundary.render TransactionsMessage.new(transactions)
+    TransactionsMessage.new(transactions)
   rescue ItemExist => message
-    boundary.render message
+    message
   end
 
   def get_accounts_of(id)
     holder = holders.find id
     accounts = store.select { |_, a| a.holder? holder }.values
-    boundary.render DisplayAccountsMessage.new(accounts)
+    DisplayAccountsMessage.new(accounts)
   rescue ItemExist => message
-    boundary.render message
+    message
   end
 
   ACCOUNT_CLASSES = { :Current      => CurrentAccount,

@@ -16,22 +16,22 @@ class LoansController
     options[:holder] = holders.find id
     loan = Loan.new(options, current_id)
     add loan
-    boundary.render LoanSuccessMessage.new(loan)
+    LoanSuccessMessage.new(loan)
   rescue ItemExistError => message
-    boundary.render message
+    message
   end
 
   def show(id)
-    boundary.render ShowLoanMessage.new(find id)
+    ShowLoanMessage.new(find id)
   rescue ItemExistError => message
-    boundary.render message
+    message
   end
 
   def pay(amount, off:)
     loan = find off
     loan.make_payment amount
-    boundary.render LoanPaidMessage.new(loan)
+    LoanPaidMessage.new(loan)
   rescue ItemExistError => message
-    boundary.render message
+    message
   end
 end
