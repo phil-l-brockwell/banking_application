@@ -13,4 +13,8 @@ class DisplayAccountsMessage < Message
       "ID: #{a.id}, Balance: #{a.output_balance}, Type: #{a.type}"
     end
   end
+
+  def output
+    @main.unshift(@header)
+  end
 end

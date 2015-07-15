@@ -8,6 +8,6 @@ class Message
   end
 
   def output
-    @main.unshift(@header)
+    (@main.unshift(@header)).join(' ')
   end
 end

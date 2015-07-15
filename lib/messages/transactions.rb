@@ -13,4 +13,8 @@ class TransactionsMessage < Message
       "#{index + 1}. Type: #{t.type}, Date: #{t.date}, Amount: £#{t.amount}"
     end
   end
+
+  def output
+    @main.unshift(@header)
+  end
 end

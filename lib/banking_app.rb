@@ -23,7 +23,7 @@ class BankingApp < Sinatra::Base
 
   get '/holders_accounts' do
     @holder = holders.find(params[:id].to_i)
-    @accounts = accounts.get_accounts_of(params[:id].to_i)
+    @accounts = (accounts.get_accounts_of(params[:id].to_i)).accounts
     erb :holders_accounts
   end
 
