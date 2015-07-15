@@ -4,9 +4,9 @@ require 'require_all'
 require_all 'lib'
 require 'rufus-scheduler'
 
-class BankingApp < Sinatra::Base
+enable :sessions
 
-  enable :sessions
+class BankingApp < Sinatra::Base
 
   get '/' do
     session[:accounts] = AccountsController.instance
