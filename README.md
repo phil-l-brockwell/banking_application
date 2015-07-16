@@ -17,5 +17,7 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Built basic web ui and deployed with Heroku
 
 # Next...
-* Fix sessions issue with Sinatra
 * Raise error on islamic account if overdraft switched on
+* Write readme
+* Ensure all money is output in correct format
+* Ensure command line version runs on Windows
