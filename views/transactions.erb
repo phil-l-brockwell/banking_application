@@ -3,9 +3,9 @@
   <ul class="list-group">
     <% @transactions.each do |transaction| %>
       <li class="list-group-item">
-        <%= transaction.date %>
-        <%= transaction.type %>
-        <%= transaction.amount %>
+        Date: <%= transaction.date %>
+        Type: <%= transaction.type %>
+        Amount: <%= transaction.output_amount %>
       </li>
     <% end %>
   </ul>

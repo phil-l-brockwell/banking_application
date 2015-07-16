@@ -2,9 +2,12 @@
   <div class="list-group">
     <% @accounts.each do |account| %>
       <a href="/transactions" type="button" class="list-group-item">
-        Type: <%= account.type %>
         ID: <%= account.id %>
-        Balance: <%= account.balance %>
+        Type: <%= account.type %>
+        Holder Name: <%= account.main_holder.name %>
+        Holder ID: <%= account.main_holder.id %>
+        Balance: <%= account.output_balance %>
+        Overdraft: <%= account.output_overdraft %>
       </a> 
     <% end %>
   </div>

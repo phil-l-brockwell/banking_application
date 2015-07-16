@@ -5,13 +5,13 @@ class OverdraftStatusMessage < Message
   def initialize(account)
     super
     @account_id = account.id
-    @overdraft = account.overdraft
+    @overdraft = account.output_overdraft
     @overdraft_on = account.overdraft_on
     @main = build_main
   end
 
   def build_main
     return ["Account ID: #{@account_id} has no overdraft"] unless @overdraft_on
-    ["Account ID: #{@account_id} has an overdraft of £#{@overdraft}"]
+    ["Account ID: #{@account_id} has an overdraft of #{@overdraft}"]
   end
 end

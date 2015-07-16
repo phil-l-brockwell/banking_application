@@ -10,13 +10,17 @@ class BaseAccount
     @interest_rate
     @daily_limit
     @overdraft_on
-    @overdraft
+    @overdraft = 0.00
     @balance = 0.00
     @transactions = []
   end
 
   def output_balance
     '£' + '%.2f' % @balance
+  end
+
+  def output_overdraft
+    '£' + '%.2f' % @overdraft    
   end
 
   def deposit(amount)

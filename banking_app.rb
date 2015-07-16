@@ -127,7 +127,7 @@ class BankingApp < Sinatra::Base
   get '/loan_view' do
     message = loans.show(params[:id].to_i)
     @transactions = message.transactions
-    erb :loan_view
+    erb :transactions
   end
 
   get '/new_loan' do

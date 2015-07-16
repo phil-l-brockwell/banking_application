@@ -10,7 +10,7 @@ class TransactionsMessage < Message
 
   def build_main
     @transactions.each_with_index.map do |t, index|
-      "#{index + 1}. Type: #{t.type}, Date: #{t.date}, Amount: £#{t.amount}"
+      "#{index + 1}. Type: #{t.type}, Date: #{t.date}, Amount: £#{t.output_amount}"
     end
   end
 

@@ -7,4 +7,8 @@ class Transaction
     @amount = amount
     @date = Time.now.strftime('%a %d %b %Y')
   end
+
+  def output_amount
+    '£' + '%.2f' % @amount
+  end
 end

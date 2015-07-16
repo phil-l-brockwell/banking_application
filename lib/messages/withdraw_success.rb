@@ -4,7 +4,7 @@ class WithdrawSuccessMessage < Message
 
   def initialize(amount)
     super
-    @amount = amount
-    @main = ["£#{@amount} withdrawn."]
+    @amount = '£' + '%.2f' % amount
+    @main = ["#{@amount} withdrawn."]
   end
 end

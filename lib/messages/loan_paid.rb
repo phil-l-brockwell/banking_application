@@ -5,8 +5,8 @@ class LoanPaidMessage < Message
   def initialize(loan)
     super
     @loan_id = loan.id
-    @outstanding = loan.outstanding
+    @outstanding = loan.output_outstanding
     @main = ["Payment made to Loan ID: #{@loan_id}.",
-             "Outstanding balance now £#{@outstanding}"]
+             "Outstanding balance now #{@outstanding}"]
   end
 end

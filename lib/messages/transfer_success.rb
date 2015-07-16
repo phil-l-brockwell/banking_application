@@ -4,7 +4,7 @@ class TransferSuccessMessage < Message
 
   def initialize(amount)
     super
-    @amount = amount
-    @main = ["£#{@amount} transferred."]
+    @amount = '£' + '%.2f' % amount
+    @main = ["#{@amount} transferred."]
   end
 end

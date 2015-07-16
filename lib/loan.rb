@@ -22,6 +22,10 @@ class Loan
     add_transaction new_transaction
   end
 
+  def output_outstanding
+    '£' + '%.2f' % @outstanding
+  end
+
   private
 
   def add_transaction(transaction)
