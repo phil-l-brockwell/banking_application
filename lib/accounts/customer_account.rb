@@ -16,20 +16,6 @@ class CustomerAccount < BaseAccount
     @overdraft     = 0
   end
 
-  def get_state
-    Memento.new(self)
-  end
-
-  def restore_state(memento)
-    @balance = memento.balance
-    @daily_limit = memento.daily_limit
-    @transactions = memento.transactions
-  end
-
-  def output_balance
-    '£' + '%.2f' % @balance
-  end
-
   def withdraw(amount)
     fail InsufficientFunds unless contains? amount
     fail OverLimit unless limit_allow? amount
@@ -55,15 +41,7 @@ class CustomerAccount < BaseAccount
     @daily_limit < LIMIT
   end
 
-  def contains?(amount)
-    @balance + @overdraft >= amount
-  end
-
   def limit_allow?(amount)
     daily_limit >= amount
-  end
-
-  def holders_include?(holder)
-    main_holder == holder || holders.value?(holder)
   end
 end

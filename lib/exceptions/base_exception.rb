@@ -6,7 +6,7 @@ class BaseException < Exception
     super
     @colour = :red
     @header = 'Transaction Error.'
-    @footer = 'All Incomplete Operations have been Rolled back. Please Try again.'
+    @footer = 'All Incomplete Operations have been Rolled back. Try again.'
   end
 
   def output

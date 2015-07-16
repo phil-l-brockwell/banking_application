@@ -11,4 +11,24 @@ class MasterAccount < BaseAccount
   def under_limit?
     false
   end
+
+  def add_holder(holder)
+    nil
+  end
+
+  def overdrawn?
+    false
+  end
+
+  def reset_limit
+    nil
+  end
+
+  def breached?
+    false
+  end
+
+  def limit_allow?(amount)
+    true
+  end
 end

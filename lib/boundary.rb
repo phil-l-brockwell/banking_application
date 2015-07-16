@@ -27,7 +27,7 @@ class Boundary
 
   MAIN_MENU = { 1 => { menu: HOLDERS,    output: 'Holders'    },
                 2 => { menu: ACCOUNTS,   output: 'Accounts'   },
-                3 => { menu: LOANS,      output: 'Loans'      },    
+                3 => { menu: LOANS,      output: 'Loans'      },
                 4 => { menu: OVERDRAFTS, output: 'Overdrafts' } }
 
   ACCOUNT_TYPES = { 1  => { output: :Current      },
