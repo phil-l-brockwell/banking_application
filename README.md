@@ -20,5 +20,6 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 * Styling
 * Add tasks view and master account balance to front end
 * Write readme
-* Ensure all money is output in correct format
+* Ensure all money is output in correct format/Money class?
 * Ensure command line version runs on Windows
+* Use Javascript in front end to increase usability
