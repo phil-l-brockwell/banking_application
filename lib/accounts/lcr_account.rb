@@ -5,4 +5,12 @@ class LCRAccount < CustomerAccount
     @type = :LCR
     @overdraft = false
   end
+
+  def overdraft
+    fail OverdraftDenied    
+  end
+
+  def overdraft_on
+    fail OverdraftDenied
+  end
 end

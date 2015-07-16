@@ -5,4 +5,12 @@ class IslamicAccount < CustomerAccount
     @type = :Islamic
     @interest_rate = 0
   end
+
+  def overdraft
+    fail OverdraftDenied    
+  end
+
+  def overdraft_on
+    fail OverdraftDenied
+  end
 end
