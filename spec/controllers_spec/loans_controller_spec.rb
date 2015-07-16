@@ -4,7 +4,7 @@ describe 'LoansController' do
   let(:loan_ctrl) { LoansController.instance }
 
   context 'when making payments' do
-    let(:loan) { double :loan, id: 0, outstanding: 1 }
+    let(:loan) { double :loan, id: 0, output_outstanding: 1 }
 
     it 'the loans receives the payment' do
       loan_ctrl.add(loan)

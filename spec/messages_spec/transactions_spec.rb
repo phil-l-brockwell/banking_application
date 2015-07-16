@@ -2,9 +2,9 @@ require 'messages/transactions'
 
 describe 'TransactionsMessage' do
   context 'when initialised' do
-    let(:t_1) { double :tran, type: :Deposit,    date: '1/1/01', amount: 34.89 }
-    let(:t_2) { double :tran, type: :Withdrawal, date: '2/2/02', amount: 12.89 }
-    let(:t_3) { double :tran, type: :Deposit,    date: '3/3/03', amount: 89.89 }
+    let(:t_1) { double :tran, type: :Deposit,    date: '1/1/01', output_amount: '£34.89' }
+    let(:t_2) { double :tran, type: :Withdrawal, date: '2/2/02', output_amount: '£12.89' }
+    let(:t_3) { double :tran, type: :Deposit,    date: '3/3/03', output_amount: '£89.89' }
     let(:transactions)  { [t_1, t_2, t_3]                                      }
     let(:test_message)  { TransactionsMessage.new(transactions)                }
 

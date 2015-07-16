@@ -5,11 +5,11 @@ describe 'WithdrawSuccessMessage' do
     let(:test_message) { WithdrawSuccessMessage.new(200.00) }
 
     it 'knows the deposit amount' do
-      expect(test_message.amount).to eq(200.00)
+      expect(test_message.amount).to eq('£200.00')
     end
 
     it 'has the correct main text' do
-      expect(test_message.main[0]).to eq('£200.0 withdrawn.')
+      expect(test_message.main[0]).to eq('£200.00 withdrawn.')
     end
   end
 end
