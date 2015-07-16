@@ -1,24 +1,32 @@
-<h2>Accounts</h2>
+<div class='row'>
 
-<% if @accounts %>
-  <div class="list-group">
-    <% @accounts.each do |key, account| %>
-      <a href="/transactions?id=<%= account.id %>" type="button" class="list-group-item">
-        ID: <%= account.id %>
-        Type: <%= account.type %>
-        Holder Name: <%= account.main_holder.name %>
-        Holder ID: <%= account.main_holder.id %>
-        Balance: <%= account.output_balance %>
-        Overdraft: <%= account.overdraft %>
-      </a> 
+  <div class="col-md-2">
+    <div class="btn-group-vertical" role="group" aria-label="...">
+      <a class='btn btn-default' href="/create_account">Create New Account</a>
+      <a class='btn btn-default' href='/deposit'>Deposit</a>
+      <a class='btn btn-default' href='/withdraw'>Withdraw</a>
+      <a class='btn btn-default' href='/transfer'>Transfer</a>
+      <a class='btn btn-default' href='/add_holder'>Add Holder</a>
+      <a class='btn btn-default' href='/enable_overdraft'>Enable/Edit Overdraft</a>
+      <a class='btn btn-default' href='/disable_overdraft'>Disable Overdraft</a>
+    </div>
+  </div>
+
+  <div class='col-md-8'>
+    <% unless @accounts.empty? %>
+      <div class="list-group">
+        <% @accounts.each do |account| %>
+          <a href="/transactions?id=<%= account.id %>" type="button" class="list-group-item">
+          ID: <%= account.id %>
+          Type: <%= account.type %>
+          Holder Name: <%= account.main_holder.name %>
+          Holder ID: <%= account.main_holder.id %>
+          Balance: <%= account.output_balance %>
+          Overdraft: <%= account.overdraft %>
+          </a> 
+        <% end %>
+      </div>
     <% end %>
   </div>
-<% end %>
 
-<a class='btn btn-default' href="/create_account">Create New Account</a>
-<a class='btn btn-default' href='/deposit'>Deposit</a>
-<a class='btn btn-default' href='/withdraw'>Withdraw</a>
-<a class='btn btn-default' href='/transfer'>Transfer</a>
-<a class='btn btn-default' href='/add_holder'>Add Holder</a>
-<a class='btn btn-default' href='/enable_overdraft'>Enable/Edit Overdraft</a>
-<a class='btn btn-default' href='/disable_overdraft'>Disable Overdraft</a>
+</div>

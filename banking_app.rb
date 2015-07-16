@@ -23,7 +23,7 @@ class BankingApp < Sinatra::Base
     @holder = holders.find(params[:id].to_i)
     message = accounts.get_accounts_of(params[:id].to_i)
     @accounts = message.accounts
-    erb :holders_accounts
+    erb :accounts
   end
 
   get '/new_holder' do
@@ -41,14 +41,15 @@ class BankingApp < Sinatra::Base
   end
 
   post '/create_account' do
-    type = :Current
+    type = params[:type].to_sym
     id = params[:id].to_i
     @message = accounts.open(type, with: id)
-    erb :index
+    @accounts = accounts.store.values
+    erb :accounts
   end
 
   get '/accounts' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     erb :accounts
   end
 
@@ -63,7 +64,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/deposit' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     @message = accounts.deposit(params[:amount].to_i, into: params[:id].to_i)
     erb :accounts
   end
@@ -73,7 +74,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/withdraw' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     @message = accounts.withdraw(params[:amount].to_i, from: params[:id].to_i)
     erb :accounts
   end
@@ -83,7 +84,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/transfer' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     @message = accounts.transfer(params[:amount].to_i, from: params[:donar].to_i, to: params[:recipitent].to_i)
     erb :accounts
   end
@@ -93,7 +94,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/add_holder' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     @message = accounts.add_holder(params[:holder_id].to_i, to: params[:account_id].to_i)
     erb :accounts
   end
@@ -103,7 +104,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/enable_overdraft' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     @message = accounts.activate_overdraft(params[:id].to_i, params[:amount].to_i)
     erb :accounts
   end
@@ -113,7 +114,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/disable_overdraft' do
-    @accounts = accounts.store
+    @accounts = accounts.store.values
     @message = accounts.deactivate_overdraft(params[:id].to_i)
     erb :accounts
   end
