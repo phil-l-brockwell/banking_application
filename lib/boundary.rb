@@ -48,11 +48,9 @@ class Boundary
   end
 
   def start
-    show(MAIN_MENU)
-    input = verify(gets.chomp, with: MAIN_MENU)
+    input = verify(MAIN_MENU)
     menu = MAIN_MENU[input][:menu]
-    show(menu)
-    input = verify(gets.chomp, with: menu)
+    input = verify(menu)
     message = send menu[input][:op]
     say message.output, message.colour
     start
@@ -66,8 +64,7 @@ class Boundary
   end
 
   def op_2
-    show(ACCOUNT_TYPES)
-    input = verify(gets.chomp, with: ACCOUNT_TYPES)
+    input = verify(ACCOUNT_TYPES)
     type = ACCOUNT_TYPES[input][:output]
     accounts.open type, with: get_('holder id')
   end
@@ -138,11 +135,13 @@ class Boundary
     say "Make a selection or type 'exit' to quit."
   end
 
-  def verify(input, with:)
-    until with.key? input.to_i
+  def verify(menu)
+    show menu
+    input = gets.chomp
+    until menu.key? input.to_i
       abort('Have a Nice Day!') if input == 'exit'
       say 'Unrecognised option, try again.'
-      show(with)
+      show(menu)
       input = gets.chomp
     end
     input.to_i
@@ -154,4 +153,4 @@ class Boundary
   end
 end
 
-# Boundary.new.start
+Boundary.new.start
