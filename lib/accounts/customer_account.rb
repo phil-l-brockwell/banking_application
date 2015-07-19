@@ -17,13 +17,11 @@ class CustomerAccount < BaseAccount
   end
 
   def deposit(amount)
-    fail NegativeAmount unless amount > 0
     @balance += amount
     add_transaction Transaction.new(:deposit, amount)
   end
 
   def withdraw(amount)
-    fail NegativeAmount unless amount > 0
     fail InsufficientFunds unless contains? amount
     fail OverLimit unless limit_allow? amount
     @balance -= amount

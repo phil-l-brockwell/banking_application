@@ -12,12 +12,13 @@ class LoansController
     @holders = HoldersController.instance
   end
 
-  def create_loan(id, options)
-    options[:holder] = holders.find id
+  def create_loan(id, amount, term, rate)
+    options = { holder: (holders.find id),   borrowed: (convert_to_int amount), 
+                term: (convert_to_int term), rate: (convert_to_float rate)      }
     loan = Loan.new(options, current_id)
     add loan
     LoanSuccessMessage.new(loan)
-  rescue ItemExist, NegativeAmount => message
+  rescue ItemExist, GreaterThanZero => message
     message
   end
 
@@ -29,9 +30,9 @@ class LoansController
 
   def pay(amount, off:)
     loan = find off
-    loan.make_payment amount
+    loan.make_payment (convert_to_int amount)
     LoanPaidMessage.new(loan)
-  rescue ItemExist, NegativeAmount => message
+  rescue ItemExist, GreaterThanZero => message
     message
   end
 end

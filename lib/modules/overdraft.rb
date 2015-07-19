@@ -9,9 +9,9 @@ module Overdrafts
   def activate_overdraft(id, amount)
     account = find id
     account.overdraft_on = true
-    account.overdraft = amount
+    account.overdraft = convert_to_int amount
     OverdraftStatusMessage.new(account)
-  rescue ItemExist, OverdraftDenied => message
+  rescue ItemExist, OverdraftDenied, GreaterThanZero => message
     message
   end
 

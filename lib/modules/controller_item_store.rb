@@ -8,12 +8,23 @@ module ControllerItemStore
   end
 
   def find(id)
+    id = id.to_i
     fail ItemExist unless store[id]
     store[id]
   end
 
   def add(item)
     store[item.id] = item
+  end
+
+  def convert_to_int(string)
+    fail GreaterThanZero unless (greater_than_zero string.to_i)
+    string.to_i
+  end
+
+  def convert_to_float(string)
+    fail GreaterThanZero unless (greater_than_zero string.to_f)
+    string.to_f
   end
 
   private
@@ -26,5 +37,9 @@ module ControllerItemStore
 
   def boundary
     @boundary ||= Boundary.instance
+  end
+
+  def greater_than_zero(amount)
+    amount > 0
   end
 end

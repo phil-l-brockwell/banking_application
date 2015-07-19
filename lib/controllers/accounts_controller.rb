@@ -27,18 +27,18 @@ class AccountsController
 
   def deposit(amount, into:)
     account = find into
-    account.deposit amount
+    account.deposit (convert_to_int amount)
     DepositSuccessMessage.new(amount)
-  rescue ItemExist, NegativeAmount => message
+  rescue ItemExist, GreaterThanZero => message
     message
   end
 
   def withdraw(amount, from:)
     account = find from
     init_limit_reset_for account unless account.breached?
-    account.withdraw amount
+    account.withdraw (convert_to_int amount)
     WithdrawSuccessMessage.new(amount)
-  rescue ItemExist, OverLimit, InsufficientFunds, NegativeAmount => message
+  rescue ItemExist, OverLimit, InsufficientFunds, GreaterThanZero => message
     message
   end
 
@@ -50,13 +50,14 @@ class AccountsController
   end
 
   def transfer(amount, from:, to:)
+    amount = convert_to_int amount
     donar = find from
     caretaker.add donar.get_state
     donar.withdraw amount
     (find to).deposit amount
     init_limit_reset_for donar unless donar.breached?
     TransferSuccessMessage.new(amount)
-  rescue ItemExist, OverLimit, InsufficientFunds, NegativeAmount => message
+  rescue ItemExist, OverLimit, InsufficientFunds, GreaterThanZero => message
     caretaker.restore donar if donar
     message
   end

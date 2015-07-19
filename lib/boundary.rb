@@ -59,8 +59,7 @@ class Boundary
   private
 
   def op_1
-    say 'Enter Name'
-    holders.create gets.chomp
+    holders.create get_('name')
   end
 
   def op_2
@@ -98,10 +97,7 @@ class Boundary
   end
 
   def op_10
-    options = { borrowed: get_('amount'), term: get_('term') }
-    say 'Enter the Interest Rate'
-    options[:rate] = gets.chomp.to_f
-    loans.create_loan get_('holder id'), options
+    loans.create_loan get_('holder id'), get_('amount'), get_('term'), get_('rate')
   end
 
   def op_11
@@ -149,8 +145,8 @@ class Boundary
 
   def get_(input)
     say "Enter the #{input.capitalize}"
-    gets.chomp.to_i
+    gets.chomp
   end
 end
 
-# Boundary.new.start
+Boundary.new.start

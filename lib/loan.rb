@@ -6,7 +6,6 @@ class Loan
                 :outstanding, :id
 
   def initialize(options = {}, id)
-    fail NegativeAmount unless options[:borrowed] > 0
     @id = id
     @amount_borrowed = options[:borrowed]
     @holder = options[:holder]
@@ -18,7 +17,6 @@ class Loan
   end
 
   def make_payment(amount)
-    fail NegativeAmount unless amount > 0
     @outstanding -= amount
     new_transaction = Transaction.new(:loan_payment, amount)
     add_transaction new_transaction
