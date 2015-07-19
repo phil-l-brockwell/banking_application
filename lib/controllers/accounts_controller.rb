@@ -29,7 +29,7 @@ class AccountsController
     account = find into
     account.deposit amount
     DepositSuccessMessage.new(amount)
-  rescue ItemExist => message
+  rescue ItemExist, NegativeAmount => message
     message
   end
 
@@ -38,7 +38,7 @@ class AccountsController
     init_limit_reset_for account unless account.breached?
     account.withdraw amount
     WithdrawSuccessMessage.new(amount)
-  rescue ItemExist, OverLimit, InsufficientFunds => message
+  rescue ItemExist, OverLimit, InsufficientFunds, NegativeAmount => message
     message
   end
 
@@ -56,7 +56,7 @@ class AccountsController
     (find to).deposit amount
     init_limit_reset_for donar unless donar.breached?
     TransferSuccessMessage.new(amount)
-  rescue ItemExist, OverLimit, InsufficientFunds => message
+  rescue ItemExist, OverLimit, InsufficientFunds, NegativeAmount => message
     caretaker.restore donar if donar
     message
   end

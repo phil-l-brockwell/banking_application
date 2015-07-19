@@ -17,7 +17,7 @@ class LoansController
     loan = Loan.new(options, current_id)
     add loan
     LoanSuccessMessage.new(loan)
-  rescue ItemExist => message
+  rescue ItemExist, NegativeAmount => message
     message
   end
 
@@ -31,7 +31,7 @@ class LoansController
     loan = find off
     loan.make_payment amount
     LoanPaidMessage.new(loan)
-  rescue ItemExist => message
+  rescue ItemExist, NegativeAmount => message
     message
   end
 end
