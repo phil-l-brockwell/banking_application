@@ -20,8 +20,8 @@ class BankingApp < Sinatra::Base
   end
 
   get '/holders_accounts' do
-    @holder = holders.find(params[:id].to_i)
-    message = accounts.get_accounts_of(params[:id].to_i)
+    @holder = holders.find(params[:id])
+    message = accounts.get_accounts_of(params[:id])
     @accounts = message.accounts
     erb :accounts
   end
@@ -42,7 +42,7 @@ class BankingApp < Sinatra::Base
 
   post '/create_account' do
     type = params[:type].to_sym
-    id = params[:id].to_i
+    id = params[:id]
     @message = accounts.open(type, with: id)
     @accounts = accounts.store.values
     erb :accounts
@@ -54,7 +54,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/transactions' do
-    message = accounts.get_transactions_of(params[:id].to_i)
+    message = accounts.get_transactions_of(params[:id])
     @transactions = message.transactions
     erb :transactions
   end
@@ -65,7 +65,7 @@ class BankingApp < Sinatra::Base
 
   post '/deposit' do
     @accounts = accounts.store.values
-    @message = accounts.deposit(params[:amount].to_i, into: params[:id].to_i)
+    @message = accounts.deposit(params[:amount], into: params[:id])
     erb :accounts
   end
 
@@ -75,7 +75,7 @@ class BankingApp < Sinatra::Base
 
   post '/withdraw' do
     @accounts = accounts.store.values
-    @message = accounts.withdraw(params[:amount].to_i, from: params[:id].to_i)
+    @message = accounts.withdraw(params[:amount], from: params[:id])
     erb :accounts
   end
 
@@ -85,7 +85,7 @@ class BankingApp < Sinatra::Base
 
   post '/transfer' do
     @accounts = accounts.store.values
-    @message = accounts.transfer(params[:amount].to_i, from: params[:donar].to_i, to: params[:recipitent].to_i)
+    @message = accounts.transfer(params[:amount], from: params[:donar], to: params[:recipitent])
     erb :accounts
   end
 
@@ -95,7 +95,7 @@ class BankingApp < Sinatra::Base
 
   post '/add_holder' do
     @accounts = accounts.store.values
-    @message = accounts.add_holder(params[:holder_id].to_i, to: params[:account_id].to_i)
+    @message = accounts.add_holder(params[:holder_id], to: params[:account_id])
     erb :accounts
   end
 
@@ -105,7 +105,7 @@ class BankingApp < Sinatra::Base
 
   post '/enable_overdraft' do
     @accounts = accounts.store.values
-    @message = accounts.activate_overdraft(params[:id].to_i, params[:amount].to_i)
+    @message = accounts.activate_overdraft(params[:id], params[:amount])
     erb :accounts
   end
 
@@ -115,7 +115,7 @@ class BankingApp < Sinatra::Base
 
   post '/disable_overdraft' do
     @accounts = accounts.store.values
-    @message = accounts.deactivate_overdraft(params[:id].to_i)
+    @message = accounts.deactivate_overdraft(params[:id])
     erb :accounts
   end
 
@@ -125,7 +125,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/loan_view' do
-    message = loans.show(params[:id].to_i)
+    message = loans.show(params[:id])
     @transactions = message.transactions
     erb :transactions
   end
@@ -136,9 +136,7 @@ class BankingApp < Sinatra::Base
 
   post '/new_loan' do
     @loans = loans.store
-    id = params[:id].to_i
-    options = { borrowed: params[:amount].to_i, term: params[:term].to_i, rate: params[:rate].to_f }
-    @message = loans.create_loan(id, options)
+    @message = loans.create_loan(params[:id], params[:amount], params[:term], params[:rate])
     erb :loans
   end
 
@@ -147,7 +145,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/pay_loan' do
-    @message = loans.pay(params[:amount].to_i, off: params[:id].to_i)
+    @message = loans.pay(params[:amount], off: params[:id])
     @loans = loans.store
     erb :loans
   end
