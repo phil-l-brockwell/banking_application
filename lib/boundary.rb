@@ -112,12 +112,12 @@ class Boundary
   def say(output, colour = :blue)
     puts output.colorize(colour) if output.is_a? String
     output.each { |string| puts string.colorize(colour) } if output.is_a? Array
-    sleep(0.2)
+    sleep(0.1)
   end
 
   def show(list)
-    list.each { |key, value| say "#{key}. #{value[:output]}" }
-    say "Make a selection or type 'exit' to quit."
+    list.each { |key, value| say "#{key.to_s}. #{value[:output]}" }
+    say "Make a selection, type 'exit' to quit, or 'main' to return to main menu."
   end
 
   def verify(menu)
@@ -139,4 +139,4 @@ class Boundary
   end
 end
 
-Boundary.new.start
+# Boundary.new.start
