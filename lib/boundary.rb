@@ -125,6 +125,7 @@ class Boundary
     input = gets.chomp
     until menu.key? input.to_i
       abort('Have a Nice Day!') if input == 'exit'
+      abort(start) if input == 'main'
       say 'Unrecognised option, try again.'
       show menu
       input = gets.chomp
