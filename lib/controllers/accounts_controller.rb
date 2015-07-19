@@ -7,7 +7,7 @@ class AccountsController
   include ControllerItemStore, Overdrafts, Singleton, Interest
 
   attr_reader :holders, :task_manager, 
-              :master, :caretaker, :ACCOUNT_CLASSES
+              :master, :caretaker, :types
 
   def initialize
     super
@@ -15,6 +15,16 @@ class AccountsController
     @caretaker    = Caretaker.instance
     @holders      = HoldersController.instance
     @task_manager = Rufus::Scheduler.new
+    @types = { :Current      => CurrentAccount,
+               :Savings      => SavingsAccount,
+               :Business     => BusinessAccount,
+               :Ir           => IRAccount,
+               :Smb          => SMBAccount,
+               :Student      => StudentAccount,
+               :Highinterest => HighInterestAccount,
+               :Islamic      => IslamicAccount,
+               :Private      => PrivateAccount,
+               :Lcr          => LCRAccount          }
   end
 
   def open(type, with:)
@@ -87,21 +97,6 @@ class AccountsController
     message
   end
 
-  def accounts
-    ACCOUNT_CLASSES
-  end
-
-  ACCOUNT_CLASSES = { :Current      => CurrentAccount,
-                      :Savings      => SavingsAccount,
-                      :Business     => BusinessAccount,
-                      :Ir           => IRAccount,
-                      :Smb          => SMBAccount,
-                      :Student      => StudentAccount,
-                      :Highinterest => HighInterestAccount,
-                      :Islamic      => IslamicAccount,
-                      :Private      => PrivateAccount,
-                      :Lcr          => LCRAccount          }
-
   private
 
   def init_yearly_interest_for(account)
@@ -121,8 +116,8 @@ class AccountsController
   end
 
   def create(type, holder)
-    fail UnrecognisedAccountType unless ACCOUNT_CLASSES[normalise type]
-    account_class = ACCOUNT_CLASSES[normalise type]
+    fail UnrecognisedAccountType unless types[normalise type]
+    account_class = types[normalise type]
     account_class.new(holder, current_id)
   end
 end

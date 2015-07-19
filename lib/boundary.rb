@@ -4,7 +4,7 @@ require 'rufus-scheduler'
 require 'colorize'
 # Definition of Boundary Class
 class Boundary
-  attr_accessor :accounts, :holders, :loans, :ACCOUNT_TYPES
+  attr_accessor :accounts, :holders, :loans, :account_types
 
   HOLDERS = { 1 => { op: :op_1,  output: 'Create New Holder' } }
 
@@ -30,22 +30,11 @@ class Boundary
                 3 => { menu: LOANS,      output: 'Loans'      },
                 4 => { menu: OVERDRAFTS, output: 'Overdrafts' } }
 
-  # ACCOUNT_TYPES = { 1  => { output: :Current      },
-  #                   2  => { output: :Savings      },
-  #                   3  => { output: :Business     },
-  #                   4  => { output: :IR           },
-  #                   5  => { output: :SMB          },
-  #                   6  => { output: :Student      },
-  #                   7  => { output: :HighInterest },
-  #                   8  => { output: :Islamic      },
-  #                   9  => { output: :Private      },
-  #                   10 => { output: :LCR          } }
-
   def initialize
-    @accounts  = AccountsController.instance
-    @holders   = HoldersController.instance
-    @loans     = LoansController.instance
-    @ACCOUNT_TYPES = @accounts.accounts
+    @accounts = AccountsController.instance
+    @holders  = HoldersController.instance
+    @loans    = LoansController.instance
+    @account_types = accounts.types
   end
 
   def start
@@ -64,11 +53,8 @@ class Boundary
   end
 
   def op_2
-    @ACCOUNT_TYPES.each { |key, value| say key.to_s }
-    type = gets.chomp
-    # input = verify(ACCOUNT_TYPES)
-    # type = ACCOUNT_TYPES[input][:output]
-    accounts.open type, with: get_('holder id')
+    account_types.each { |key, value| say key.to_s }
+    accounts.open get_('type'), with: get_('holder id')
   end
 
   def op_3
@@ -152,4 +138,4 @@ class Boundary
   end
 end
 
-# Boundary.new.start
+Boundary.new.start
