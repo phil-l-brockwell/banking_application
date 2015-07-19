@@ -153,4 +153,4 @@ class Boundary
   end
 end
 
-Boundary.new.start
+# Boundary.new.start
