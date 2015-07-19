@@ -6,7 +6,8 @@ require_relative '../modules/interest'
 class AccountsController
   include ControllerItemStore, Overdrafts, Singleton, Interest
 
-  attr_reader :holders, :task_manager, :master, :caretaker
+  attr_reader :holders, :task_manager, 
+              :master, :caretaker, :ACCOUNT_CLASSES
 
   def initialize
     super
@@ -21,7 +22,7 @@ class AccountsController
     add account
     init_yearly_interest_for account
     AccountSuccessMessage.new(account)
-  rescue ItemExist => message
+  rescue ItemExist, UnrecognisedAccountType => message
     message
   end
 
@@ -86,16 +87,20 @@ class AccountsController
     message
   end
 
+  def accounts
+    ACCOUNT_CLASSES
+  end
+
   ACCOUNT_CLASSES = { :Current      => CurrentAccount,
                       :Savings      => SavingsAccount,
                       :Business     => BusinessAccount,
-                      :IR           => IRAccount,
-                      :SMB          => SMBAccount,
+                      :Ir           => IRAccount,
+                      :Smb          => SMBAccount,
                       :Student      => StudentAccount,
-                      :HighInterest => HighInterestAccount,
+                      :Highinterest => HighInterestAccount,
                       :Islamic      => IslamicAccount,
                       :Private      => PrivateAccount,
-                      :LCR          => LCRAccount          }
+                      :Lcr          => LCRAccount          }
 
   private
 
@@ -111,8 +116,13 @@ class AccountsController
     end
   end
 
+  def normalise(string)
+    string.capitalize.gsub(/\s+/, "").to_sym
+  end
+
   def create(type, holder)
-    account_class = ACCOUNT_CLASSES[type]
+    fail UnrecognisedAccountType unless ACCOUNT_CLASSES[normalise type]
+    account_class = ACCOUNT_CLASSES[normalise type]
     account_class.new(holder, current_id)
   end
 end

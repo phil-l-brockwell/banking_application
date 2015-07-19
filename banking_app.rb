@@ -41,7 +41,7 @@ class BankingApp < Sinatra::Base
   end
 
   post '/create_account' do
-    type = params[:type].to_sym
+    type = params[:type]
     id = params[:id]
     @message = accounts.open(type, with: id)
     @accounts = accounts.store.values

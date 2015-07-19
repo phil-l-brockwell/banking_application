@@ -4,7 +4,7 @@ require 'rufus-scheduler'
 require 'colorize'
 # Definition of Boundary Class
 class Boundary
-  attr_accessor :accounts, :holders, :loans
+  attr_accessor :accounts, :holders, :loans, :ACCOUNT_TYPES
 
   HOLDERS = { 1 => { op: :op_1,  output: 'Create New Holder' } }
 
@@ -30,21 +30,22 @@ class Boundary
                 3 => { menu: LOANS,      output: 'Loans'      },
                 4 => { menu: OVERDRAFTS, output: 'Overdrafts' } }
 
-  ACCOUNT_TYPES = { 1  => { output: :Current      },
-                    2  => { output: :Savings      },
-                    3  => { output: :Business     },
-                    4  => { output: :IR           },
-                    5  => { output: :SMB          },
-                    6  => { output: :Student      },
-                    7  => { output: :HighInterest },
-                    8  => { output: :Islamic      },
-                    9  => { output: :Private      },
-                    10 => { output: :LCR          } }
+  # ACCOUNT_TYPES = { 1  => { output: :Current      },
+  #                   2  => { output: :Savings      },
+  #                   3  => { output: :Business     },
+  #                   4  => { output: :IR           },
+  #                   5  => { output: :SMB          },
+  #                   6  => { output: :Student      },
+  #                   7  => { output: :HighInterest },
+  #                   8  => { output: :Islamic      },
+  #                   9  => { output: :Private      },
+  #                   10 => { output: :LCR          } }
 
   def initialize
     @accounts  = AccountsController.instance
     @holders   = HoldersController.instance
     @loans     = LoansController.instance
+    @ACCOUNT_TYPES = @accounts.accounts
   end
 
   def start
@@ -63,8 +64,10 @@ class Boundary
   end
 
   def op_2
-    input = verify(ACCOUNT_TYPES)
-    type = ACCOUNT_TYPES[input][:output]
+    @ACCOUNT_TYPES.each { |key, value| say key.to_s }
+    type = gets.chomp
+    # input = verify(ACCOUNT_TYPES)
+    # type = ACCOUNT_TYPES[input][:output]
     accounts.open type, with: get_('holder id')
   end
 
