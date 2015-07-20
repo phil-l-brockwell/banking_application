@@ -116,7 +116,7 @@ class Boundary
   end
 
   def show(list)
-    list.each { |key, value| say "#{key.to_s}. #{value[:output]}" }
+    list.each { |key, value| say "#{key}. #{value[:output]}" }
     say "Make a selection, type 'exit' to quit, or 'main' to return to main menu."
   end
 
@@ -139,4 +139,4 @@ class Boundary
   end
 end
 
-# Boundary.new.start
+Boundary.new.start

@@ -5,7 +5,6 @@ require_all 'lib'
 require 'rufus-scheduler'
 
 class BankingApp < Sinatra::Base
-
   accounts = AccountsController.instance
   holders  = HoldersController.instance
   loans    = LoansController.instance

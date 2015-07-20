@@ -14,7 +14,7 @@ describe 'AccountsController' do
     id
   end
 
-  def open_account_and_return_id(type = :Savings)
+  def open_account_and_return_id(type = 'savings')
     holder_id = create_holder_and_return_id
     id = accounts_ctrl.id
     accounts_ctrl.open(type, with: holder_id)
@@ -33,7 +33,7 @@ describe 'AccountsController' do
     end
 
     it 'can open different account types' do
-      id = open_account_and_return_id(:Current)
+      id = open_account_and_return_id('current')
       expect(accounts_ctrl.store[id].type).to eq(:Current)
     end
 

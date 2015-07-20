@@ -10,4 +10,8 @@ class HoldersController
     add holder
     NewHolderSuccessMessage.new(holder)
   end
+
+  def check_string(string)
+    
+  end
 end
