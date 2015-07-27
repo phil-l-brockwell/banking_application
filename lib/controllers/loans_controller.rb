@@ -12,7 +12,7 @@ class LoansController
   end
 
   def create_loan(id, amount, term, rate)
-    options = { holder: (holders.find id),   borrowed: (convert_to_int amount), 
+    options = { holder: (holders.find id),   borrowed: (convert_to_int amount),
                 term: (convert_to_int term), rate: (convert_to_float rate)      }
     loan = Loan.new(options, current_id)
     add loan

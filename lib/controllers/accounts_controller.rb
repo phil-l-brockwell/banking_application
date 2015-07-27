@@ -111,7 +111,7 @@ class AccountsController
   end
 
   def normalise(string)
-    string.capitalize.gsub(/\s+/, "").to_sym
+    string.capitalize.gsub(/\s+/, '').to_sym
   end
 
   def create(type, holder)
