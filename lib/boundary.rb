@@ -4,110 +4,63 @@ require 'rufus-scheduler'
 require 'colorize'
 # Definition of Boundary Class
 class Boundary
-  attr_accessor :accounts, :holders, :loans, :account_types
-
-  HOLDERS = { 1 => { op: :op_1,  output: 'Create New Holder' } }
-
-  ACCOUNTS = { 1 => { op: :op_2,  output: 'Create an Account'         },
-               2 => { op: :op_3,  output: 'Make a Deposit'            },
-               3 => { op: :op_4,  output: 'Display Account Balance'   },
-               4 => { op: :op_5,  output: 'Make a Withdrawal'         },
-               5 => { op: :op_6,  output: 'Make a Transfer'           },
-               6 => { op: :op_7,  output: 'Add Holder'                },
-               7 => { op: :op_8,  output: 'Show Customers Accounts'   },
-               8 => { op: :op_9,  output: 'View Account Transactions' } }
-
-  LOANS = { 1 => { op: :op_10, output: 'New Loan'          },
-            2 => { op: :op_11, output: 'View Loan'         },
-            3 => { op: :op_12, output: 'Make Loan Payment' } }
-
-  OVERDRAFTS = { 1 => { op: :op_13, output: 'Enable/Edit Overdraft' },
-                 2 => { op: :op_14, output: 'Disable Overdraft'     },
-                 3 => { op: :op_15, output: 'View Overdraft Status' } }
-
-  MAIN_MENU = { 1 => { menu: HOLDERS,    output: 'Holders'    },
-                2 => { menu: ACCOUNTS,   output: 'Accounts'   },
-                3 => { menu: LOANS,      output: 'Loans'      },
-                4 => { menu: OVERDRAFTS, output: 'Overdrafts' } }
 
   def initialize
     @accounts = AccountsController.instance
     @holders  = HoldersController.instance
     @loans    = LoansController.instance
     @account_types = accounts.types
+    @holders_menu = { 1 => { op: -> { @holders.create get_('name') }, 
+                             output: 'Create New Holder'          } }
+
+    @overdrafts_menu = { 1 => { op: -> { @accounts.activate_overdraft get_('account id'), get_('amount') }, 
+                                output: 'Enable/Edit Overdraft'                                           },
+                         2 => { op: -> { @accounts.deactivate_overdraft get_('account id')               }, 
+                                output: 'Disable Overdraft'                                               },
+                         3 => { op: -> { @accounts.show_overdraft get_('account id')                     }, 
+                                output: 'View Overdraft Status'                                           } }
+
+    @loans_menu = { 1 => { op: -> { @loans.create_loan get_('holder id'), get_('amount'), get_('term'), get_('rate') }, 
+                           output: 'New Loan'          },
+                    2 => { op: -> { @loans.show get_('loan id') }, 
+                           output: 'View Loan'         },
+                    3 => { op: -> { @loans.pay get_('amount'), off: get_('loan id') }, 
+                           output: 'Make Loan Payment' } }
+
+    @accounts_menu = { 1 => { op: -> { @account_types.each { |key, _| say key.to_s }
+                                       @accounts.open get_('type'), with: get_('holder id') }, 
+                              output: 'Create an Account'         },
+                       2 => { op: -> { @accounts.deposit get_('amount'), into: get_('account id') }, 
+                              output: 'Make a Deposit'            },
+                       3 => { op: -> { @accounts.get_balance_of get_('account id') }, 
+                              output: 'Display Account Balance'   },
+                       4 => { op: -> { @accounts.withdraw get_('amount'), from: get_('account id') },  
+                              output: 'Make a Withdrawal'         },
+                       5 => { op: -> { @accounts.transfer get_('amount'), from: get_('donar id'), to: get_('recipitent id') }, 
+                              output: 'Make a Transfer'           },
+                       6 => { op: -> { @accounts.add_holder get_('holder id'), to: get_('account id') }, 
+                              output: 'Add Holder'                },
+                       7 => { op: -> { @accounts.get_accounts_of get_('holder id') },  
+                              output: 'Show Customers Accounts'   },
+                       8 => { op: -> { @accounts.get_transactions_of get_('account id') }, 
+                              output: 'View Account Transactions' } }
+
+    @main_menu = { 1 => { menu: @holders_menu,    output: 'Holders'    },
+                   2 => { menu: @accounts_menu,   output: 'Accounts'   },
+                   3 => { menu: @loans_menu,      output: 'Loans'      },
+                   4 => { menu: @overdrafts_menu, output: 'Overdrafts' } }
   end
 
   def start
-    input = verify(MAIN_MENU)
-    menu = MAIN_MENU[input][:menu]
+    input = verify(@main_menu)
+    menu = @main_menu[input][:menu]
     input = verify(menu)
-    message = send menu[input][:op]
+    message = menu[input][:op].call
     say message.output, message.colour
     start
   end
 
   private
-
-  def op_1
-    holders.create get_('name')
-  end
-
-  def op_2
-    account_types.each { |key, value| say key.to_s }
-    accounts.open get_('type'), with: get_('holder id')
-  end
-
-  def op_3
-    accounts.deposit get_('amount'), into: get_('account id')
-  end
-
-  def op_4
-    accounts.get_balance_of get_('account id')
-  end
-
-  def op_5
-    accounts.withdraw get_('amount'), from: get_('account id')
-  end
-
-  def op_6
-    accounts.transfer get_('amount'), from: get_('donar id'), to: get_('recipitent id')
-  end
-
-  def op_7
-    accounts.add_holder get_('holder id'), to: get_('account id')
-  end
-
-  def op_8
-    accounts.get_accounts_of get_('holder id')
-  end
-
-  def op_9
-    accounts.get_transactions_of get_('account id')
-  end
-
-  def op_10
-    loans.create_loan get_('holder id'), get_('amount'), get_('term'), get_('rate')
-  end
-
-  def op_11
-    loans.show get_('loan id')
-  end
-
-  def op_12
-    loans.pay get_('amount'), off: get_('loan id')
-  end
-
-  def op_13
-    accounts.activate_overdraft get_('account id'), get_('amount')
-  end
-
-  def op_14
-    accounts.deactivate_overdraft get_('account id')
-  end
-
-  def op_15
-    accounts.show_overdraft get_('account id')
-  end
 
   def say(output, colour = :blue)
     puts output.colorize(colour) if output.is_a? String

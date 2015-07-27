@@ -1,11 +1,7 @@
 # Defintion of Balance Message Class
 class BalanceMessage < Message
-  attr_reader :balance, :account_id
-
   def initialize(account)
     super
-    @balance = account.output_balance
-    @account_id = account.id
-    @main = ["Balance of Account ID: #{@account_id} is #{balance}"]
+    @main = ["Balance of Account ID: #{account.id} is #{account.output_balance}"]
   end
 end

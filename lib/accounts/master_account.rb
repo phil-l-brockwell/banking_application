@@ -12,7 +12,7 @@ class MasterAccount < BaseAccount
     false
   end
 
-  def add_holder(holder)
+  def add_holder(*)
     nil
   end
 
@@ -28,7 +28,7 @@ class MasterAccount < BaseAccount
     false
   end
 
-  def limit_allow?(amount)
+  def limit_allow?(*)
     true
   end
 end

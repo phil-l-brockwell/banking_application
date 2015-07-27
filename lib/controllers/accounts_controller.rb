@@ -6,8 +6,7 @@ require_relative '../modules/interest'
 class AccountsController
   include ControllerItemStore, Overdrafts, Singleton, Interest
 
-  attr_reader :holders, :task_manager, 
-              :master, :caretaker, :types
+  attr_reader :holders, :task_manager, :master, :caretaker, :types
 
   def initialize
     super
@@ -38,7 +37,7 @@ class AccountsController
 
   def deposit(amount, into:)
     account = find into
-    account.deposit (convert_to_int amount)
+    account.deposit(convert_to_int amount)
     DepositSuccessMessage.new(amount)
   rescue ItemExist, GreaterThanZero => message
     message
@@ -47,7 +46,7 @@ class AccountsController
   def withdraw(amount, from:)
     account = find from
     init_limit_reset_for account unless account.breached?
-    account.withdraw (convert_to_int amount)
+    account.withdraw(convert_to_int amount)
     WithdrawSuccessMessage.new(amount)
   rescue ItemExist, OverLimit, InsufficientFunds, GreaterThanZero => message
     message

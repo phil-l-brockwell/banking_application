@@ -4,6 +4,7 @@ require 'require_all'
 require_all 'lib'
 require 'rufus-scheduler'
 
+# Class Banking App, defines logic and routes for Sinatra Web App
 class BankingApp < Sinatra::Base
   accounts = AccountsController.instance
   holders  = HoldersController.instance

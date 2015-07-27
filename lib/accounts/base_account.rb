@@ -1,16 +1,9 @@
 # Definition of Base Account Class
 class BaseAccount
   attr_reader :balance, :type, :transactions,
-              :id, :main_holder
+              :id, :main_holder, :holders
 
   def initialize(*)
-    @main_holder
-    @id
-    @holders
-    @interest_rate
-    @daily_limit
-    @overdraft_on
-    @overdraft = 0.00
     @balance = 0.00
     @transactions = []
   end

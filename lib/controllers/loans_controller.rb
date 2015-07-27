@@ -2,8 +2,7 @@ require 'singleton'
 require_relative '../modules/controller_item_store'
 # Definition of Loan Controller Class
 class LoansController
-  include Singleton
-  include ControllerItemStore
+  include Singleton, ControllerItemStore
 
   attr_reader :holders
 

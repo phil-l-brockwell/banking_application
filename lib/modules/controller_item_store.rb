@@ -1,6 +1,6 @@
 # Definition of Controller Item Store module
 module ControllerItemStore
-  attr_reader :store, :id, :boundary
+  attr_reader :store, :id
 
   def initialize
     @store = {}
@@ -33,10 +33,6 @@ module ControllerItemStore
     new_id = @id
     @id += 1
     new_id
-  end
-
-  def boundary
-    @boundary ||= Boundary.instance
   end
 
   def greater_than_zero(amount)
