@@ -1,4 +1,5 @@
 # Definition of Loan Success Message Class
+# returned when a loan is created successfully
 class LoanSuccessMessage < Message
   def initialize(loan)
     super

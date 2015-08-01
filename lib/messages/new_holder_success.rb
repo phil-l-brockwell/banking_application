@@ -1,4 +1,5 @@
 # Definition of Holder Success Message
+# returned when a new holder is created
 class NewHolderSuccessMessage < Message
   def initialize(new_holder)
     super

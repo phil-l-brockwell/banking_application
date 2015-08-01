@@ -1,4 +1,5 @@
 # Definition of Holder on account exception
+# raised when adding a holder to an account
 class HolderOnAccount < BaseException
   def initialize
     super

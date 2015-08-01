@@ -1,4 +1,5 @@
 # Definition of DepositSuccessMessage Class
+# returned when a deposit is successfully made
 class DepositSuccessMessage < Message
   def initialize(amount)
     super

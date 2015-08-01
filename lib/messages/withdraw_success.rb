@@ -1,4 +1,5 @@
 # Definiton of Withdraw Success Message
+# returned when withdrawal is successfully completed
 class WithdrawSuccessMessage < Message
   attr_reader :amount
 

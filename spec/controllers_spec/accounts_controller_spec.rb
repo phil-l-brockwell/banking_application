@@ -36,13 +36,22 @@ describe 'AccountsController' do
       id = open_account_and_return_id('current')
       expect(accounts_ctrl.store[id].type).to eq(:Current)
     end
+  end
 
-    it 'schedules new interest payments' do
-      id = open_account_and_return_id
-      Timecop.scale(100_000_00)
-      expect(accounts_ctrl.store[id]).to receive(:deposit)
-      sleep(5)
-    end
+  context 'when scheduling interest payemnts' do
+      it 'schedules new interest payments' do
+        id = open_account_and_return_id
+        Timecop.scale(100_000_00)
+        expect(accounts_ctrl.store[id]).to receive(:deposit)
+        sleep(5)
+      end
+
+      it 'does not schedule new interest payements for islamic accounts' do
+        id = open_account_and_return_id('islamic')
+        Timecop.scale(100_000_00)
+        expect(accounts_ctrl.store[id]).not_to receive(:deposit)
+        sleep(5)
+      end
   end
 
   context 'when depositing' do

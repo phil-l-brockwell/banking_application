@@ -1,4 +1,5 @@
 # Defintion of Account Success Message Class
+# returned when new account is created
 class AccountSuccessMessage < Message
   def initialize(new_account)
     super

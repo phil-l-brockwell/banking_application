@@ -1,4 +1,5 @@
 # Definition of Negative Amount exception
+# raised when an amount passed is zero or a minus number
 class GreaterThanZero < BaseException
   def initialize
     super

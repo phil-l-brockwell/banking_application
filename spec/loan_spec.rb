@@ -1,5 +1,6 @@
 require 'timecop'
 require 'loan'
+require 'exceptions/over_payment'
 
 describe 'Loan' do
   let(:test_holder) { double :holder }
@@ -53,6 +54,12 @@ describe 'Loan' do
       loan = create_loan
       expect { loan.make_payment(100) }
         .to change { loan.outstanding }.by(-100)
+    end
+
+    it 'raises an error if the payment is greater than the outstanding amount' do
+      loan = create_loan
+      overpayment = loan.outstanding + 1
+      expect { loan.make_payment(overpayment) }.to raise_error(OverPayment)
     end
 
     it 'adds a transaction to the array' do

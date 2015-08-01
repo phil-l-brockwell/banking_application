@@ -1,4 +1,5 @@
 # Definition of LoanPaidMessage Class
+# returned when a loan is paid
 class LoanPaidMessage < Message
   def initialize(loan)
     super
