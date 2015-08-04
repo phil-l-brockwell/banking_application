@@ -27,6 +27,7 @@ module Overdrafts
     # creates a success message and passes the account as an arg
   rescue ItemExist, OverdraftDenied, GreaterThanZero => message
   # catches exceptions, saves them to a message and executes the code inside the rescue block
+    account.overdraft = 0
     message
     # returns message
   end
