@@ -1,14 +1,28 @@
 require 'sinatra/base'
+# requires sinatra gem
+# sinatra is a light weight ruby web framework
+# designed to be simple to use to quickly get small web apps up and running
 require 'tilt/erb'
+# used for templating html/erb pages
 require 'require_all'
+# gem to require a directory of file as opposed to one file at a time
 require_all 'lib'
+# requires entire library dir
 require 'rufus-scheduler'
+# requires task scheduling gem
 
 # Class Banking App, defines logic and routes for Sinatra Web App
 class BankingApp < Sinatra::Base
+  # contains a reference to each controller so appropriate methods can be called
   accounts = AccountsController.instance
   holders  = HoldersController.instance
   loans    = LoansController.instance
+
+  # the following blocks tell the app what to do when a post/get request is made to the route specified
+  # the last line of each method must tell the app to render a erb/html page
+  # any @/instance variables used in a block can also be accessed inside the erb/html page
+  # params that have been passed with get/post requests can be accessed calling the params hash with the appropriate id
+  # responsibilites are taking input from html page and calling controller methods, then returning results, and repeating
 
   get '/' do
     erb :index

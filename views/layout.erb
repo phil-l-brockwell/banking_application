@@ -1,3 +1,6 @@
+<!-- this is the main layout page where all other layouts will be imported into -->
+<!-- in a html/erb file ruby code can be written and rendered inside erb tags -->
+
 <html>
 
   <head>
@@ -25,6 +28,7 @@
     <% end %>
 
     <div class='container'>
+      <!-- this area will change based on which route is selected -->
       <%= yield %>
     </div>
 
