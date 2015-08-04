@@ -71,7 +71,7 @@ class AccountsController
     # can be written deposit 500, into 3
     account = find into
     # finds account and assigns it to account local variable
-    account.deposit(convert_to_int amount)
+    account.deposit(convert_to_float amount)
     # converts the amount to an integer then passes it as an arg to accounts deposit method
     DepositSuccessMessage.new(amount)
     # creates and returns message
@@ -88,7 +88,7 @@ class AccountsController
     # finds account and assigns it to local variable
     init_limit_reset_for account unless account.breached?
     # initialises limit reset for account unless account is breached and a limit reset has already been initialised
-    account.withdraw(convert_to_int amount)
+    account.withdraw(convert_to_float amount)
     # converts amount to an integer from string and passes as arg to accounts withdraw method
     WithdrawSuccessMessage.new(amount)
     # creates and returns message
@@ -115,7 +115,7 @@ class AccountsController
   def transfer(amount, from:, to:)
     # accepts three args, amount = amount, from: = donar account, to: = recipitent account
     # can be written transfer 500, from: 1, to: 54
-    amount = convert_to_int amount
+    amount = convert_to_float amount
     # converts amount to integer and saves to account local variable
     donar = find from
     # finds donar account and saves in local variable
