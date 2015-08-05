@@ -51,10 +51,13 @@ class BankingApp < Sinatra::Base
   end
 
   get '/create_account' do
+    @account_types = accounts.types
+    @holders = holders.store.values
     erb :create_account
   end
 
   post '/create_account' do
+    puts (params[:id])
     @message = accounts.open(params[:type], with: params[:id])
     @accounts = accounts.store.values
     erb :accounts

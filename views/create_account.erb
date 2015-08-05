@@ -1,18 +1,24 @@
-<form class="navbar-form navbar-left" role="search" action='/create_account' method='post'>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Holder ID" name='id'>
-    <select class='form-control' name='type'>
-      <option value="Current">Current</option>
-      <option value="Savings">Savings</option>
-      <option value="Business">Business</option>
-      <option value="IR">IR</option>
-      <option value="SMB">SMB</option>
-      <option value="Student">Student</option>
-      <option value="HighInterest">HighInterest</option>
-      <option value="Islamic">Islamic</option>
-      <option value="Private">Private</option>
-      <option value="LCR">LCR</option>
-    </select>
-  </div>
-  <button type="submit" class="btn btn-default">Create</button>
-</form>
+<% unless @holders.empty? %>
+
+  <form class="navbar-form navbar-left" role="search" action='/create_account' method='post'>
+    <div class="form-group">
+      <select class='form-control' name='id'>
+        <% @holders.each do |holder| %>
+          <option value='<%= holder.id %>'> <%= holder.id %>.<%= holder.name %> </option>
+        <% end %>
+      </select>
+
+      <select class='form-control' name='type'>
+        <% @account_types.each do |key, value| %>
+          <option value="<%= key %>"><%= key %></option>  
+        <% end %>
+      </select>
+    </div>
+    
+    <button type="submit" class="btn btn-default">Create</button>
+  </form>
+
+<% else %>
+  <h3>No Holders!</h3>
+  <a class="btn btn-default" href='/new_holder'>Add a Holder</a>
+<% end %>
