@@ -1,18 +1,16 @@
 <div class='row'>
 
-  <div class="col-md-2">
-    <div class="btn-group-vertical" role="group" aria-label="...">
-    </div>
-  </div>
-
-  <ul class='col-md-8'>
-    <% if @tasks %>
+  <% unless @tasks.empty? %>
+    <ul class='col-md-8'>
       <% @tasks.each.with_index do |task, index| %>
         <li class='list-group-item'>
           <%= index + 1 %>. Scheduled for: <%= task.next_time %>
         </li>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
+
+  <% else %>
+    <h3>No Tasks</h3>
+  <% end %>
 
 </div>
