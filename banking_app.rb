@@ -75,6 +75,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/deposit' do
+    @accounts = accounts.store.values
     erb :deposit
   end
 
@@ -85,6 +86,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/withdraw' do
+    @accounts = accounts.store.values
     erb :withdraw
   end
 
@@ -95,6 +97,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/transfer' do
+    @accounts = accounts.store.values
     erb :transfer
   end
 
@@ -105,6 +108,8 @@ class BankingApp < Sinatra::Base
   end
 
   get '/add_holder' do
+    @accounts = accounts.store.values
+    @holders = holders.store.values
     erb :add_holder
   end
 
@@ -115,6 +120,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/enable_overdraft' do
+    @accounts = accounts.store.values
     erb :enable_overdraft
   end
 
@@ -125,6 +131,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/disable_overdraft' do
+    @accounts = accounts.store.values
     erb :disable_overdraft
   end
 
@@ -146,6 +153,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/new_loan' do
+    @holders = holders.store.values
     erb :new_loan
   end
 

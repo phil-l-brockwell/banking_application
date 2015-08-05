@@ -1,6 +1,6 @@
 <div class='row'>
 
-  <% unless @tasks.empty? %>
+  <% if @tasks.any? %>
     <ul class='col-md-8'>
       <% @tasks.each.with_index do |task, index| %>
         <li class='list-group-item'>

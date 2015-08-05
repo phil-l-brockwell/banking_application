@@ -1,7 +1,20 @@
 <form class="navbar-form navbar-left" role="search" action='/transfer' method='post'>
   <div class="form-group">
-    <input type="text" name='donar' class="form-control" placeholder="Donar ID">
-    <input type="text" name='recipitent' class="form-control" placeholder="Recipitent ID">
+
+    FROM:
+    <select class='form-control' name='donar'>
+      <% @accounts.each do |account| %>
+        <option value='<%= account.id %>'>ID: <%= account.id %> - <%= account.main_holder.name %> - <%= account.type %> Account </option>
+      <% end %>
+    </select>
+
+    TO:
+    <select class='form-control' name='recipitent'>
+      <% @accounts.each do |account| %>
+        <option value='<%= account.id %>'>ID: <%= account.id %> - <%= account.main_holder.name %> - <%= account.type %> Account </option>
+      <% end %>
+    </select>
+
     <input type='text' name='amount' class='form-control' placeholder='Amount'>
   </div>
   <button type="submit" class="btn btn-default">Transfer</button>

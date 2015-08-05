@@ -1,4 +1,4 @@
-<% unless @transactions.empty? %>
+<% if @transactions.any? %>
 
   <ul class="list-group">
     <% @transactions.each do |transaction| %>

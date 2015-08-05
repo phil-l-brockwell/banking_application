@@ -13,7 +13,7 @@
   </div>
 
   <div class='col-md-8'>
-    <% unless @accounts.empty? %>
+    <% if @accounts.any? %>
       <div class="list-group">
         <% @accounts.each do |account| %>
           <a href="/transactions?id=<%= account.id %>" type="button" class="list-group-item">
