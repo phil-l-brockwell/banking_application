@@ -57,7 +57,6 @@ class BankingApp < Sinatra::Base
   end
 
   post '/create_account' do
-    puts (params[:id])
     @message = accounts.open(params[:type], with: params[:id])
     @accounts = accounts.store.values
     erb :accounts
@@ -164,6 +163,7 @@ class BankingApp < Sinatra::Base
   end
 
   get '/pay_loan' do
+    @loans = loans.store.values
     erb :pay_loan
   end
 
