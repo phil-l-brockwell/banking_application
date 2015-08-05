@@ -19,15 +19,13 @@ module Overdrafts
     # takes an account id and an overdraft amount as args
     account = find id
     # find account and assigns to local variable
-    account.overdraft = convert_to_int amount
+    account.activate_overdraft amount
     # converts the amount to an integer and set the accounts overdraft to it
-    account.overdraft_on = true
-    # switches the accounts overdraft on
     OverdraftStatusMessage.new(account)
     # creates a success message and passes the account as an arg
   rescue ItemExist, OverdraftDenied, GreaterThanZero => message
   # catches exceptions, saves them to a message and executes the code inside the rescue block
-    account.overdraft = 0
+    account.switch_off_overdraft
     message
     # returns message
   end
@@ -37,10 +35,8 @@ module Overdrafts
     # takes account id as an arg
     account = find id
     # finds account with the id and assigns to local variable
-    account.overdraft_on = false
+    account.switch_off_overdraft
     # swiches overdraft off
-    account.overdraft = 0
-    # sets accounts overdraft variable to zero
     OverdraftStatusMessage.new(account)
     # creates success message and passes account as an arg
   rescue ItemExist, OverdraftDenied => message

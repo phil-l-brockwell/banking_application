@@ -13,7 +13,7 @@ class IslamicAccount < CustomerAccount
   end
 
   # overides overdraft method
-  def overdraft_on
+  def activate_overdraft(*)
     # raises an exception if this method is called
     fail OverdraftDenied
   end

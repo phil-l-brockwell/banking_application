@@ -3,14 +3,10 @@
 # It has been implemented so that the master account will not have certain features, such as overdraft
 class CustomerAccount < BaseAccount
   # inherits from base account
-  attr_reader :interest_rate, :daily_limit
+  attr_reader :interest_rate, :daily_limit, :overdraft_on, :overdraft
   # defines readable attributes. these attributes can now be read outside of the object.
   # equivalent to creating a getter method in java or other languages
   # so account.interest_rate will return 0.1
-  attr_accessor :overdraft, :overdraft_on
-  # defines accessible attributes, these attributes can now be accessed outside of the object
-  # equivalent to having a getter and setter method in java and other languages
-  # as well as above, account.overdraft_on = false will updates the status of overdraft_on to false
 
   LIMIT = 300
   # sets a limit constant to 300
@@ -35,6 +31,16 @@ class CustomerAccount < BaseAccount
     # overdraft defaults to off
     @overdraft     = 0.00
     # sets overdraft amount to zero
+  end
+
+  def activate_overdraft(amount)
+    @overdraft_on = true
+    @overdraft = amount
+  end
+
+  def switch_off_overdraft
+    @overdraft_on = false
+    @overdraft = 0
   end
 
   # overrides withdrawal method defined in base account to incorporate error checking

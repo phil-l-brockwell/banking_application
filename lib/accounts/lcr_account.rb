@@ -11,9 +11,9 @@ class LCRAccount < CustomerAccount
     @overdraft = 0.00
   end
 
-  # overrides overdraft method
-  def overdraft_on
-    # raises exception if this method is called
+  # overides overdraft method
+  def activate_overdraft(*)
+    # raises an exception if this method is called
     fail OverdraftDenied
   end
 end

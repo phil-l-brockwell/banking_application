@@ -1,9 +1,13 @@
 require 'accounts/base_account'
+# require the test subject
 
 describe 'BaseAccount' do
+  # set up a test subject
   let(:test_account)  { BaseAccount.new(:holder, 1)  }
+  # create an instance of the subject so we can test
 
   context 'when initialsed' do
+    # these tests will test behaviour after initialisation
     it 'has zero balance' do
       expect(test_account.balance).to eq(0.00)
     end
