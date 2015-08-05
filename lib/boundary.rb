@@ -85,6 +85,7 @@ class Boundary
     # uses the input variable to select relevant code from menu
     # calls this code and sets its return value to local message variable
     say message.output, message.colour
+    @accounts.task_manager.jobs.each { |job| puts job.next_time }
     # calls say method and passes message as an arg to output outcome to user
     start
     # recursive method calls itself

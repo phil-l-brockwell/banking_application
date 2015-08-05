@@ -162,6 +162,11 @@ class BankingApp < Sinatra::Base
     erb :loans
   end
 
+  get '/tasks' do
+    @tasks = accounts.task_manager.jobs
+    erb :tasks
+  end
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 end
