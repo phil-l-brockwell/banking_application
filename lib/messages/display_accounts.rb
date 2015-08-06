@@ -10,6 +10,13 @@ class DisplayAccountsMessage < Message
     @main = build_main
   end
 
+  # defines output method
+  def output
+    @main.unshift(@header)
+  end
+
+  private
+
   # method used to build the main message body
   def build_main
     # map returns a modified version of the existing array
@@ -17,10 +24,5 @@ class DisplayAccountsMessage < Message
     @accounts.map do |a|
       "ID: #{a.id}, Balance: #{a.output_balance}, Type: #{a.type}"
     end
-  end
-
-  # defines output method
-  def output
-    @main.unshift(@header)
   end
 end

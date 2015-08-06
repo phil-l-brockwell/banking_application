@@ -14,6 +14,12 @@ class ShowLoanMessage < Message
     # combines loan details and transaction details
   end
 
+  def output
+    @main.unshift(@header)
+  end
+
+  private
+
   # builds the loan details
   def loan_details
     ["Holder Name: #{@holder_name}",
@@ -29,9 +35,5 @@ class ShowLoanMessage < Message
     # map returns a copy of array with code inside block, sets to a
     a.unshift('Transactions:')
     # add text to front off array
-  end
-
-  def output
-    @main.unshift(@header)
   end
 end

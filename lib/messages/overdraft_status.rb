@@ -7,6 +7,8 @@ class OverdraftStatusMessage < Message
     @main = build_main(account)
   end
 
+  private
+
   # method to build main body text
   def build_main(account)
     # conditional return allows the message to morph if the overdraft is on or off

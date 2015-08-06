@@ -33,22 +33,6 @@ module ControllerItemStore
     # saves the item, using its id as its key and the actual item as the value
   end
 
-  # converts a string to an integer, used for converting numerical amounts into integers
-  def convert_to_int(string)
-    fail GreaterThanZero unless (greater_than_zero string.to_i)
-    # raises exception if the converted string is zero or minus
-    string.to_i
-    # returns the integer
-  end
-
-  # converts a string to a float, used for converting loan rates to float
-  def convert_to_float(string)
-    fail GreaterThanZero unless (greater_than_zero string.to_f)
-    # raises an exception if the converted amount is zero or minus
-    string.to_f
-    # returns the float
-  end
-
   # private area
   private
 
@@ -65,5 +49,21 @@ module ControllerItemStore
   # method to check if an amount is greater than zero
   def greater_than_zero(amount)
     amount > 0
+  end
+
+  # converts a string to an integer, used for converting numerical amounts into integers
+  def convert_to_int(string)
+    fail GreaterThanZero unless (greater_than_zero string.to_i)
+    # raises exception if the converted string is zero or minus
+    string.to_i
+    # returns the integer
+  end
+
+  # converts a string to a float, used for converting loan rates to float
+  def convert_to_float(string)
+    fail GreaterThanZero unless (greater_than_zero string.to_f)
+    # raises an exception if the converted amount is zero or minus
+    string.to_f
+    # returns the float
   end
 end
