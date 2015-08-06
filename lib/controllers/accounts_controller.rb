@@ -89,10 +89,12 @@ class AccountsController
     # accepts two args, amount = withdrawal amount and from: = account id
     account = find from
     # finds account and assigns it to local variable
-    init_limit_reset_for account unless account.breached?
-    # initialises limit reset for account unless account is breached and a limit reset has already been initialised
+    breached = account.breached?
+    # checks if account is breached then stores before state of account is changed
     account.withdraw(convert_to_float amount)
     # converts amount to an integer from string and passes as arg to accounts withdraw method
+    init_limit_reset_for account unless breached
+    # initialises limit reset for account unless account is breached and a limit reset has already been initialised
     WithdrawSuccessMessage.new(amount)
     # creates and returns message
   rescue ItemExist, OverLimit, InsufficientFunds, GreaterThanZero => message
@@ -124,12 +126,14 @@ class AccountsController
     # finds donar account and saves in local variable
     @caretaker.add donar.get_state
     # calls get_state on donar account which returns a momento, then passess momento as an arg to the caretakers add method
-    init_limit_reset_for donar unless donar.breached?
-    # initialises a limit reset for donar account unless one has already been initialised
+    donar_breached = donar.breached?
+    # check if donar is breached and saves to variable before its state is changed
     donar.withdraw amount
     # withdraws amount from donar amount
     (find to).deposit amount
     # finds the recipitent account and calls .deposit on it passing amount as an arg
+    init_limit_reset_for donar unless donar_breached
+    # initialises a limit reset for donar account unless one has already been initialised
     TransferSuccessMessage.new(amount)
     # creates and returns message
   rescue ItemExist, OverLimit, InsufficientFunds, GreaterThanZero => message
