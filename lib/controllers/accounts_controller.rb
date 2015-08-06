@@ -197,7 +197,7 @@ class AccountsController
 
   # method to initialize yearly interest payments on an account
   def init_yearly_interest_for(account)
-    @task_manager.every '1s' do
+    @task_manager.every '1y' do
       pay_interest_on account
     end
   end
