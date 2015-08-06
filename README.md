@@ -18,7 +18,7 @@ An exercise in Object Oriented Programming, worked on at the Greenwich School of
 
 # Next...
 * Styling
-* Add tasks view and master account balance to front end
+* Add master account balance to front end
 * Write readme
 * Ensure command line version runs on Windows
 * Use Javascript in front end to increase usability
