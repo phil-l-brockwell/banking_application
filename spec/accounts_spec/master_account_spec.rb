@@ -16,11 +16,4 @@ describe 'MasterAccount' do
       expect(test_account).not_to respond_to(:daily_limit)
     end
   end
-
-  context 'when making withdrawals' do
-    it 'is never under limit' do
-      test_account.withdraw(100_000_000_0)
-      expect(test_account.under_limit?).to eq(false)
-    end
-  end
 end

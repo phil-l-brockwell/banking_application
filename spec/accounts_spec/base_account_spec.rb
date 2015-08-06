@@ -33,12 +33,6 @@ describe 'BaseAccount' do
   end
 
   context 'transactions' do
-    it 'can add a new transaction' do
-      new_transaction = double :new_transaction
-      test_account.add_transaction(new_transaction)
-      expect(test_account.transactions).to eq([new_transaction])
-    end
-
     it 'creates a transaction after a deposit is made' do
       expect { test_account.deposit(100.00) }
         .to change { test_account.transactions.count }.by(1)

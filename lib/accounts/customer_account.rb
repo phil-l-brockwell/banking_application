@@ -3,7 +3,8 @@
 # It has been implemented so that the master account will not have certain features, such as overdraft
 class CustomerAccount < BaseAccount
   # inherits from base account
-  attr_reader :interest_rate, :daily_limit, :overdraft_on, :overdraft
+  attr_reader :interest_rate, :daily_limit, :overdraft_on, 
+              :overdraft, :holders, :main_holder, :id
   # defines readable attributes. these attributes can now be read outside of the object.
   # equivalent to creating a getter method in java or other languages
   # so account.interest_rate will return 0.1
@@ -33,6 +34,11 @@ class CustomerAccount < BaseAccount
     # sets overdraft amount to zero
   end
 
+  # method used to output the overdraft as a string with two decimal places and a pound sign
+  def output_overdraft
+    '£' + '%.2f' % @overdraft    
+  end
+
   def activate_overdraft(amount)
     @overdraft_on = true
     @overdraft = amount
@@ -41,6 +47,18 @@ class CustomerAccount < BaseAccount
   def switch_off_overdraft
     @overdraft_on = false
     @overdraft = 0
+  end
+
+  # creates a memento and passes itself as an arg to the initialize method, then returns the memento
+  def get_state
+    Memento.new(self)
+  end
+
+  # method used to restore a previous state. takes a memento as an arg and uses its attributes to revert
+  def restore_state(memento)
+    @balance = memento.balance
+    @daily_limit = memento.daily_limit
+    @transactions = memento.transactions
   end
 
   # overrides withdrawal method defined in base account to incorporate error checking
@@ -70,6 +88,11 @@ class CustomerAccount < BaseAccount
     @holders[holder.id] = holder
   end
 
+    # method used to check if a holder exists on an account. will be used when searching and adding holders
+  def holders_include?(holder)
+    @main_holder == holder || holders.value?(holder)
+  end
+
   # method to check if an account is in negative balance
   def overdrawn?
     @balance < 0
@@ -85,8 +108,15 @@ class CustomerAccount < BaseAccount
     @daily_limit < LIMIT
   end
 
+  private
+
   # method to check if an accounts limit has a specific amount
   def limit_allow?(amount)
     daily_limit >= amount
+  end
+
+  # method to check if the account contains a specific amount, will be used for withdrawals
+  def contains?(amount)
+    @balance + @overdraft >= amount
   end
 end

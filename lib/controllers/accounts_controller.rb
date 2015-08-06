@@ -15,16 +15,19 @@ class AccountsController
   include ControllerItemStore, Overdrafts, Singleton, Interest
   # includes various modules
 
-  attr_reader :holders, :task_manager, :master, :caretaker, :types
+  attr_reader :holders, :task_manager, :caretaker, :types
   # sets readable attributes, equivalent to writing a getter method in java or other languages
   # controller.holders (or just holders, inside this class) will now return an instance of the holders controller
+  # these are mainly used during testing
 
   def initialize
     # initialize method
-    super
-    # calls initialize method from super classes/modules
-    @master       = MasterAccount.new
-    # creates an instance of a master account
+    ControllerItemStore.instance_method(:initialize).bind(self).call
+    # calls initialize method from controller item store module
+    Interest.instance_method(:initialize).bind(self).call
+    # calls initialize method from interest module
+    # using super in this method would only initialize the first of the two modules
+    # so each module is initialized separately
     @caretaker    = Caretaker.instance
     # reference to the instance of the caretaker class, which manages mementos
     @holders      = HoldersController.instance
@@ -50,7 +53,7 @@ class AccountsController
   # open account method
   def open(type, with:)
     # accepts two args, type = account type, with: holder_id, can be written 'open :Current, with: 4'
-    account = create type, (holders.find with)
+    account = create type, (@holders.find with)
     # gets the holder from the holders controller, calls the create method and passes it the holder and type
     # sets it to an account variable
     add account
@@ -119,7 +122,7 @@ class AccountsController
     # converts amount to integer and saves to account local variable
     donar = find from
     # finds donar account and saves in local variable
-    caretaker.add donar.get_state
+    @caretaker.add donar.get_state
     # calls get_state on donar account which returns a momento, then passess momento as an arg to the caretakers add method
     init_limit_reset_for donar unless donar.breached?
     # initialises a limit reset for donar account unless one has already been initialised
@@ -131,7 +134,7 @@ class AccountsController
     # creates and returns message
   rescue ItemExist, OverLimit, InsufficientFunds, GreaterThanZero => message
     # catches exceptions and saves them to a message, then executes code inside block
-    caretaker.restore donar if donar
+    @caretaker.restore donar if donar
     # calls caretakers restore method, passing the donar account if it exists, this rollsback the withdrawal from donar account
     message
     # returns message
@@ -141,7 +144,7 @@ class AccountsController
   def add_holder(id, to:)
     # takes two args, id = new holder id, to: = account id to be added to
     # can be written add holder 1, to: 3
-    holder = holders.find id
+    holder = @holders.find id
     # calls find method on holders controller and passes holder id, assigns to local variable
     account = find to
     # finds account and assigns to local variable
@@ -171,7 +174,7 @@ class AccountsController
   # method to get accounts of a holder
   def get_accounts_of(id)
     # method takes holders id as an arg
-    holder = holders.find id
+    holder = @holders.find id
     # calls find method on holders controller and passes id as arg, assigns result to holder local variable
     accounts = store.select { |_, a| a.holders_include? holder }.values
     # selects all accounts from store hash that include holder and return them as an array and save to accounts local variable 
@@ -190,14 +193,14 @@ class AccountsController
 
   # method to initialize yearly interest payments on an account
   def init_yearly_interest_for(account)
-    task_manager.every '1y' do
+    @task_manager.every '1y' do
       pay_interest_on account
     end
   end
 
   # method to initialize a limit reset for a given account
   def init_limit_reset_for(account)
-    task_manager.in '1d' do
+    @task_manager.in '1d' do
       account.reset_limit
     end
   end
@@ -213,9 +216,11 @@ class AccountsController
   # method to encapsulate creating an account
   def create(type, holder)
     # takes a type and holder args
-    fail UnrecognisedAccountType unless types[normalise type]
-    # normalises the account type and tries to find it, if it fails, raises an exception
-    account_class = types[normalise type]
+    type = normalise type
+    # normalises type
+    fail UnrecognisedAccountType unless types[type]
+    # tries to find account type, if it fails, raises an exception
+    account_class = types[type]
     # sets account constant equal to account_class local variable
     account_class.new(holder, current_id)
     # calls .new on account class, passes holder and current_id method which returns the current id

@@ -1,5 +1,7 @@
 require 'exceptions/base_exception'
 require 'exceptions/holder_on_account'
+require 'exceptions/over_limit'
+require 'exceptions/insufficient_funds'
 require 'accounts/customer_account'
 
 describe 'CustomerAccount' do
@@ -17,6 +19,13 @@ describe 'CustomerAccount' do
     end
   end
 
+  context 'withdrawals' do
+    it 'raises an error if a withdrawal is greater than its balance' do
+      expect { test_account.withdraw(1.00) }
+        .to raise_error(InsufficientFunds)
+    end
+  end
+
   context 'limits' do
     it 'has a default daily limit of 300' do
       expect(test_account.daily_limit).to eq(300)
@@ -28,6 +37,12 @@ describe 'CustomerAccount' do
         .to change { test_account.daily_limit }.by(-100.00)
     end
 
+    it 'raises an error if a transaction is greater than its limit' do
+      test_account.deposit(500.00)
+      expect { test_account.withdraw(301.00) }
+        .to raise_error(OverLimit)
+    end
+
     it 'can reset its limit' do
       test_account.deposit(100.00)
       test_account.withdraw(100.00)
@@ -35,34 +50,14 @@ describe 'CustomerAccount' do
       expect(test_account.daily_limit).to eq(300.00)
     end
 
-    it 'knows when its daily limit is under' do
+    it 'knows when its daily limit is breached' do
       test_account.deposit(100.00)
       test_account.withdraw(100.00)
       expect(test_account.breached?).to eq(true)
     end
 
-    it 'knows when its daily limit is less than its limit' do
+    it 'knows when its daily limit is not breached' do
       expect(test_account.breached?).to eq(false)
-    end
-
-    it 'knows if it has a certain amount' do
-      test_account.deposit(100)
-      expect(test_account.contains?(100)).to eq(true)
-    end
-
-    it 'knows if it doesnt have a certain amount' do
-      expect(test_account.contains?(100)).to eq(false)
-    end
-
-    it 'knows if its daily limit will allow a certain withdrawal' do
-      test_account.deposit(100)
-      expect(test_account.limit_allow?(100)).to eq(true)
-    end
-
-    it 'knows if its daily limit will not allow a certain withdrawal' do
-      test_account.deposit(300)
-      test_account.withdraw(300)
-      expect(test_account.limit_allow?(100)).to eq(false)
     end
   end
 

@@ -2,6 +2,12 @@
 # this module will be responsible for calculating and making interest payments on accounts
 # it will be included by the accounts controller
 module Interest
+
+  attr_reader :master
+
+  def initialize
+    @master = MasterAccount.new
+  end
   # method pays interest on a given account
   def pay_interest_on(account)
     # first interest is calculated and stored to local variable
@@ -10,10 +16,10 @@ module Interest
     if account.overdrawn?
       # if it is the interest is subtracted
       account.withdraw interest
-      master.deposit interest
+      @master.deposit interest
     else
       # else the interest is added
-      master.withdraw interest
+      @master.withdraw interest
       account.deposit interest
     end
   end
