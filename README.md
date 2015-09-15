@@ -2,7 +2,7 @@
 
 An exercise in Object Oriented Programming, worked on at the Greenwich School of Management, Software Development Coursework.
 
-# UML Diagrams
+## UML Diagrams
 
 ## Getting Started
 
