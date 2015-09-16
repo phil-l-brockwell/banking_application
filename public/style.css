@@ -2,4 +2,16 @@ body
 {
   padding-top: 150px;
   padding-bottom: 20px;
+  color: white;
+  background: url(http://www.nocreditcheckbasicbankaccounts.co.uk/wp-content/uploads/2014/06/88d60c6886715f8f_640.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.navigation
+{
+  background-color: white;
+  color: black;
 }
