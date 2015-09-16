@@ -123,7 +123,7 @@ class Boundary
     until menu.key? input.to_i
       # loops until input as integer is valid
       abort('Have a Nice Day!') if input == 'exit'
-      # exits the program and outputs the text id user input is 'exit'
+      # exits the program and outputs the text if user input is 'exit'
       abort(start) if input == 'main'
       # exits the menu and runs start method if user input is 'main'
       say 'Unrecognised option, try again.'
@@ -147,5 +147,5 @@ class Boundary
   end
 end
 
-# Boundary.new.start
+Boundary.new.start
 # creates a boundary object and calls the start method
