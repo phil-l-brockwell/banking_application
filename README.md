@@ -39,6 +39,9 @@ It was used in the program to store the state of a donar account before a transf
 
 The repo also contains a sequence diagram for each of the use cases, they can be found [here](https://github.com/robertpulson/banking_application/tree/master/screenshots).
 
+## Graphical Interface
+A basic graphical interface was created and deployed to [Heroku](https://greenwich-banking.herokuapp.com). The main purpose of this was to show the program functioning visually in a more comprehensive fashion. However, it also shows that the loose coupling of the boundary and functional classes, allows for a web interface/boundary to easily be utilised.
+
 ## Getting Started
 
 Open up a terminal window
