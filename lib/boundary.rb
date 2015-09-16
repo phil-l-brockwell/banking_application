@@ -147,5 +147,5 @@ class Boundary
   end
 end
 
-# Boundary.new.start
+Boundary.new.start
 # creates a boundary object and calls the start method
