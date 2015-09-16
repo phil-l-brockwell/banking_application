@@ -2,8 +2,6 @@
 
 <form class="navbar-form navbar-left" role="search" action='/new_loan' method='post'>
   <div class="form-group">
-    <!-- <input type="text" name='id' class="form-control" placeholder="Holder ID"> -->
-
     <select class='form-control' name='id'>
       <% @holders.each do |holder| %>
         <option value='<%= holder.id %>'> <%= holder.id %>.<%= holder.name %> </option>

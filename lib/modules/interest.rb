@@ -7,6 +7,8 @@ module Interest
 
   def initialize
     @master = MasterAccount.new
+    # creates an instance of a master account
+    # used to pay and receive interest
   end
   # method pays interest on a given account
   def pay_interest_on(account)
