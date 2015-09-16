@@ -12,6 +12,26 @@ Create a basic command line interface for a banking clerk. The system should hav
 * Failsafe rollback facility
 * Automated Interest Payments
 
+## Key Learning areas
+* [Rufus Task Managing Gem](https://github.com/jmettraux/rufus-scheduler)
+  Used to schedule interest payments and account limit rollbacks
+* [Sinatra](https://github.com/sinatra/sinatra)
+  Used to create graphical representation of the application
+* [Timecop](https://github.com/travisjeffery/timecop)
+  Used to test time scheduled events
+* [Rspec](https://github.com/rspec/rspec)
+  Used for unit testing
+
+## Design Patterns
+
+### Singleton Pattern
+The singleton pattern, as the name suggests, ensures only a single instance of a class can be created. It also gives a global reference point to the class.
+It was used in the program on each of the controllers to ensure that the entire program had access to the same data set, for storing/updating accounts, loans and holders.
+
+### Memento Pattern
+The memento pattern provides the ability to restore an object to its previous state.
+It was used in the program to store the state of a donar account before a transfer was initiated, then if the recipitent account was found to not exist, the state of the donar account could be reverted.
+
 ## UML Diagrams
 
 ### Class Diagram
